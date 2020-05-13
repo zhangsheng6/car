@@ -1,0 +1,13 @@
+"F:\IAR安装包\arm\bin\armproc.dll" 
+
+"F:\IAR安装包\arm\bin\armstlink.dll" 
+
+"I:\电磁程序-ZS\电磁直立-ZS\stand_ZS_9.18\iar\KEA_128_RAM\Exe\cowherd.out" 
+
+--plugin "F:\IAR安装包\arm\bin\armbat.dll" 
+
+--device_macro "F:\IAR安装包\arm\config\debugger\Freescale\KExx.dmac" 
+
+
+
+

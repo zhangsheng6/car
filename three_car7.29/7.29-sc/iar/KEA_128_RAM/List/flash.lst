@@ -1,0 +1,186 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.30.3.8024/W32 for ARM        17/Jul/2018  09:40:34
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\flash.c
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\flash.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -lB
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -o
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config H:\IAR7.3\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\device\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\user\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\lib\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\coreSupport\ -Ol
+#    List file    =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\flash.lst
+#    Object file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\flash.o
+#
+###############################################################################
+
+H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\flash.c
+      1          /**
+      2            ******************************************************************************
+      3            * COPYRIGHT NOTICE
+      4            * Copyright (c) 2018,华北科技学院
+      5            * All rights reserved.
+      6            *
+      7            * 文件名称：    flash.c
+      8            * 文件标识：
+      9            * 摘    要：    flash操作
+     10            *
+     11            * 当前版本：     1.0
+     12            * 负    责：     韩志伟
+     13            * 时    间：     2018年5月7日 17:25:35
+     14            ******************************************************************************
+     15            */
+     16          
+     17          #include "flash.h"
+     18          #include "KEA128_flash.h"
+     19          
+     20          /**
+     21            * @brief  flash初始化
+     22            * @param  clear 1 清除该扇区, 0 不清除
+     23            * @note   如果不清除扇区，则扇区内保存的内容永不丢失，
+     24            *         包括下载程序，也不会清除掉该扇区内容，
+     25            *         除非程序代码用到了那个扇区,但那个扇区是倒数的 512B
+     26            *         如果程序使用到了那个扇区，请修改程序，你的程序太多了
+     27            */
+
+   \                                 In section .text, align 2, keep-with-next
+     28          void Flash_Init(uint8 clear)
+     29          {
+   \                     Flash_Init: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+     30              FLASH_Init();
+   \   00000004   0x.... 0x....      BL       FLASH_Init
+     31              if (clear)  FLASH_EraseSector(FLASH_BLOCK_0);
+   \   00000008   0xB2E4             UXTB     R4,R4
+   \   0000000A   0x2C00             CMP      R4,#+0
+   \   0000000C   0xD002             BEQ      ??Flash_Init_0
+   \   0000000E   0x20FF             MOVS     R0,#+255
+   \   00000010   0x.... 0x....      BL       FLASH_EraseSector
+     32          }
+   \                     ??Flash_Init_0: (+1)
+   \   00000014   0xBD10             POP      {R4,PC}          ;; return
+     33          
+     34          /**
+     35            * @brief  顺序写入flash
+     36            * @param  block   FLASH_BLOCK_0, FLASH_BLOCK_1
+     37            *         num     写入数据
+     38            * @return offset  本次数据的偏移值
+     39            * @note   将数据的偏移值保存起来，读取数据时使用
+     40            *         一次必须要写入一个字，所以8位数据也要转换成32位
+     41            *         不要输入 double 它需要8B，此函数不适用
+     42            */
+
+   \                                 In section .text, align 2, keep-with-next
+     43          uint8 FLASH_UintFloatW(void *num)
+     44          {
+   \                     FLASH_UintFloatW: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+     45              static uint8 time = 0;
+     46              uint8 offset = 4*time;
+   \   00000002   0x....             LDR      R1,??DataTable0
+   \   00000004   0x780C             LDRB     R4,[R1, #+0]
+   \   00000006   0x2104             MOVS     R1,#+4
+   \   00000008   0x434C             MULS     R4,R1,R4
+     47          
+     48              FLASH_WriteSector(FLASH_BLOCK_0, (uint8 *)num, 4, 4*time++);//每一个int32造成4B偏移
+   \   0000000A   0x....             LDR      R1,??DataTable0
+   \   0000000C   0x780B             LDRB     R3,[R1, #+0]
+   \   0000000E   0x0019             MOVS     R1,R3
+   \   00000010   0x1C49             ADDS     R1,R1,#+1
+   \   00000012   0x....             LDR      R2,??DataTable0
+   \   00000014   0x7011             STRB     R1,[R2, #+0]
+   \   00000016   0xB2DB             UXTB     R3,R3
+   \   00000018   0x2104             MOVS     R1,#+4
+   \   0000001A   0x434B             MULS     R3,R1,R3
+   \   0000001C   0x2204             MOVS     R2,#+4
+   \   0000001E   0x0001             MOVS     R1,R0
+   \   00000020   0x20FF             MOVS     R0,#+255
+   \   00000022   0x.... 0x....      BL       FLASH_WriteSector
+     49          
+     50              return offset;
+   \   00000026   0x0020             MOVS     R0,R4
+   \   00000028   0xB2C0             UXTB     R0,R0
+   \   0000002A   0xBD10             POP      {R4,PC}          ;; return
+     51          }
+
+   \                                 In section .bss, align 1
+   \                     ??time:
+   \   00000000                      DS8 1
+     52          
+     53          /**
+     54            * @brief  定点写入flash
+     55            * @param  block   FLASH_BLOCK_0, FLASH_BLOCK_1
+     56            *         num     写入数据
+     57            *         offset  偏移值
+     58            * @return
+     59            */
+
+   \                                 In section .text, align 2, keep-with-next
+     60          void FLASH_Int32WriteOffset(int32 num, uint8 offset)
+     61          {
+   \                     FLASH_Int32WriteOffset: (+1)
+   \   00000000   0xB501             PUSH     {R0,LR}
+     62              FLASH_WriteSector(FLASH_BLOCK_0, (uint8 *)(&num), 4, offset);//每一个int32造成4B偏移
+   \   00000002   0xB2C9             UXTB     R1,R1
+   \   00000004   0x000B             MOVS     R3,R1
+   \   00000006   0x2204             MOVS     R2,#+4
+   \   00000008   0x4669             MOV      R1,SP
+   \   0000000A   0x20FF             MOVS     R0,#+255
+   \   0000000C   0x.... 0x....      BL       FLASH_WriteSector
+     63          }
+   \   00000010   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \   00000000   0x........         DC32     ??time
+     64          
+     65          
+     66          
+     67          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   FLASH_Int32WriteOffset
+         8   -> FLASH_WriteSector
+       8   FLASH_UintFloatW
+         8   -> FLASH_WriteSector
+       8   Flash_Init
+         8   -> FLASH_EraseSector
+         8   -> FLASH_Init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable0
+      18  FLASH_Int32WriteOffset
+      44  FLASH_UintFloatW
+      22  Flash_Init
+       1  time
+
+ 
+  1 byte  in section .bss
+ 88 bytes in section .text
+ 
+ 88 bytes of CODE memory
+  1 byte  of DATA memory
+
+Errors: none
+Warnings: none

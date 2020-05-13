@@ -1,0 +1,564 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.30.3.8024/W32 for ARM        17/Jul/2018  09:40:42
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\user\C\Motor_Control.c
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\user\C\Motor_Control.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -lB
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -o
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config H:\IAR7.3\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\device\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\user\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\lib\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\coreSupport\ -Ol
+#    List file    =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\Motor_Control.lst
+#    Object file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\Motor_Control.o
+#
+###############################################################################
+
+H:\智能车程序2018\电磁三轮——ZS\7.17\user\C\Motor_Control.c
+      1          /**
+      2            ******************************************************************************
+      3            * COPYRIGHT NOTICE
+      4            * Copyright (c) 2018,华北科技学院
+      5            * All rights reserved.
+      6            *
+      7            * 文件名称：    Motor_Control.c
+      8            * 文件标识：
+      9            * 摘    要：
+     10            *
+     11            * 当前版本：     1.0
+     12            * 负    责：     韩志伟
+     13            * 时    间：     2018年1月29日 21:58:02
+     14            ******************************************************************************
+     15            */
+     16          #include "Motor_Control.h"
+     17          
+     18          extern float Direction_Control_Output_L ,Direction_Control_Output_R;
+     19          //电机
+
+   \                                 In section .bss, align 4
+     20          float Motor_Out_L = 0.0, Motor_Out_R = 0.0, Motor_Max = 8000, Motor_Min = -8000,Motor_Out_R_Temp=0;
+   \                     Motor_Out_L:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+   \                     Motor_Out_R:
+   \   00000000                      DS8 4
+
+   \                                 In section .data, align 4
+   \                     Motor_Max:
+   \   00000000   0x45FA0000         DC32 45FA0000H
+
+   \                                 In section .data, align 4
+   \                     Motor_Min:
+   \   00000000   0xC5FA0000         DC32 0C5FA0000H
+
+   \                                 In section .bss, align 4
+   \                     Motor_Out_R_Temp:
+   \   00000000                      DS8 4
+
+   \                                 In section .data, align 4
+     21          unsigned int DEAD_L = 3000;//2290
+   \                     DEAD_L:
+   \   00000000   0x00000BB8         DC32 3000
+
+   \                                 In section .data, align 4
+     22          unsigned int DEAD_R =3000;
+   \                     DEAD_R:
+   \   00000000   0x00000BB8         DC32 3000
+
+   \                                 In section .data, align 4
+     23          float AD_0_Min=10,AD_0_Max=45,AD_2_Max=45,AD_2_Min=10;//7,57
+   \                     AD_0_Min:
+   \   00000000   0x41200000         DC32 41200000H
+
+   \                                 In section .data, align 4
+   \                     AD_0_Max:
+   \   00000000   0x42340000         DC32 42340000H
+
+   \                                 In section .data, align 4
+   \                     AD_2_Max:
+   \   00000000   0x42340000         DC32 42340000H
+
+   \                                 In section .data, align 4
+   \                     AD_2_Min:
+   \   00000000   0x41200000         DC32 41200000H
+
+   \                                 In section .bss, align 4
+     24          float Wangdao_Speed_Output = 0;
+   \                     Wangdao_Speed_Output:
+   \   00000000                      DS8 4
+     25          
+     26          /**
+     27            * 简介
+     28            *     电机控制程序
+     29            * 备注
+     30            *
+     31            */
+
+   \                                 In section .text, align 4, keep-with-next
+     32          void Motor_control(void)
+     33          {
+   \                     Motor_control: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     34              Motor_Out_L = Direction_Control_Output_L+Control_Output_L+Speed_PWM;
+   \   00000002   0x4869             LDR      R0,??Motor_control_0
+   \   00000004   0x6801             LDR      R1,[R0, #+0]
+   \   00000006   0x4869             LDR      R0,??Motor_control_0+0x4
+   \   00000008   0x6800             LDR      R0,[R0, #+0]
+   \   0000000A   0x.... 0x....      BL       __aeabi_fadd
+   \   0000000E   0x4968             LDR      R1,??Motor_control_0+0x8
+   \   00000010   0x6809             LDR      R1,[R1, #+0]
+   \   00000012   0x.... 0x....      BL       __aeabi_fadd
+   \   00000016   0x4967             LDR      R1,??Motor_control_0+0xC
+   \   00000018   0x6008             STR      R0,[R1, #+0]
+     35              Motor_Out_R =Direction_Control_Output_R+Control_Output_R+Speed_PWM;
+   \   0000001A   0x4867             LDR      R0,??Motor_control_0+0x10
+   \   0000001C   0x6801             LDR      R1,[R0, #+0]
+   \   0000001E   0x4867             LDR      R0,??Motor_control_0+0x14
+   \   00000020   0x6800             LDR      R0,[R0, #+0]
+   \   00000022   0x.... 0x....      BL       __aeabi_fadd
+   \   00000026   0x4962             LDR      R1,??Motor_control_0+0x8
+   \   00000028   0x6809             LDR      R1,[R1, #+0]
+   \   0000002A   0x.... 0x....      BL       __aeabi_fadd
+   \   0000002E   0x4964             LDR      R1,??Motor_control_0+0x18
+   \   00000030   0x6008             STR      R0,[R1, #+0]
+     36              
+     37          
+     38          //  
+     39             if(Motor_Out_L>0)  Motor_Out_L+=DEAD_L;
+   \   00000032   0x4860             LDR      R0,??Motor_control_0+0xC
+   \   00000034   0x6800             LDR      R0,[R0, #+0]
+   \   00000036   0x2100             MOVS     R1,#+0
+   \   00000038   0x.... 0x....      BL       __aeabi_cfrcmple
+   \   0000003C   0xD209             BCS      ??Motor_control_1
+   \   0000003E   0x4861             LDR      R0,??Motor_control_0+0x1C
+   \   00000040   0x6800             LDR      R0,[R0, #+0]
+   \   00000042   0x.... 0x....      BL       __aeabi_ui2f
+   \   00000046   0x495B             LDR      R1,??Motor_control_0+0xC
+   \   00000048   0x6809             LDR      R1,[R1, #+0]
+   \   0000004A   0x.... 0x....      BL       __aeabi_fadd
+   \   0000004E   0x4959             LDR      R1,??Motor_control_0+0xC
+   \   00000050   0x6008             STR      R0,[R1, #+0]
+     40            if(Motor_Out_L<0)  Motor_Out_L-=DEAD_L;
+   \                     ??Motor_control_1: (+1)
+   \   00000052   0x4858             LDR      R0,??Motor_control_0+0xC
+   \   00000054   0x6800             LDR      R0,[R0, #+0]
+   \   00000056   0x2100             MOVS     R1,#+0
+   \   00000058   0x.... 0x....      BL       __aeabi_cfcmple
+   \   0000005C   0xD20A             BCS      ??Motor_control_2
+   \   0000005E   0x4859             LDR      R0,??Motor_control_0+0x1C
+   \   00000060   0x6800             LDR      R0,[R0, #+0]
+   \   00000062   0x.... 0x....      BL       __aeabi_ui2f
+   \   00000066   0x0001             MOVS     R1,R0
+   \   00000068   0x4852             LDR      R0,??Motor_control_0+0xC
+   \   0000006A   0x6800             LDR      R0,[R0, #+0]
+   \   0000006C   0x.... 0x....      BL       __aeabi_fsub
+   \   00000070   0x4950             LDR      R1,??Motor_control_0+0xC
+   \   00000072   0x6008             STR      R0,[R1, #+0]
+     41            
+     42            if(Motor_Out_R>0)  Motor_Out_R+=DEAD_R;
+   \                     ??Motor_control_2: (+1)
+   \   00000074   0x4852             LDR      R0,??Motor_control_0+0x18
+   \   00000076   0x6800             LDR      R0,[R0, #+0]
+   \   00000078   0x2100             MOVS     R1,#+0
+   \   0000007A   0x.... 0x....      BL       __aeabi_cfrcmple
+   \   0000007E   0xD209             BCS      ??Motor_control_3
+   \   00000080   0x4851             LDR      R0,??Motor_control_0+0x20
+   \   00000082   0x6800             LDR      R0,[R0, #+0]
+   \   00000084   0x.... 0x....      BL       __aeabi_ui2f
+   \   00000088   0x494D             LDR      R1,??Motor_control_0+0x18
+   \   0000008A   0x6809             LDR      R1,[R1, #+0]
+   \   0000008C   0x.... 0x....      BL       __aeabi_fadd
+   \   00000090   0x494B             LDR      R1,??Motor_control_0+0x18
+   \   00000092   0x6008             STR      R0,[R1, #+0]
+     43            if(Motor_Out_R<0)  Motor_Out_R-=DEAD_R;
+   \                     ??Motor_control_3: (+1)
+   \   00000094   0x484A             LDR      R0,??Motor_control_0+0x18
+   \   00000096   0x6800             LDR      R0,[R0, #+0]
+   \   00000098   0x2100             MOVS     R1,#+0
+   \   0000009A   0x.... 0x....      BL       __aeabi_cfcmple
+   \   0000009E   0xD20A             BCS      ??Motor_control_4
+   \   000000A0   0x4849             LDR      R0,??Motor_control_0+0x20
+   \   000000A2   0x6800             LDR      R0,[R0, #+0]
+   \   000000A4   0x.... 0x....      BL       __aeabi_ui2f
+   \   000000A8   0x0001             MOVS     R1,R0
+   \   000000AA   0x4845             LDR      R0,??Motor_control_0+0x18
+   \   000000AC   0x6800             LDR      R0,[R0, #+0]
+   \   000000AE   0x.... 0x....      BL       __aeabi_fsub
+   \   000000B2   0x4943             LDR      R1,??Motor_control_0+0x18
+   \   000000B4   0x6008             STR      R0,[R1, #+0]
+     44          
+     45            
+     46           
+     47                  /* 电机启动PWM控制 ------------------------------------------------------- */
+     48             
+     49          //        Motor_Out_L += DEAD_L; //加上启动基数
+     50          //                Motor_Out_R += DEAD_R;
+     51                  if (Motor_Out_L > Motor_Max)
+   \                     ??Motor_control_4: (+1)
+   \   000000B6   0x4845             LDR      R0,??Motor_control_0+0x24
+   \   000000B8   0x6800             LDR      R0,[R0, #+0]
+   \   000000BA   0x493E             LDR      R1,??Motor_control_0+0xC
+   \   000000BC   0x6809             LDR      R1,[R1, #+0]
+   \   000000BE   0x.... 0x....      BL       __aeabi_cfcmple
+   \   000000C2   0xD203             BCS      ??Motor_control_5
+     52                      Motor_Out_L = Motor_Max;
+   \   000000C4   0x4841             LDR      R0,??Motor_control_0+0x24
+   \   000000C6   0x6800             LDR      R0,[R0, #+0]
+   \   000000C8   0x493A             LDR      R1,??Motor_control_0+0xC
+   \   000000CA   0x6008             STR      R0,[R1, #+0]
+     53          
+     54                  if (Motor_Out_R > Motor_Max)
+   \                     ??Motor_control_5: (+1)
+   \   000000CC   0x483F             LDR      R0,??Motor_control_0+0x24
+   \   000000CE   0x6800             LDR      R0,[R0, #+0]
+   \   000000D0   0x493B             LDR      R1,??Motor_control_0+0x18
+   \   000000D2   0x6809             LDR      R1,[R1, #+0]
+   \   000000D4   0x.... 0x....      BL       __aeabi_cfcmple
+   \   000000D8   0xD203             BCS      ??Motor_control_6
+     55                      Motor_Out_R = Motor_Max;  
+   \   000000DA   0x483C             LDR      R0,??Motor_control_0+0x24
+   \   000000DC   0x6800             LDR      R0,[R0, #+0]
+   \   000000DE   0x4938             LDR      R1,??Motor_control_0+0x18
+   \   000000E0   0x6008             STR      R0,[R1, #+0]
+     56                  
+     57                  if (Motor_Out_L < Motor_Min)
+   \                     ??Motor_control_6: (+1)
+   \   000000E2   0x4834             LDR      R0,??Motor_control_0+0xC
+   \   000000E4   0x6800             LDR      R0,[R0, #+0]
+   \   000000E6   0x493A             LDR      R1,??Motor_control_0+0x28
+   \   000000E8   0x6809             LDR      R1,[R1, #+0]
+   \   000000EA   0x.... 0x....      BL       __aeabi_cfcmple
+   \   000000EE   0xD203             BCS      ??Motor_control_7
+     58                      Motor_Out_L = Motor_Min;
+   \   000000F0   0x4837             LDR      R0,??Motor_control_0+0x28
+   \   000000F2   0x6800             LDR      R0,[R0, #+0]
+   \   000000F4   0x492F             LDR      R1,??Motor_control_0+0xC
+   \   000000F6   0x6008             STR      R0,[R1, #+0]
+     59          
+     60                  if (Motor_Out_R <Motor_Min)
+   \                     ??Motor_control_7: (+1)
+   \   000000F8   0x4831             LDR      R0,??Motor_control_0+0x18
+   \   000000FA   0x6800             LDR      R0,[R0, #+0]
+   \   000000FC   0x4934             LDR      R1,??Motor_control_0+0x28
+   \   000000FE   0x6809             LDR      R1,[R1, #+0]
+   \   00000100   0x.... 0x....      BL       __aeabi_cfcmple
+   \   00000104   0xD203             BCS      ??Motor_control_8
+     61                      Motor_Out_R = Motor_Min;
+   \   00000106   0x4832             LDR      R0,??Motor_control_0+0x28
+   \   00000108   0x6800             LDR      R0,[R0, #+0]
+   \   0000010A   0x492D             LDR      R1,??Motor_control_0+0x18
+   \   0000010C   0x6008             STR      R0,[R1, #+0]
+     62            
+     63          //    Motor_Out_R_Temp=Motor_Out_R;
+     64              /* 电机启动PWM控制 -------- END ------------------------------------------ */
+     65          
+     66                  /* 电机正反转控制 -------------------------------------------- */
+     67                  //左正反转控制
+     68                  if (Motor_Out_L > 0)
+   \                     ??Motor_control_8: (+1)
+   \   0000010E   0x4829             LDR      R0,??Motor_control_0+0xC
+   \   00000110   0x6800             LDR      R0,[R0, #+0]
+   \   00000112   0x2100             MOVS     R1,#+0
+   \   00000114   0x.... 0x....      BL       __aeabi_cfrcmple
+   \   00000118   0xD208             BCS      ??Motor_control_9
+     69                  {
+     70                      forward_L;//正转
+   \   0000011A   0x2101             MOVS     R1,#+1
+   \   0000011C   0x202A             MOVS     R0,#+42
+   \   0000011E   0x.... 0x....      BL       GpioSet
+   \   00000122   0x2100             MOVS     R1,#+0
+   \   00000124   0x201A             MOVS     R0,#+26
+   \   00000126   0x.... 0x....      BL       GpioSet
+   \   0000012A   0xE007             B        ??Motor_control_10
+     71                  }
+     72              
+     73                  else
+     74                  {
+     75          //          Motor_Out_L=0;
+     76          //          forward_L;//正转
+     77                      reversal_L;//反转
+   \                     ??Motor_control_9: (+1)
+   \   0000012C   0x2100             MOVS     R1,#+0
+   \   0000012E   0x202A             MOVS     R0,#+42
+   \   00000130   0x.... 0x....      BL       GpioSet
+   \   00000134   0x2101             MOVS     R1,#+1
+   \   00000136   0x201A             MOVS     R0,#+26
+   \   00000138   0x.... 0x....      BL       GpioSet
+     78                  }
+     79          
+     80                  //右正反转控制
+     81                  if (Motor_Out_R > 0)
+   \                     ??Motor_control_10: (+1)
+   \   0000013C   0x4820             LDR      R0,??Motor_control_0+0x18
+   \   0000013E   0x6800             LDR      R0,[R0, #+0]
+   \   00000140   0x2100             MOVS     R1,#+0
+   \   00000142   0x.... 0x....      BL       __aeabi_cfrcmple
+   \   00000146   0xD208             BCS      ??Motor_control_11
+     82                  {
+     83                      forward_R;
+   \   00000148   0x2101             MOVS     R1,#+1
+   \   0000014A   0x2024             MOVS     R0,#+36
+   \   0000014C   0x.... 0x....      BL       GpioSet
+   \   00000150   0x2100             MOVS     R1,#+0
+   \   00000152   0x201C             MOVS     R0,#+28
+   \   00000154   0x.... 0x....      BL       GpioSet
+   \   00000158   0xE007             B        ??Motor_control_12
+     84                  }
+     85              
+     86                  else
+     87                  {
+     88          //          Motor_Out_R=0;
+     89          //          forward_L;//正转
+     90                      reversal_R;
+   \                     ??Motor_control_11: (+1)
+   \   0000015A   0x2100             MOVS     R1,#+0
+   \   0000015C   0x2024             MOVS     R0,#+36
+   \   0000015E   0x.... 0x....      BL       GpioSet
+   \   00000162   0x2101             MOVS     R1,#+1
+   \   00000164   0x201C             MOVS     R0,#+28
+   \   00000166   0x.... 0x....      BL       GpioSet
+     91                  }
+     92              Motor_Out_L=abs_f(Motor_Out_L);
+   \                     ??Motor_control_12: (+1)
+   \   0000016A   0x4812             LDR      R0,??Motor_control_0+0xC
+   \   0000016C   0x6800             LDR      R0,[R0, #+0]
+   \   0000016E   0x.... 0x....      BL       abs_f
+   \   00000172   0x4910             LDR      R1,??Motor_control_0+0xC
+   \   00000174   0x6008             STR      R0,[R1, #+0]
+     93              Motor_Out_R=abs_f(Motor_Out_R);
+   \   00000176   0x4812             LDR      R0,??Motor_control_0+0x18
+   \   00000178   0x6800             LDR      R0,[R0, #+0]
+   \   0000017A   0x.... 0x....      BL       abs_f
+   \   0000017E   0x4910             LDR      R1,??Motor_control_0+0x18
+   \   00000180   0x6008             STR      R0,[R1, #+0]
+     94              
+     95              
+     96                  /* 电机正反转控制 -------- END ------------------------------- */  
+     97                  change_L((uint32)Motor_Out_L);
+   \   00000182   0x480C             LDR      R0,??Motor_control_0+0xC
+   \   00000184   0x6800             LDR      R0,[R0, #+0]
+   \   00000186   0x.... 0x....      BL       __aeabi_f2uiz
+   \   0000018A   0x0002             MOVS     R2,R0
+   \   0000018C   0x2101             MOVS     R1,#+1
+   \   0000018E   0x2002             MOVS     R0,#+2
+   \   00000190   0x.... 0x....      BL       FTM_PwmDuty
+     98                  change_R((uint32)Motor_Out_R);
+   \   00000194   0x480A             LDR      R0,??Motor_control_0+0x18
+   \   00000196   0x6800             LDR      R0,[R0, #+0]
+   \   00000198   0x.... 0x....      BL       __aeabi_f2uiz
+   \   0000019C   0x0002             MOVS     R2,R0
+   \   0000019E   0x2100             MOVS     R1,#+0
+   \   000001A0   0x2002             MOVS     R0,#+2
+   \   000001A2   0x.... 0x....      BL       FTM_PwmDuty
+     99              //DataScope_Get_Channel_Data(Motor_Out_R,3);
+    100          }
+   \   000001A6   0xBD01             POP      {R0,PC}          ;; return
+   \                     ??Motor_control_0:
+   \   000001A8   0x........         DC32     Direction_Control_Output_L
+   \   000001AC   0x........         DC32     Control_Output_L
+   \   000001B0   0x........         DC32     Speed_PWM
+   \   000001B4   0x........         DC32     Motor_Out_L
+   \   000001B8   0x........         DC32     Direction_Control_Output_R
+   \   000001BC   0x........         DC32     Control_Output_R
+   \   000001C0   0x........         DC32     Motor_Out_R
+   \   000001C4   0x........         DC32     DEAD_L
+   \   000001C8   0x........         DC32     DEAD_R
+   \   000001CC   0x........         DC32     Motor_Max
+   \   000001D0   0x........         DC32     Motor_Min
+    101          
+    102          
+    103          /**
+    104            * 简介
+    105            *     直道与弯道的处理方法  A2 57且A0<7
+    106            * 备注
+    107            *
+    108            */
+    109          //void  Motor_Out_control(void)
+    110          //{
+    111          //    if( ((AD_inductor[2] >= AD_2_Max) && (AD_inductor[0] <= AD_0_Min)) ||((AD_inductor[0] >= AD_0_Max) && (AD_inductor[2] <= AD_2_Min)))//调节范围
+    112          //    {
+    113          //          Motor_Out_L = Wangdao_Speed_Output - Direction_Control_Output;
+    114          //          Motor_Out_R = Wangdao_Speed_Output + Direction_Control_Output;
+    115          //          LED_1_ON;
+    116          //    }
+    117          //    else
+    118          //    {
+    119          //          Motor_Out_L = Speed_Control_Output - Direction_Control_Output;
+    120          //          Motor_Out_R = Speed_Control_Output + Direction_Control_Output;
+    121          //    }
+    122          //    
+    123          //}
+    124          
+    125          //void  Motor_Out_control(void)
+    126          //{
+    127          //    if( (AD_inductor[0] >= AD_0_Min) && (AD_inductor[0] <= AD_0_Max) && (AD_inductor[2] >= AD_2_Min) && (AD_inductor[2] <= AD_2_Max))//调节范围
+    128          //    {
+    129          //          Motor_Out_L = Wangdao_Speed_Output - Direction_Control_Output;
+    130          //          Motor_Out_R = Wangdao_Speed_Output + Direction_Control_Output;
+    131          //    }
+    132          //    else
+    133          //    {
+    134          //          Motor_Out_L = Speed_Control_Output - Direction_Control_Output;
+    135          //          Motor_Out_R = Speed_Control_Output + Direction_Control_Output;
+    136          //    }
+    137          //    
+    138          //}
+    139          /**
+    140            * 简介
+    141            *     电机控制程序
+    142            * 备注
+    143            *
+    144            */
+    145          //void Motor_control(void)
+    146          //{
+    147          //    Motor_Out_L = Direction_Control_Output_L;
+    148          //    Motor_Out_R = Direction_Control_Output_R;
+    149          //  
+    150          ////    Motor_Out_L = Speed_Control_Output +Direction_Control_Output;
+    151          ////    Motor_Out_R = Speed_Control_Output + Direction_Control_Output;
+    152          ////    Motor_Out_control();
+    153          //  
+    154          //  
+    155          //    /* 电机启动PWM控制 ------------------------------------------------------- */
+    156          //    //左电机控制
+    157          //    if (Motor_Out_L > 0)
+    158          //    {
+    159          //        Motor_Out_L += DEAD_L; //加上启动基数
+    160          //        if (Motor_Out_L > Motor_Max)
+    161          //            Motor_Out_L = Motor_Max;
+    162          //    }
+    163          //    else if (Motor_Out_L < 0)
+    164          //    {
+    165          //        Motor_Out_L -= DEAD_L;
+    166          //        if (Motor_Out_L < -Motor_Max)
+    167          //            Motor_Out_L = -Motor_Max;
+    168          //    }
+    169          //
+    170          //    //右电机控制
+    171          //    if (Motor_Out_R > 0)
+    172          //    {
+    173          //        Motor_Out_R += DEAD_R;
+    174          //        if (Motor_Out_R > Motor_Max)
+    175          //            Motor_Out_R = Motor_Max;
+    176          //    }
+    177          //    else if (Motor_Out_R < 0)
+    178          //    {
+    179          //        Motor_Out_R -= DEAD_R;
+    180          //        if (Motor_Out_R < -Motor_Max)
+    181          //            Motor_Out_R = -Motor_Max;
+    182          //    }
+    183          //    /* 电机启动PWM控制 -------- END ------------------------------------------ */
+    184          //
+    185          //        /* 电机正反转控制 -------------------------------------------- */
+    186          ////        //左正反转控制
+    187          ////        if (Motor_Out_L > 0)
+    188          ////        {
+    189          ////            forward_L;//正转
+    190          ////        }
+    191          ////    
+    192          ////        else
+    193          ////        {
+    194          ////            Motor_Out_L = -Motor_Out_L;
+    195          ////            reversal_L;//反转
+    196          ////        }
+    197          ////
+    198          ////        //右正反转控制
+    199          ////        if (Motor_Out_R > 0)
+    200          ////        {
+    201          ////            forward_R;
+    202          ////        }
+    203          ////    
+    204          ////        else
+    205          ////        {
+    206          ////            Motor_Out_R = -Motor_Out_R;
+    207          ////            reversal_R;
+    208          ////        }
+    209          //    
+    210          //    forward_L;
+    211          //    forward_R;
+    212          //    
+    213          //        /* 电机正反转控制 -------- END ------------------------------- */
+    214          //  
+    215          //        
+    216          //
+    217          //        change_L((uint32)Motor_Out_L);
+    218          //        change_R((uint32)Motor_Out_R);
+    219          //
+    220          //
+    221          //        //测试用
+    222          ////        forward_L//正转
+    223          ////        forward_R
+    224          ////        change_L(PWM)
+    225          ////        change_R(PWM)
+    226          //        
+    227          //    //DataScope_Get_Channel_Data(Motor_Out_R,3);
+    228          //}
+    229          //
+    230          //
+    231          //
+    232          //
+    233          //
+    234          //
+    235          
+    236          
+    237          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   Motor_control
+         8   -> FTM_PwmDuty
+         8   -> GpioSet
+         8   -> __aeabi_f2uiz
+         8   -> __aeabi_fadd
+         8   -> __aeabi_fsub
+         8   -> __aeabi_ui2f
+         8   -> abs_f
+         8 __aeabi_cfcmple
+         8 __aeabi_cfrcmple
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  AD_0_Max
+       4  AD_0_Min
+       4  AD_2_Max
+       4  AD_2_Min
+       4  DEAD_L
+       4  DEAD_R
+       4  Motor_Max
+       4  Motor_Min
+       4  Motor_Out_L
+       4  Motor_Out_R
+       4  Motor_Out_R_Temp
+     468  Motor_control
+       4  Wangdao_Speed_Output
+
+ 
+  16 bytes in section .bss
+  32 bytes in section .data
+ 468 bytes in section .text
+ 
+ 468 bytes of CODE memory
+  48 bytes of DATA memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,220 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.20.2.7424/W32 for ARM        28/Feb/2018  20:39:13
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\device\C\usmart\usmart.c
+#    Command line =  
+#        "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\device\C\usmart\usmart.c" -D IAR -D TWR_K60N512 -D
+#        _DLIB_FILE_DESCRIPTOR -lCN "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\List\" -lB
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\KEA_128_FLASH\List\"
+#        -o "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\Obj\" --no_cse --no_unroll --no_inline
+#        --no_code_motion --no_tbaa --no_clustering --no_scheduling --debug
+#        --endian=little --cpu=Cortex-M0+ -e --fpu=None --dlib_config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\device\H\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\user\H\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\system\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\lib\H\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\..\system\coreSupport\" -Ol
+#    List file    =  
+#        F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\List\usmart.lst
+#    Object file  =  
+#        F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\Obj\usmart.o
+#
+###############################################################################
+
+F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\device\C\usmart\usmart.c
+      1          #include "SKEAZ1284.h"
+      2          #include "usmart_str.h"
+      3          #include "usmart.h"
+      4          #include "allHead.h"
+      5          
+      6          /*****************************************************************/
+      7          UART_Type * USMART_uart[3] = UART_BASES;
+      8          uint16 USART_RX_STA = 0;
+      9          uint8 USART_RX_BUF[100] = {0};
+     10          
+     11          /**
+     12            * 简介
+     13            *     获取串口数据
+     14            */
+     15          void GetUartData()
+     16          {
+     17              uint8 temp = 0;
+     18          
+     19              if ( !(USMART_uart[UART_PART]->S1 & UART_S1_RDRF_MASK))
+     20              {
+     21                  USART_RX_STA = 0;
+     22              }
+     23              else
+     24              {
+     25                  for (USART_RX_STA=0; !(USART_RX_STA&0x8000); USART_RX_STA++)
+     26                  {
+     27                      while ( !(USMART_uart[UART_PART]->S1 & UART_S1_RDRF_MASK) );
+     28                      USART_RX_BUF[USART_RX_STA] =  USMART_uart[UART_PART]->D;
+     29          
+     30                      if (USART_RX_STA>0)
+     31                      {
+     32                          if ((USART_RX_BUF[USART_RX_STA-1]=='\r') && (USART_RX_BUF[USART_RX_STA]=='\n') )
+     33                          {
+     34                              USART_RX_STA |= 0x8000;
+     35                          }
+     36                      }
+     37                  }
+     38              }
+     39          }
+     40          
+     41          /*****************************************************************/
+     42          
+     43          
+     44          //从str中获取函数名,id,及参数信息
+     45          //*str:字符串指针.
+     46          //返回值:0,识别成功;其他,错误代码.
+     47          uint8 usmart_cmd_rec(uint8*str)
+     48          {
+     49          	uint8 sta,i,rval;//状态
+     50          	uint8 rpnum,spnum;
+     51          	uint8 rfname[MAX_FNAME_LEN];//暂存空间,用于存放接收到的函数名
+     52          	uint8 sfname[MAX_FNAME_LEN];//存放本地函数名
+     53          
+     54          	sta = usmart_get_fname(str,rfname,&rpnum,&rval);//得到接收到的数据的函数名及参数个数
+     55          	if(sta)return sta;//错误
+     56          	for(i=0;i<usmart_dev.fnum;i++)
+     57          	{
+     58          		sta=usmart_get_fname((uint8*)usmart_dev.funs[i].name,sfname,&spnum,&rval);//得到本地函数名及参数个数
+     59          		if(sta)return sta;//本地解析有误
+     60          		if(usmart_strcmp(sfname,rfname)==0)//相等
+     61          		{
+     62          			if(spnum>rpnum)return USMART_PARMERR;//参数错误(输入参数比源函数参数少)
+     63          			usmart_dev.id=i;//记录函数ID.
+     64          			break;//跳出.
+     65          		}
+     66          	}
+     67          	if(i==usmart_dev.fnum)return USMART_NOFUNCFIND;	//未找到匹配的函数
+     68           	sta=usmart_get_fparam(str,&i);					//得到函数参数个数
+     69          	if(sta)return sta;								//返回错误
+     70          	usmart_dev.pnum=i;								//参数个数记录
+     71              return USMART_OK;
+     72          }
+     73          //usamrt执行函数
+     74          //该函数用于最终执行从串口收到的有效函数.
+     75          //最多支持10个参数的函数,更多的参数支持也很容易实现.不过用的很少.一般5个左右的参数的函数已经很少见了.
+     76          //该函数会在串口打印执行情况.以:"函数名(参数1，参数2...参数N)=返回值".的形式打印.
+     77          //当所执行的函数没有返回值的时候,所打印的返回值是一个无意义的数据.
+     78          void usmart_exe(void)
+     79          {
+     80          	uint8 id,i;
+     81          	uint32 res;
+     82          	uint32 temp[MAX_PARM];//参数转换,使之支持了字符串
+     83          	uint8 sfname[MAX_FNAME_LEN];//存放本地函数名
+     84          	uint8 pnum,rval;
+     85          
+     86          	id=usmart_dev.id;
+     87          	if(id>=usmart_dev.fnum)return;//不执行.
+     88          	usmart_get_fname((uint8*)usmart_dev.funs[id].name,sfname,&pnum,&rval);//得到本地函数名,及参数个数
+     89          
+     90          	switch(usmart_dev.pnum)
+     91          	{
+     92          		case 0://无参数(void类型)
+     93          			res=(*(uint32(*)())usmart_dev.funs[id].func)();
+     94          			break;
+     95          	    case 1://有1个参数
+     96          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0]);
+     97          			break;
+     98          	    case 2://有2个参数
+     99          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1]);
+    100          			break;
+    101          	    case 3://有3个参数
+    102          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2]);
+    103          			break;
+    104          	    case 4://有4个参数
+    105          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3]);
+    106          			break;
+    107          	    case 5://有5个参数
+    108          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4]);
+    109          			break;
+    110          	    case 6://有6个参数
+    111          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4],\
+    112          			temp[5]);
+    113          			break;
+    114          	    case 7://有7个参数
+    115          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4],\
+    116          			temp[5],temp[6]);
+    117          			break;
+    118          	    case 8://有8个参数
+    119          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4],\
+    120          			temp[5],temp[6],temp[7]);
+    121          			break;
+    122          	    case 9://有9个参数
+    123          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4],\
+    124          			temp[5],temp[6],temp[7],temp[8]);
+    125          			break;
+    126          	    case 10://有10个参数
+    127          			res=(*(uint32(*)())usmart_dev.funs[id].func)(temp[0],temp[1],temp[2],temp[3],temp[4],\
+    128          			temp[5],temp[6],temp[7],temp[8],temp[9]);
+    129          			break;
+    130          	}
+    131          }
+    132          //usmart扫描函数
+    133          //通过调用该函数,实现usmart的各个控制.该函数需要每隔一定时间被调用一次
+    134          //以及时执行从串口发过来的各个函数.
+    135          //本函数可以在中断里面调用,从而实现自动管理.
+    136          //如果非ALIENTEK用户,则USART_RX_STA和USART_RX_BUF[]需要用户自己实现
+    137          void usmart_scan(void)
+    138          {
+    139          	uint8 sta,len;
+    140          
+    141              GetUartData();
+    142          	if(USART_RX_STA&0x8000)//串口接收完成？
+    143          	{
+    144          		len=USART_RX_STA&0x3fff;	//得到此次接收到的数据长度
+    145          		USART_RX_BUF[len]='\0';	//在末尾加入结束符.
+    146          		sta=usmart_dev.cmd_rec(USART_RX_BUF);//得到函数各个信息
+    147          		if(sta==0)usmart_dev.exe();	//执行函数
+    148          		else
+    149          		{
+    150          			BUZZER_ON;
+    151          		}
+    152          		USART_RX_STA=0;//状态寄存器清空
+    153          	}
+    154          }
+    155          
+    156          #if USMART_USE_WRFUNS==1 	//如果使能了读写操作
+    157          //读取指定地址的值
+    158          uint32 read_addr(uint32 addr)
+    159          {
+    160          	return *(uint32*)addr;//
+    161          }
+    162          //在指定地址写入指定的值
+    163          void write_addr(uint32 addr,uint32 val)
+    164          {
+    165          	*(uint32*)addr=val;
+    166          }
+    167          #endif
+    168          
+    169          
+    170          
+    171          
+    172          
+    173          
+    174          
+    175          
+    176          
+    177          
+    178          
+    179          
+    180          
+
+Errors: 49
+Warnings: 4

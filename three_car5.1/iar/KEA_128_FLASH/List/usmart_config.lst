@@ -1,0 +1,93 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.20.2.7424/W32 for ARM        28/Feb/2018  20:39:13
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\device\C\usmart\usmart_config.c
+#    Command line =  
+#        "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\device\C\usmart\usmart_config.c" -D IAR -D TWR_K60N512 -D
+#        _DLIB_FILE_DESCRIPTOR -lCN "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\List\" -lB
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\KEA_128_FLASH\List\"
+#        -o "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\Obj\" --no_cse --no_unroll --no_inline
+#        --no_code_motion --no_tbaa --no_clustering --no_scheduling --debug
+#        --endian=little --cpu=Cortex-M0+ -e --fpu=None --dlib_config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\device\H\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\user\H\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\system\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\iar\..\lib\H\" -I
+#        "F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\..\system\coreSupport\" -Ol
+#    List file    =  
+#        F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\List\usmart_config.lst
+#    Object file  =  
+#        F:\2018飞思卡尔\程序\2018\2018直立 -
+#        KEA直立\iar\KEA_128_FLASH\Obj\usmart_config.o
+#
+###############################################################################
+
+F:\2018飞思卡尔\程序\2018\2018直立 - KEA直立\device\C\usmart\usmart_config.c
+      1          #include "usmart.h"
+      2          #include "usmart_str.h"
+      3          ////////////////////////////用户配置区///////////////////////////////////////////////
+      4          //这下面要包含所用到的函数所申明的头文件(用户自己添加)
+      5          
+      6          //函数名列表初始化(用户自己添加)
+      7          //用户直接在这里输入要执行的函数名及其查找串
+      8          struct _m_usmart_nametab usmart_nametab[]=
+      9          {
+     10          	(void*)DM9000_WriteReg,"void DM9000_WriteReg(u16 reg,u16 data)",
+     11          	(void*)DM9000_ReadReg,"u16 DM9000_ReadReg(u16 reg)",
+     12          	(void*)W25QXX_Erase_Chip,"void W25QXX_Erase_Chip(void)",
+     13          };
+     14          ///////////////////////////////////END///////////////////////////////////////////////
+     15          /////////////////////////////////////////////////////////////////////////////////////
+     16          //函数控制管理器初始化
+     17          //得到各个受控函数的名字
+     18          //得到函数总数量
+     19          struct _m_usmart_dev usmart_dev=
+     20          {
+     21          	usmart_nametab,
+     22          	usmart_init,
+     23          	usmart_cmd_rec,
+     24          	usmart_exe,
+     25          	usmart_scan,
+     26          	sizeof(usmart_nametab)/sizeof(struct _m_usmart_nametab),//函数数量
+     27          	0,	  	//参数数量
+     28          	0,	 	//函数ID
+     29          	1,		//参数显示类型,0,10进制;1,16进制
+     30          	0,		//参数类型.bitx:,0,数字;1,字符串
+     31          	0,	  	//每个参数的长度暂存表,需要MAX_PARM个0初始化
+     32          	0,		//函数的参数,需要PARM_LEN个0初始化
+     33          };
+     34          
+     35          
+     36          
+     37          
+     38          
+     39          
+     40          
+     41          
+     42          
+     43          
+     44          
+     45          
+     46          
+     47          
+     48          
+     49          
+     50          
+     51          
+     52          
+
+Errors: 55
+Warnings: none

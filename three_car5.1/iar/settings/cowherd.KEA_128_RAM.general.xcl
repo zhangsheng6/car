@@ -1,0 +1,13 @@
+"F:\IAR安装包\arm\bin\armproc.dll" 
+
+"F:\IAR安装包\arm\bin\armstlink.dll" 
+
+"H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Exe\cowherd.out" 
+
+--plugin "F:\IAR安装包\arm\bin\armbat.dll" 
+
+--device_macro "F:\IAR安装包\arm\config\debugger\Freescale\KExx.dmac" 
+
+
+
+

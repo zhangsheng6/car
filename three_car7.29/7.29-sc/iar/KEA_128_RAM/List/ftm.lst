@@ -1,0 +1,1134 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.30.3.8024/W32 for ARM        17/Jul/2018  09:40:34
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\ftm.c
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\ftm.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -lB
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -o
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config H:\IAR7.3\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\device\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\user\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\lib\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\coreSupport\ -Ol
+#    List file    =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ftm.lst
+#    Object file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\ftm.o
+#
+###############################################################################
+
+H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\ftm.c
+      1          /**
+      2            ******************************************************************************
+      3            * COPYRIGHT NOTICE
+      4            * Copyright (c) 2018,华北科技学院
+      5            * All rights reserved.
+      6            *
+      7            * 文件名称：     ftm.c
+      8            * 文件标识：
+      9            * 摘    要：     PWM波配置
+     10            *
+     11            * 当前版本：     1.0
+     12            * 负    责：     韩志伟
+     13            * 时    间：     2018年1           月8日 16:43:36
+     14            * 备    注：     FtmPwmMux函数被KEA128_ftm.c中初始化函数调用
+     15            ******************************************************************************
+     16            */
+     17          #include "ftm.h"
+
+   \                                 In section .rodata, align 4
+   \   static __absolute struct <unnamed> *const FTMX[3]
+   \                     FTMX:
+   \   00000000   0x40038000         DC32 40038000H, 40039000H, 4003A000H
+   \              0x40039000   
+   \              0x4003A000   
+     18          
+     19          //全局变量定义
+     20          //uint32_t LPLD_FTM1_MOD;
+     21          //uint32_t LPLD_FTM2_MOD;
+
+   \                                 In section .bss, align 2
+     22          uint16 g_mod; //PWM周期置入值
+   \                     g_mod:
+   \   00000000                      DS8 2
+     23          
+     24          
+     25          /**
+     26            * 简介
+     27            *     FTM 引脚复用 时钟开启
+     28            * 参数
+     29            *     ftmn --- FTM模块
+     30            *       ftm0
+     31            *       ftm1
+     32            *       ftm2
+     33            *     ch --- 通道
+     34            *       ch0
+     35            *       ch0,
+     36            *       ch1,
+     37            *       ch2,
+     38            *       ch3,
+     39            *       ch4,
+     40            *       ch5,
+     41            */
+
+   \                                 In section .text, align 2, keep-with-next
+     42          void FTM_PwmMux(ftmX ftmn, ftmCh ch)
+     43          {
+   \                     FTM_PwmMux: (+1)
+   \   00000000   0xB500             PUSH     {LR}
+     44              switch (ftmn)
+   \   00000002   0xB2C0             UXTB     R0,R0
+   \   00000004   0x2800             CMP      R0,#+0
+   \   00000006   0xD003             BEQ      ??FTM_PwmMux_0
+   \   00000008   0x2802             CMP      R0,#+2
+   \   0000000A   0xD038             BEQ      ??FTM_PwmMux_1
+   \   0000000C   0xD31B             BCC      ??FTM_PwmMux_2
+   \   0000000E   0xE087             B        ??FTM_PwmMux_3
+     45              {
+     46                case ftm0:
+     47                  SIM->SCGC |= SIM_SCGC_FTM0_MASK;                //开时钟
+   \                     ??FTM_PwmMux_0: (+1)
+   \   00000010   0x....             LDR      R0,??DataTable2  ;; 0x40048014
+   \   00000012   0x6800             LDR      R0,[R0, #+0]
+   \   00000014   0x2220             MOVS     R2,#+32
+   \   00000016   0x4302             ORRS     R2,R2,R0
+   \   00000018   0x....             LDR      R0,??DataTable2  ;; 0x40048014
+   \   0000001A   0x6002             STR      R2,[R0, #+0]
+     48                  switch(ch)
+   \   0000001C   0xB2C9             UXTB     R1,R1
+   \   0000001E   0x2900             CMP      R1,#+0
+   \   00000020   0xD002             BEQ      ??FTM_PwmMux_4
+   \   00000022   0x2901             CMP      R1,#+1
+   \   00000024   0xD007             BEQ      ??FTM_PwmMux_5
+   \   00000026   0xE00D             B        ??FTM_PwmMux_6
+     49                  {
+     50                    case ch0:
+     51                      if(FTM0_CH0_PIN == A0)
+     52                      {
+     53                          SIM->PINSEL &= ~SIM_PINSEL_FTM0PS0_MASK;
+   \                     ??FTM_PwmMux_4: (+1)
+   \   00000028   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   0000002A   0x6800             LDR      R0,[R0, #+0]
+   \   0000002C   0x....             LDR      R1,??DataTable2_2  ;; 0xfffffeff
+   \   0000002E   0x4001             ANDS     R1,R1,R0
+   \   00000030   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   00000032   0x6001             STR      R1,[R0, #+0]
+     54                      }
+     55                      else if(FTM0_CH0_PIN == B2)
+     56                      {
+     57                          SIM->PINSEL |= SIM_PINSEL_FTM0PS0_MASK;
+     58                      }
+     59                      break;
+   \   00000034   0xE006             B        ??FTM_PwmMux_7
+     60                    case ch1:
+     61                      if(FTM0_CH1_PIN == A1)
+     62                      {
+     63                          SIM->PINSEL &= ~SIM_PINSEL_FTM0PS1_MASK;
+   \                     ??FTM_PwmMux_5: (+1)
+   \   00000036   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   00000038   0x6800             LDR      R0,[R0, #+0]
+   \   0000003A   0x....             LDR      R1,??DataTable2_3  ;; 0xfffffdff
+   \   0000003C   0x4001             ANDS     R1,R1,R0
+   \   0000003E   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   00000040   0x6001             STR      R1,[R0, #+0]
+     64                      }
+     65                      else if(FTM0_CH1_PIN == B3)
+     66                      {
+     67                          SIM->PINSEL |= SIM_PINSEL_FTM0PS1_MASK;
+     68                      }
+     69                      break;
+   \   00000042   0xE7FF             B        ??FTM_PwmMux_7
+     70          
+     71                    default :
+     72                      break;
+     73                  }
+     74                  break;
+   \                     ??FTM_PwmMux_6: (+1)
+   \                     ??FTM_PwmMux_7: (+1)
+   \   00000044   0xE06C             B        ??FTM_PwmMux_8
+     75          
+     76                case ftm1:
+     77                  SIM->SCGC |= SIM_SCGC_FTM1_MASK;                //开时钟
+   \                     ??FTM_PwmMux_2: (+1)
+   \   00000046   0x....             LDR      R0,??DataTable2  ;; 0x40048014
+   \   00000048   0x6800             LDR      R0,[R0, #+0]
+   \   0000004A   0x2240             MOVS     R2,#+64
+   \   0000004C   0x4302             ORRS     R2,R2,R0
+   \   0000004E   0x....             LDR      R0,??DataTable2  ;; 0x40048014
+   \   00000050   0x6002             STR      R2,[R0, #+0]
+     78                  switch(ch)
+   \   00000052   0xB2C9             UXTB     R1,R1
+   \   00000054   0x2900             CMP      R1,#+0
+   \   00000056   0xD002             BEQ      ??FTM_PwmMux_9
+   \   00000058   0x2901             CMP      R1,#+1
+   \   0000005A   0xD008             BEQ      ??FTM_PwmMux_10
+   \   0000005C   0xE00E             B        ??FTM_PwmMux_11
+     79                  {
+     80                    case ch0:
+     81                      if(FTM1_CH0_PIN == C4)
+     82                      {
+     83                          SIM->PINSEL &= ~SIM_PINSEL_FTM1PS0_MASK;
+     84                      }
+     85                      else if(FTM1_CH0_PIN == H2)
+     86                      {
+     87                          SIM->PINSEL |= SIM_PINSEL_FTM1PS0_MASK;
+   \                     ??FTM_PwmMux_9: (+1)
+   \   0000005E   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   00000060   0x6800             LDR      R0,[R0, #+0]
+   \   00000062   0x2180             MOVS     R1,#+128
+   \   00000064   0x00C9             LSLS     R1,R1,#+3        ;; #+1024
+   \   00000066   0x4301             ORRS     R1,R1,R0
+   \   00000068   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   0000006A   0x6001             STR      R1,[R0, #+0]
+     88                      }
+     89                      break;
+   \   0000006C   0xE006             B        ??FTM_PwmMux_12
+     90                    case ch1:
+     91                      if(FTM1_CH1_PIN == C5)
+     92                      {
+     93                          SIM->PINSEL &= ~SIM_PINSEL_FTM1PS1_MASK;
+   \                     ??FTM_PwmMux_10: (+1)
+   \   0000006E   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   00000070   0x6800             LDR      R0,[R0, #+0]
+   \   00000072   0x....             LDR      R1,??DataTable2_4  ;; 0xfffff7ff
+   \   00000074   0x4001             ANDS     R1,R1,R0
+   \   00000076   0x....             LDR      R0,??DataTable2_1  ;; 0x4004800c
+   \   00000078   0x6001             STR      R1,[R0, #+0]
+     94                      }
+     95                      else if(FTM1_CH1_PIN == E7)
+     96                      {
+     97                          SIM->PINSEL |= SIM_PINSEL_FTM1PS1_MASK;
+     98                      }
+     99                      break;
+   \   0000007A   0xE7FF             B        ??FTM_PwmMux_12
+    100                    default :
+    101                      break;
+    102                  }
+    103                  break;
+   \                     ??FTM_PwmMux_11: (+1)
+   \                     ??FTM_PwmMux_12: (+1)
+   \   0000007C   0xE050             B        ??FTM_PwmMux_8
+    104          
+    105                case ftm2:
+    106                  SIM->SCGC |= SIM_SCGC_FTM2_MASK;                //开启FTM外设时钟
+   \                     ??FTM_PwmMux_1: (+1)
+   \   0000007E   0x....             LDR      R0,??DataTable2  ;; 0x40048014
+   \   00000080   0x6800             LDR      R0,[R0, #+0]
+   \   00000082   0x2280             MOVS     R2,#+128
+   \   00000084   0x4302             ORRS     R2,R2,R0
+   \   00000086   0x....             LDR      R0,??DataTable2  ;; 0x40048014
+   \   00000088   0x6002             STR      R2,[R0, #+0]
+    107                  switch(ch)
+   \   0000008A   0xB2C9             UXTB     R1,R1
+   \   0000008C   0x2900             CMP      R1,#+0
+   \   0000008E   0xD008             BEQ      ??FTM_PwmMux_13
+   \   00000090   0x2902             CMP      R1,#+2
+   \   00000092   0xD020             BEQ      ??FTM_PwmMux_14
+   \   00000094   0xD312             BCC      ??FTM_PwmMux_15
+   \   00000096   0x2904             CMP      R1,#+4
+   \   00000098   0xD033             BEQ      ??FTM_PwmMux_16
+   \   0000009A   0xD327             BCC      ??FTM_PwmMux_17
+   \   0000009C   0x2905             CMP      R1,#+5
+   \   0000009E   0xD037             BEQ      ??FTM_PwmMux_18
+   \   000000A0   0xE03D             B        ??FTM_PwmMux_19
+    108                  {
+    109                    case ch0:
+    110                      SIM->PINSEL1 &= ~SIM_PINSEL1_FTM2PS0_MASK;
+   \                     ??FTM_PwmMux_13: (+1)
+   \   000000A2   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000A4   0x6800             LDR      R0,[R0, #+0]
+   \   000000A6   0x2103             MOVS     R1,#+3
+   \   000000A8   0x4388             BICS     R0,R0,R1
+   \   000000AA   0x....             LDR      R1,??DataTable6  ;; 0x40048010
+   \   000000AC   0x6008             STR      R0,[R1, #+0]
+    111                      if(FTM2_CH0_PIN == C0)
+    112                      {
+    113                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS0(0);
+    114                      }
+    115                      else if(FTM2_CH0_PIN == H0)
+    116                      {
+    117                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS0(1);
+    118                      }
+    119                      else if(FTM2_CH0_PIN == F0)
+    120                      {
+    121                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS0(2);
+   \   000000AE   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000B0   0x6800             LDR      R0,[R0, #+0]
+   \   000000B2   0x2102             MOVS     R1,#+2
+   \   000000B4   0x4301             ORRS     R1,R1,R0
+   \   000000B6   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000B8   0x6001             STR      R1,[R0, #+0]
+    122                      }
+    123                      break;
+   \   000000BA   0xE030             B        ??FTM_PwmMux_20
+    124          
+    125                    case ch1:
+    126                      SIM->PINSEL1 &= ~SIM_PINSEL1_FTM2PS1_MASK;
+   \                     ??FTM_PwmMux_15: (+1)
+   \   000000BC   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000BE   0x6800             LDR      R0,[R0, #+0]
+   \   000000C0   0x210C             MOVS     R1,#+12
+   \   000000C2   0x4388             BICS     R0,R0,R1
+   \   000000C4   0x....             LDR      R1,??DataTable6  ;; 0x40048010
+   \   000000C6   0x6008             STR      R0,[R1, #+0]
+    127                      if(FTM2_CH1_PIN == C1)
+    128                      {
+    129                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS1(0);
+    130                      }
+    131                      else if(FTM2_CH1_PIN == H1)
+    132                      {
+    133                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS1(1);
+    134                      }
+    135                      else if(FTM2_CH1_PIN == F1)
+    136                      {
+    137                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS1(2);
+   \   000000C8   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000CA   0x6800             LDR      R0,[R0, #+0]
+   \   000000CC   0x2108             MOVS     R1,#+8
+   \   000000CE   0x4301             ORRS     R1,R1,R0
+   \   000000D0   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000D2   0x6001             STR      R1,[R0, #+0]
+    138                      }
+    139                      break;
+   \   000000D4   0xE023             B        ??FTM_PwmMux_20
+    140          
+    141                    case ch2:
+    142                      SIM->PINSEL1 &= ~SIM_PINSEL1_FTM2PS2_MASK;
+   \                     ??FTM_PwmMux_14: (+1)
+   \   000000D6   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000D8   0x6800             LDR      R0,[R0, #+0]
+   \   000000DA   0x2130             MOVS     R1,#+48
+   \   000000DC   0x4388             BICS     R0,R0,R1
+   \   000000DE   0x....             LDR      R1,??DataTable6  ;; 0x40048010
+   \   000000E0   0x6008             STR      R0,[R1, #+0]
+    143                      if(FTM2_CH2_PIN == C2)
+    144                      {
+    145                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS2(0);
+   \   000000E2   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000E4   0x6800             LDR      R0,[R0, #+0]
+   \   000000E6   0x....             LDR      R1,??DataTable6  ;; 0x40048010
+   \   000000E8   0x6008             STR      R0,[R1, #+0]
+    146                      }
+    147                      else if(FTM2_CH2_PIN == D0)
+    148                      {
+    149                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS2(1);
+    150                      }
+    151                      else if(FTM2_CH2_PIN == G4)
+    152                      {
+    153                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS2(2);
+    154                      }
+    155                      break;
+   \   000000EA   0xE018             B        ??FTM_PwmMux_20
+    156          
+    157                    case ch3:
+    158                      SIM->PINSEL1 &= ~SIM_PINSEL1_FTM2PS3_MASK;
+   \                     ??FTM_PwmMux_17: (+1)
+   \   000000EC   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000EE   0x6800             LDR      R0,[R0, #+0]
+   \   000000F0   0x21C0             MOVS     R1,#+192
+   \   000000F2   0x4388             BICS     R0,R0,R1
+   \   000000F4   0x....             LDR      R1,??DataTable6  ;; 0x40048010
+   \   000000F6   0x6008             STR      R0,[R1, #+0]
+    159                      if(FTM2_CH3_PIN == C3)
+    160                      {
+    161                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS3(0);
+   \   000000F8   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   000000FA   0x6800             LDR      R0,[R0, #+0]
+   \   000000FC   0x....             LDR      R1,??DataTable6  ;; 0x40048010
+   \   000000FE   0x6008             STR      R0,[R1, #+0]
+    162                      }
+    163                      else if(FTM2_CH3_PIN == D1)
+    164                      {
+    165                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS3(1);
+    166                      }
+    167                      else if(FTM2_CH3_PIN == G5)
+    168                      {
+    169                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS3(2);
+    170                      }
+    171                      break;
+   \   00000100   0xE00D             B        ??FTM_PwmMux_20
+    172          
+    173                    case ch4:
+    174                      if(FTM2_CH4_PIN == B4)
+    175                      {
+    176                          SIM->PINSEL1 &= ~SIM_PINSEL1_FTM2PS4_MASK;
+   \                     ??FTM_PwmMux_16: (+1)
+   \   00000102   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   00000104   0x6800             LDR      R0,[R0, #+0]
+   \   00000106   0x....             LDR      R1,??DataTable2_2  ;; 0xfffffeff
+   \   00000108   0x4001             ANDS     R1,R1,R0
+   \   0000010A   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   0000010C   0x6001             STR      R1,[R0, #+0]
+    177                      }
+    178                      else if(FTM2_CH4_PIN == G6)
+    179                      {
+    180                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS4_MASK;
+    181                      }
+    182                      break;
+   \   0000010E   0xE006             B        ??FTM_PwmMux_20
+    183          
+    184                    case ch5:
+    185                      if(FTM2_CH5_PIN == B5)
+    186                      {
+    187                          SIM->PINSEL1 &= ~SIM_PINSEL1_FTM2PS5_MASK;
+   \                     ??FTM_PwmMux_18: (+1)
+   \   00000110   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   00000112   0x6800             LDR      R0,[R0, #+0]
+   \   00000114   0x....             LDR      R1,??DataTable2_3  ;; 0xfffffdff
+   \   00000116   0x4001             ANDS     R1,R1,R0
+   \   00000118   0x....             LDR      R0,??DataTable6  ;; 0x40048010
+   \   0000011A   0x6001             STR      R1,[R0, #+0]
+    188                      }
+    189                      else if(FTM2_CH5_PIN == G7)
+    190                      {
+    191                          SIM->PINSEL1 |= SIM_PINSEL1_FTM2PS5_MASK;
+    192                      }
+    193                      break;
+   \   0000011C   0xE7FF             B        ??FTM_PwmMux_20
+    194          
+    195                    default :
+    196                      break;
+    197                  }
+    198                  break;
+   \                     ??FTM_PwmMux_19: (+1)
+   \                     ??FTM_PwmMux_20: (+1)
+   \   0000011E   0xE7FF             B        ??FTM_PwmMux_8
+    199          
+    200                default :
+    201                  break;
+    202              }
+    203          }
+   \                     ??FTM_PwmMux_3: (+1)
+   \                     ??FTM_PwmMux_8: (+1)
+   \   00000120   0xBD00             POP      {PC}             ;; return
+    204          
+    205          /**
+    206            * 简介
+    207            *     PWM初始化
+    208            * 参数
+    209            *     ftmn --- FTM模块
+    210            *       ftm0
+    211            *       ftm1
+    212            *       ftm2
+    213            *     ch --- 通道
+    214            *       ch0,
+    215            *       ch0,
+    216            *       ch1,
+    217            *       ch2,
+    218            *       ch3,
+    219            *       ch4,
+    220            *       ch5,
+    221            *     freqKhz
+    222            *       计数值 = 系统频率 / 分频系数 / 频率
+    223            *     duty --- 占空比
+    224            *       0-8000
+    225            * 备注
+    226            *     故障控制 未使能，POL未配置
+    227            */
+
+   \                                 In section .text, align 2, keep-with-next
+    228          void FTM_PwmInit(ftmX ftmn, ftmCh ch, uint8 freqKhz, uint32 duty)
+    229          {
+   \                     FTM_PwmInit: (+1)
+   \   00000000   0xB5F4             PUSH     {R2,R4-R7,LR}
+   \   00000002   0x0005             MOVS     R5,R0
+   \   00000004   0x000F             MOVS     R7,R1
+   \   00000006   0x001C             MOVS     R4,R3
+    230              uint32 clk_hz;
+    231              uint16 cv;
+    232          
+    233              FTM_PwmMux(ftmn, ch);  //开时钟，引脚复用
+   \   00000008   0x0039             MOVS     R1,R7
+   \   0000000A   0xB2C9             UXTB     R1,R1
+   \   0000000C   0x0028             MOVS     R0,R5
+   \   0000000E   0xB2C0             UXTB     R0,R0
+   \   00000010   0x.... 0x....      BL       FTM_PwmMux
+    234          
+    235              //频率
+    236              clk_hz = ftm_clk_khz*1000;
+   \   00000014   0x....             LDR      R0,??DataTable6_1
+   \   00000016   0x6800             LDR      R0,[R0, #+0]
+   \   00000018   0x21FA             MOVS     R1,#+250
+   \   0000001A   0x0089             LSLS     R1,R1,#+2        ;; #+1000
+   \   0000001C   0x4348             MULS     R0,R1,R0
+    237              g_mod = clk_hz / 1 / (freqKhz*1000);
+   \   0000001E   0x2101             MOVS     R1,#+1
+   \   00000020   0x.... 0x....      BL       __aeabi_uidiv
+   \   00000024   0x4669             MOV      R1,SP
+   \   00000026   0x7809             LDRB     R1,[R1, #+0]
+   \   00000028   0x22FA             MOVS     R2,#+250
+   \   0000002A   0x0092             LSLS     R2,R2,#+2        ;; #+1000
+   \   0000002C   0x4351             MULS     R1,R2,R1
+   \   0000002E   0x.... 0x....      BL       __aeabi_uidiv
+   \   00000032   0x....             LDR      R1,??DataTable6_2
+   \   00000034   0x8008             STRH     R0,[R1, #+0]
+    238              g_mod = g_mod - 1;
+   \   00000036   0x....             LDR      R0,??DataTable6_2
+   \   00000038   0x8800             LDRH     R0,[R0, #+0]
+   \   0000003A   0x1E40             SUBS     R0,R0,#+1
+   \   0000003C   0x....             LDR      R1,??DataTable6_2
+   \   0000003E   0x8008             STRH     R0,[R1, #+0]
+    239          
+    240              //占空比
+    241              switch (ftmn)
+   \   00000040   0xB2ED             UXTB     R5,R5
+   \   00000042   0x2D00             CMP      R5,#+0
+   \   00000044   0xD003             BEQ      ??FTM_PwmInit_0
+   \   00000046   0x2D02             CMP      R5,#+2
+   \   00000048   0xD017             BEQ      ??FTM_PwmInit_1
+   \   0000004A   0xD30B             BCC      ??FTM_PwmInit_2
+   \   0000004C   0xE020             B        ??FTM_PwmInit_3
+    242              {
+    243                case ftm0:
+    244                  cv = (duty * (g_mod + 1)) / FTM0_PRECISON;
+   \                     ??FTM_PwmInit_0: (+1)
+   \   0000004E   0x....             LDR      R0,??DataTable6_2
+   \   00000050   0x8800             LDRH     R0,[R0, #+0]
+   \   00000052   0x1C40             ADDS     R0,R0,#+1
+   \   00000054   0x4344             MULS     R4,R0,R4
+   \   00000056   0x0020             MOVS     R0,R4
+   \   00000058   0x21FA             MOVS     R1,#+250
+   \   0000005A   0x0149             LSLS     R1,R1,#+5        ;; #+8000
+   \   0000005C   0x.... 0x....      BL       __aeabi_uidiv
+   \   00000060   0x0006             MOVS     R6,R0
+    245                  break;
+   \   00000062   0xE015             B        ??FTM_PwmInit_4
+    246          
+    247                case ftm1:
+    248                  cv = (duty * (g_mod + 1)) / FTM1_PRECISON;
+   \                     ??FTM_PwmInit_2: (+1)
+   \   00000064   0x....             LDR      R0,??DataTable6_2
+   \   00000066   0x8800             LDRH     R0,[R0, #+0]
+   \   00000068   0x1C40             ADDS     R0,R0,#+1
+   \   0000006A   0x4344             MULS     R4,R0,R4
+   \   0000006C   0x0020             MOVS     R0,R4
+   \   0000006E   0x21FA             MOVS     R1,#+250
+   \   00000070   0x0149             LSLS     R1,R1,#+5        ;; #+8000
+   \   00000072   0x.... 0x....      BL       __aeabi_uidiv
+   \   00000076   0x0006             MOVS     R6,R0
+    249                  break;
+   \   00000078   0xE00A             B        ??FTM_PwmInit_4
+    250          
+    251                case ftm2:
+    252                  cv = (duty * (g_mod + 1)) / FTM2_PRECISON;//FTM2_PRECISON精度
+   \                     ??FTM_PwmInit_1: (+1)
+   \   0000007A   0x....             LDR      R0,??DataTable6_2
+   \   0000007C   0x8800             LDRH     R0,[R0, #+0]
+   \   0000007E   0x1C40             ADDS     R0,R0,#+1
+   \   00000080   0x4344             MULS     R4,R0,R4
+   \   00000082   0x0020             MOVS     R0,R4
+   \   00000084   0x21FA             MOVS     R1,#+250
+   \   00000086   0x0149             LSLS     R1,R1,#+5        ;; #+8000
+   \   00000088   0x.... 0x....      BL       __aeabi_uidiv
+   \   0000008C   0x0006             MOVS     R6,R0
+    253                  break;
+   \   0000008E   0xE7FF             B        ??FTM_PwmInit_4
+    254                default:
+    255                  break;
+    256              }
+    257          
+    258          
+    259          //    FTMX[ftmn]->MODE |= FTM_MODE_WPDIS_MASK; //关写保护
+    260          
+    261              FTMX[ftmn]->MOD = g_mod;                  //设置PWM周期
+   \                     ??FTM_PwmInit_3: (+1)
+   \                     ??FTM_PwmInit_4: (+1)
+   \   00000090   0x....             LDR      R0,??DataTable6_2
+   \   00000092   0x8800             LDRH     R0,[R0, #+0]
+   \   00000094   0x....             LDR      R1,??DataTable6_3
+   \   00000096   0xB2ED             UXTB     R5,R5
+   \   00000098   0x2204             MOVS     R2,#+4
+   \   0000009A   0x436A             MULS     R2,R5,R2
+   \   0000009C   0x5889             LDR      R1,[R1, R2]
+   \   0000009E   0x6088             STR      R0,[R1, #+8]
+    262          
+    263              //边沿对齐，匹配时输出低
+    264              FTMX[ftmn]->CONTROLS[ch].CnSC &= ~FTM_CnSC_ELSA_MASK;
+   \   000000A0   0x....             LDR      R0,??DataTable6_3
+   \   000000A2   0xB2ED             UXTB     R5,R5
+   \   000000A4   0x2104             MOVS     R1,#+4
+   \   000000A6   0x4369             MULS     R1,R5,R1
+   \   000000A8   0x5840             LDR      R0,[R0, R1]
+   \   000000AA   0xB2FF             UXTB     R7,R7
+   \   000000AC   0x2108             MOVS     R1,#+8
+   \   000000AE   0x4379             MULS     R1,R7,R1
+   \   000000B0   0x1840             ADDS     R0,R0,R1
+   \   000000B2   0x....             LDR      R1,??DataTable6_3
+   \   000000B4   0xB2ED             UXTB     R5,R5
+   \   000000B6   0x2204             MOVS     R2,#+4
+   \   000000B8   0x436A             MULS     R2,R5,R2
+   \   000000BA   0x5889             LDR      R1,[R1, R2]
+   \   000000BC   0xB2FF             UXTB     R7,R7
+   \   000000BE   0x2208             MOVS     R2,#+8
+   \   000000C0   0x437A             MULS     R2,R7,R2
+   \   000000C2   0x1889             ADDS     R1,R1,R2
+   \   000000C4   0x68C9             LDR      R1,[R1, #+12]
+   \   000000C6   0x2204             MOVS     R2,#+4
+   \   000000C8   0x4391             BICS     R1,R1,R2
+   \   000000CA   0x60C1             STR      R1,[R0, #+12]
+    265              FTMX[ftmn]->CONTROLS[ch].CnSC |= FTM_CnSC_MSB_MASK | FTM_CnSC_ELSB_MASK;
+   \   000000CC   0x....             LDR      R0,??DataTable6_3
+   \   000000CE   0xB2ED             UXTB     R5,R5
+   \   000000D0   0x2104             MOVS     R1,#+4
+   \   000000D2   0x4369             MULS     R1,R5,R1
+   \   000000D4   0x5840             LDR      R0,[R0, R1]
+   \   000000D6   0xB2FF             UXTB     R7,R7
+   \   000000D8   0x2108             MOVS     R1,#+8
+   \   000000DA   0x4379             MULS     R1,R7,R1
+   \   000000DC   0x1840             ADDS     R0,R0,R1
+   \   000000DE   0x....             LDR      R1,??DataTable6_3
+   \   000000E0   0xB2ED             UXTB     R5,R5
+   \   000000E2   0x2204             MOVS     R2,#+4
+   \   000000E4   0x436A             MULS     R2,R5,R2
+   \   000000E6   0x5889             LDR      R1,[R1, R2]
+   \   000000E8   0xB2FF             UXTB     R7,R7
+   \   000000EA   0x2208             MOVS     R2,#+8
+   \   000000EC   0x437A             MULS     R2,R7,R2
+   \   000000EE   0x1889             ADDS     R1,R1,R2
+   \   000000F0   0x68C9             LDR      R1,[R1, #+12]
+   \   000000F2   0x2228             MOVS     R2,#+40
+   \   000000F4   0x430A             ORRS     R2,R2,R1
+   \   000000F6   0x60C2             STR      R2,[R0, #+12]
+    266          
+    267              // set FTM clock to system clock
+    268              FTMX[ftmn]->SC = ( 0
+    269                                 //| FTM_SC_CPWMS_MASK       //0：边沿对齐 ，1： 中心对齐 （注释了表示 0）
+    270                                 | FTM_SC_PS(0)              //分频因子，分频系数 = 2^ps
+    271                                 | FTM_SC_CLKS(1)            //时钟选择， 0：没选择时钟，禁用； 1：系统时钟； 2：固定时钟； 3：外部时钟
+    272                                 //| FTM_SC_TOIE_MASK        //溢出中断使能（注释了表示 禁止溢出中断）
+    273                               );
+   \   000000F8   0x2008             MOVS     R0,#+8
+   \   000000FA   0x....             LDR      R1,??DataTable6_3
+   \   000000FC   0xB2ED             UXTB     R5,R5
+   \   000000FE   0x2204             MOVS     R2,#+4
+   \   00000100   0x436A             MULS     R2,R5,R2
+   \   00000102   0x5889             LDR      R1,[R1, R2]
+   \   00000104   0x6008             STR      R0,[R1, #+0]
+    274          
+    275              FTMX[ftmn]->CNTIN = 0;                         //计数器初值
+   \   00000106   0x2000             MOVS     R0,#+0
+   \   00000108   0x....             LDR      R1,??DataTable6_3
+   \   0000010A   0xB2ED             UXTB     R5,R5
+   \   0000010C   0x2204             MOVS     R2,#+4
+   \   0000010E   0x436A             MULS     R2,R5,R2
+   \   00000110   0x5889             LDR      R1,[R1, R2]
+   \   00000112   0x64C8             STR      R0,[R1, #+76]
+    276              FTMX[ftmn]->CONTROLS[ch].CnV = cv;             //设置占空比
+   \   00000114   0x....             LDR      R0,??DataTable6_3
+   \   00000116   0xB2ED             UXTB     R5,R5
+   \   00000118   0x2104             MOVS     R1,#+4
+   \   0000011A   0x4369             MULS     R1,R5,R1
+   \   0000011C   0x5840             LDR      R0,[R0, R1]
+   \   0000011E   0xB2FF             UXTB     R7,R7
+   \   00000120   0x2108             MOVS     R1,#+8
+   \   00000122   0x434F             MULS     R7,R1,R7
+   \   00000124   0x19C0             ADDS     R0,R0,R7
+   \   00000126   0xB2B6             UXTH     R6,R6
+   \   00000128   0x6106             STR      R6,[R0, #+16]
+    277              FTMX[ftmn]->CNT = 0;                           //计数器，写任意值都会加载CNTIN的值
+   \   0000012A   0x2000             MOVS     R0,#+0
+   \   0000012C   0x....             LDR      R1,??DataTable6_3
+   \   0000012E   0xB2ED             UXTB     R5,R5
+   \   00000130   0x2204             MOVS     R2,#+4
+   \   00000132   0x4355             MULS     R5,R2,R5
+   \   00000134   0x5949             LDR      R1,[R1, R5]
+   \   00000136   0x6048             STR      R0,[R1, #+4]
+    278          
+    279          //    FTMX[ftmn]->FMS |= FTM_FMS_WPEN_MASK;          //开写保护
+    280          
+    281          }
+   \   00000138   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+    282          
+    283          /**
+    284            * 简介
+    285            *     占空比修改
+    286            * 参数
+    287            *     ftmn --- 只有ftm2有效
+    288            *       ftmX0
+    289            *       ftmX1
+    290            *       ftmX2
+    291            *     ch --- 只配置了ch0和ch1
+    292            *       ch0
+    293            *       ch1
+    294            *     freqKhz
+    295            *       计数值 = 总线频率 / 分频系数 / 频率
+    296            *     duty --- 占空比
+    297            *       0-6000
+    298            */
+
+   \                                 In section .text, align 2, keep-with-next
+    299          void FTM_PwmDuty(ftmX ftmn, ftmCh ch, uint32 duty)
+    300          {
+   \                     FTM_PwmDuty: (+1)
+   \   00000000   0xB530             PUSH     {R4,R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    301              uint16 cv;
+    302          
+    303              switch (ftmn)
+   \   00000006   0xB2E4             UXTB     R4,R4
+   \   00000008   0x2C00             CMP      R4,#+0
+   \   0000000A   0xD003             BEQ      ??FTM_PwmDuty_0
+   \   0000000C   0x2C02             CMP      R4,#+2
+   \   0000000E   0xD015             BEQ      ??FTM_PwmDuty_1
+   \   00000010   0xD30A             BCC      ??FTM_PwmDuty_2
+   \   00000012   0xE01D             B        ??FTM_PwmDuty_3
+    304              {
+    305                case ftm0:
+    306                  cv = (duty * (g_mod + 1)) / FTM0_PRECISON;
+   \                     ??FTM_PwmDuty_0: (+1)
+   \   00000014   0x....             LDR      R0,??DataTable6_2
+   \   00000016   0x8800             LDRH     R0,[R0, #+0]
+   \   00000018   0x1C40             ADDS     R0,R0,#+1
+   \   0000001A   0x4342             MULS     R2,R0,R2
+   \   0000001C   0x0010             MOVS     R0,R2
+   \   0000001E   0x21FA             MOVS     R1,#+250
+   \   00000020   0x0149             LSLS     R1,R1,#+5        ;; #+8000
+   \   00000022   0x.... 0x....      BL       __aeabi_uidiv
+    307                  break;
+   \   00000026   0xE013             B        ??FTM_PwmDuty_4
+    308          
+    309                case ftm1:
+    310                  cv = (duty * (g_mod + 1)) / FTM1_PRECISON;
+   \                     ??FTM_PwmDuty_2: (+1)
+   \   00000028   0x....             LDR      R0,??DataTable6_2
+   \   0000002A   0x8800             LDRH     R0,[R0, #+0]
+   \   0000002C   0x1C40             ADDS     R0,R0,#+1
+   \   0000002E   0x4342             MULS     R2,R0,R2
+   \   00000030   0x0010             MOVS     R0,R2
+   \   00000032   0x21FA             MOVS     R1,#+250
+   \   00000034   0x0149             LSLS     R1,R1,#+5        ;; #+8000
+   \   00000036   0x.... 0x....      BL       __aeabi_uidiv
+    311                  break;
+   \   0000003A   0xE009             B        ??FTM_PwmDuty_4
+    312          
+    313                case ftm2:
+    314                  cv = (duty * (g_mod + 1)) / FTM2_PRECISON;//FTM2_PRECISON精度
+   \                     ??FTM_PwmDuty_1: (+1)
+   \   0000003C   0x....             LDR      R0,??DataTable6_2
+   \   0000003E   0x8800             LDRH     R0,[R0, #+0]
+   \   00000040   0x1C40             ADDS     R0,R0,#+1
+   \   00000042   0x4342             MULS     R2,R0,R2
+   \   00000044   0x0010             MOVS     R0,R2
+   \   00000046   0x21FA             MOVS     R1,#+250
+   \   00000048   0x0149             LSLS     R1,R1,#+5        ;; #+8000
+   \   0000004A   0x.... 0x....      BL       __aeabi_uidiv
+    315                  break;
+   \   0000004E   0xE7FF             B        ??FTM_PwmDuty_4
+    316                default:
+    317                  break;
+    318              }
+    319          
+    320              FTMX[ftmn]->CONTROLS[ch].CnV = cv;       //设置占空比
+   \                     ??FTM_PwmDuty_3: (+1)
+   \                     ??FTM_PwmDuty_4: (+1)
+   \   00000050   0x....             LDR      R1,??DataTable6_3
+   \   00000052   0xB2E4             UXTB     R4,R4
+   \   00000054   0x2204             MOVS     R2,#+4
+   \   00000056   0x4354             MULS     R4,R2,R4
+   \   00000058   0x5909             LDR      R1,[R1, R4]
+   \   0000005A   0xB2ED             UXTB     R5,R5
+   \   0000005C   0x2208             MOVS     R2,#+8
+   \   0000005E   0x4355             MULS     R5,R2,R5
+   \   00000060   0x1949             ADDS     R1,R1,R5
+   \   00000062   0xB280             UXTH     R0,R0
+   \   00000064   0x6108             STR      R0,[R1, #+16]
+    321          }
+   \   00000066   0xBD30             POP      {R4,R5,PC}       ;; return
+    322          
+    323          
+    324          /**
+    325            * 简介
+    326            *     测速引脚复用
+    327            */
+
+   \                                 In section .text, align 2, keep-with-next
+    328          void FTM_SpeedMux(ftmX ftmn)
+    329          {
+   \                     FTM_SpeedMux: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+    330              switch(ftmn)
+   \   00000002   0xB2C0             UXTB     R0,R0
+   \   00000004   0x2800             CMP      R0,#+0
+   \   00000006   0xD003             BEQ      ??FTM_SpeedMux_0
+   \   00000008   0x2802             CMP      R0,#+2
+   \   0000000A   0xD02F             BEQ      ??FTM_SpeedMux_1
+   \   0000000C   0xD317             BCC      ??FTM_SpeedMux_2
+   \   0000000E   0xE043             B        ??FTM_SpeedMux_3
+    331              {
+    332                  case ftm0:
+    333                  {
+    334                      SIM->SCGC |= SIM_SCGC_FTM0_MASK;                //开时钟
+   \                     ??FTM_SpeedMux_0: (+1)
+   \   00000010   0x....             LDR      R0,??DataTable6_4  ;; 0x40048014
+   \   00000012   0x6800             LDR      R0,[R0, #+0]
+   \   00000014   0x2120             MOVS     R1,#+32
+   \   00000016   0x4301             ORRS     R1,R1,R0
+   \   00000018   0x....             LDR      R0,??DataTable6_4  ;; 0x40048014
+   \   0000001A   0x6001             STR      R1,[R0, #+0]
+    335                      SIM->PINSEL &= ~SIM_PINSEL_FTM0CLKPS_MASK;
+   \   0000001C   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   0000001E   0x6800             LDR      R0,[R0, #+0]
+   \   00000020   0x....             LDR      R1,??DataTable6_6  ;; 0xfcffffff
+   \   00000022   0x4001             ANDS     R1,R1,R0
+   \   00000024   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   00000026   0x6001             STR      R1,[R0, #+0]
+    336                      if(FTM0_COUNT_PIN == A5)
+    337                      {
+    338                          prot_pull(A5);
+    339                          SIM->PINSEL |= SIM_PINSEL_FTM0CLKPS(0);     //选择外部时钟输入引脚 A5
+    340                      }
+    341          
+    342                      else if(FTM0_COUNT_PIN == E0)
+    343                      {
+    344                          prot_pull(E0);
+    345                          SIM->PINSEL |= SIM_PINSEL_FTM0CLKPS(1);     //选择外部时钟输入引脚 E0
+    346                      }
+    347          
+    348                      else if(FTM0_COUNT_PIN == E7)
+    349                      {
+    350                          prot_pull(E7);
+   \   00000028   0x2027             MOVS     R0,#+39
+   \   0000002A   0x.... 0x....      BL       prot_pull
+    351                          SIM->PINSEL |= SIM_PINSEL_FTM0CLKPS(2);     //选择外部时钟输入引脚 E7
+   \   0000002E   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   00000030   0x6800             LDR      R0,[R0, #+0]
+   \   00000032   0x2180             MOVS     R1,#+128
+   \   00000034   0x0489             LSLS     R1,R1,#+18       ;; #+33554432
+   \   00000036   0x4301             ORRS     R1,R1,R0
+   \   00000038   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   0000003A   0x6001             STR      R1,[R0, #+0]
+    352                      }
+    353                  }break;
+   \   0000003C   0xE02C             B        ??FTM_SpeedMux_3
+    354          
+    355                  case ftm1:
+    356                  {
+    357                      SIM->SCGC |= SIM_SCGC_FTM1_MASK;                //开启FTM外设时钟
+   \                     ??FTM_SpeedMux_2: (+1)
+   \   0000003E   0x....             LDR      R0,??DataTable6_4  ;; 0x40048014
+   \   00000040   0x6800             LDR      R0,[R0, #+0]
+   \   00000042   0x2140             MOVS     R1,#+64
+   \   00000044   0x4301             ORRS     R1,R1,R0
+   \   00000046   0x....             LDR      R0,??DataTable6_4  ;; 0x40048014
+   \   00000048   0x6001             STR      R1,[R0, #+0]
+    358                      SIM->PINSEL &= ~SIM_PINSEL_FTM1CLKPS_MASK;      //清除外部时钟引脚选择
+   \   0000004A   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   0000004C   0x6800             LDR      R0,[R0, #+0]
+   \   0000004E   0x....             LDR      R1,??DataTable6_7  ;; 0xf3ffffff
+   \   00000050   0x4001             ANDS     R1,R1,R0
+   \   00000052   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   00000054   0x6001             STR      R1,[R0, #+0]
+    359                      if(FTM1_COUNT_PIN == A5)
+    360                      {
+    361                          prot_pull(A5);
+    362                          SIM->PINSEL |= SIM_PINSEL_FTM1CLKPS(0);     //选择外部时钟输入引脚 A5
+    363                      }
+    364          
+    365                      else if(FTM1_COUNT_PIN == E0)
+    366                      {
+    367                          prot_pull(E0);
+   \   00000056   0x2020             MOVS     R0,#+32
+   \   00000058   0x.... 0x....      BL       prot_pull
+    368                          SIM->PINSEL |= SIM_PINSEL_FTM1CLKPS(1);     //选择外部时钟输入引脚 E0
+   \   0000005C   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   0000005E   0x6800             LDR      R0,[R0, #+0]
+   \   00000060   0x2180             MOVS     R1,#+128
+   \   00000062   0x04C9             LSLS     R1,R1,#+19       ;; #+67108864
+   \   00000064   0x4301             ORRS     R1,R1,R0
+   \   00000066   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   00000068   0x6001             STR      R1,[R0, #+0]
+    369                      }
+    370          
+    371                      else if(FTM1_COUNT_PIN == E7)
+    372                      {
+    373                          prot_pull(E7);
+    374                          SIM->PINSEL |= SIM_PINSEL_FTM1CLKPS(2);     //选择外部时钟输入引脚 E7
+    375                      }
+    376                  }break;
+   \   0000006A   0xE015             B        ??FTM_SpeedMux_3
+    377          
+    378                  case ftm2:
+    379                  {
+    380                      SIM->SCGC |= SIM_SCGC_FTM2_MASK;                //开启FTM外设时钟
+   \                     ??FTM_SpeedMux_1: (+1)
+   \   0000006C   0x....             LDR      R0,??DataTable6_4  ;; 0x40048014
+   \   0000006E   0x6800             LDR      R0,[R0, #+0]
+   \   00000070   0x2180             MOVS     R1,#+128
+   \   00000072   0x4301             ORRS     R1,R1,R0
+   \   00000074   0x....             LDR      R0,??DataTable6_4  ;; 0x40048014
+   \   00000076   0x6001             STR      R1,[R0, #+0]
+    381                      SIM->PINSEL &= ~SIM_PINSEL_FTM2CLKPS_MASK;      //清除外部时钟引脚选择
+   \   00000078   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   0000007A   0x6800             LDR      R0,[R0, #+0]
+   \   0000007C   0x....             LDR      R1,??DataTable6_8  ;; 0xcfffffff
+   \   0000007E   0x4001             ANDS     R1,R1,R0
+   \   00000080   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   00000082   0x6001             STR      R1,[R0, #+0]
+    382                      FTM2->CNTIN = 0;
+   \   00000084   0x2000             MOVS     R0,#+0
+   \   00000086   0x....             LDR      R1,??DataTable6_9  ;; 0x4003a04c
+   \   00000088   0x6008             STR      R0,[R1, #+0]
+    383                      if(FTM2_COUNT_PIN == A5)
+    384                      {
+    385                          prot_pull(A5);
+   \   0000008A   0x2005             MOVS     R0,#+5
+   \   0000008C   0x.... 0x....      BL       prot_pull
+    386                          SIM->PINSEL |= SIM_PINSEL_FTM2CLKPS(0);     //选择外部时钟输入引脚 A5
+   \   00000090   0x....             LDR      R0,??DataTable6_5  ;; 0x4004800c
+   \   00000092   0x6800             LDR      R0,[R0, #+0]
+   \   00000094   0x....             LDR      R1,??DataTable6_5  ;; 0x4004800c
+   \   00000096   0x6008             STR      R0,[R1, #+0]
+    387                      }
+    388          
+    389                      else if(FTM2_COUNT_PIN == E0)
+    390                      {
+    391                          prot_pull(E0);
+    392                          SIM->PINSEL |= SIM_PINSEL_FTM2CLKPS(1);     //选择外部时钟输入引脚 E0
+    393                      }
+    394          
+    395                      else if(FTM2_COUNT_PIN == E7)
+    396                      {
+    397                          prot_pull(E7);
+    398                          SIM->PINSEL |= SIM_PINSEL_FTM2CLKPS(2);     //选择外部时钟输入引脚 E7
+    399                      }
+    400                  }break;
+    401          
+    402              }
+    403          }
+   \                     ??FTM_SpeedMux_3: (+1)
+   \   00000098   0xBD01             POP      {R0,PC}          ;; return
+    404          
+    405          /**
+    406            * 简介
+    407            *     测速初始化
+    408            * 参数
+    409            *     ftmn --- FTM模块
+    410            *       ftm0
+    411            *       ftm1
+    412            *       ftm2
+    413            */
+
+   \                                 In section .text, align 2, keep-with-next
+    414          void FTM_SpeedInit(ftmX ftmn)
+    415          {
+   \                     FTM_SpeedInit: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    416              FTM_SpeedMux(ftmn);                                    //引脚复用 开启上拉 开启对应外设时钟
+   \   00000004   0x0020             MOVS     R0,R4
+   \   00000006   0xB2C0             UXTB     R0,R0
+   \   00000008   0x.... 0x....      BL       FTM_SpeedMux
+    417          
+    418              FTMX[ftmn]->SC |= FTM_SC_PS(0);	                        //分频系数
+   \   0000000C   0x....             LDR      R0,??DataTable6_3
+   \   0000000E   0xB2E4             UXTB     R4,R4
+   \   00000010   0x2104             MOVS     R1,#+4
+   \   00000012   0x4361             MULS     R1,R4,R1
+   \   00000014   0x5840             LDR      R0,[R0, R1]
+   \   00000016   0x6800             LDR      R0,[R0, #+0]
+   \   00000018   0x....             LDR      R1,??DataTable6_3
+   \   0000001A   0xB2E4             UXTB     R4,R4
+   \   0000001C   0x2204             MOVS     R2,#+4
+   \   0000001E   0x4362             MULS     R2,R4,R2
+   \   00000020   0x5889             LDR      R1,[R1, R2]
+   \   00000022   0x6008             STR      R0,[R1, #+0]
+    419              FTMX[ftmn]->SC |= FTM_SC_CLKS(3);                       //选择外部时钟作为FTM输入时钟
+   \   00000024   0x....             LDR      R0,??DataTable6_3
+   \   00000026   0xB2E4             UXTB     R4,R4
+   \   00000028   0x2104             MOVS     R1,#+4
+   \   0000002A   0x4361             MULS     R1,R4,R1
+   \   0000002C   0x5840             LDR      R0,[R0, R1]
+   \   0000002E   0x6800             LDR      R0,[R0, #+0]
+   \   00000030   0x2118             MOVS     R1,#+24
+   \   00000032   0x4301             ORRS     R1,R1,R0
+   \   00000034   0x....             LDR      R0,??DataTable6_3
+   \   00000036   0xB2E4             UXTB     R4,R4
+   \   00000038   0x2204             MOVS     R2,#+4
+   \   0000003A   0x4362             MULS     R2,R4,R2
+   \   0000003C   0x5880             LDR      R0,[R0, R2]
+   \   0000003E   0x6001             STR      R1,[R0, #+0]
+    420          
+    421              FTMX[ftmn]->CNT = 0;                                    //加载初始化值
+   \   00000040   0x2000             MOVS     R0,#+0
+   \   00000042   0x....             LDR      R1,??DataTable6_3
+   \   00000044   0xB2E4             UXTB     R4,R4
+   \   00000046   0x2204             MOVS     R2,#+4
+   \   00000048   0x4354             MULS     R4,R2,R4
+   \   0000004A   0x5909             LDR      R1,[R1, R4]
+   \   0000004C   0x6048             STR      R0,[R1, #+4]
+    422          }
+   \   0000004E   0xBD10             POP      {R4,PC}          ;; return
+    423          
+    424          /**
+    425            * 简介
+    426            *     获取速度值
+    427            */
+
+   \                                 In section .text, align 2, keep-with-next
+    428          uint16 FTM_SpeedGet(ftmX ftmn)
+    429          {
+    430              return FTMX[ftmn]->CNT ;
+   \                     FTM_SpeedGet: (+1)
+   \   00000000   0x....             LDR      R1,??DataTable6_3
+   \   00000002   0xB2C0             UXTB     R0,R0
+   \   00000004   0x2204             MOVS     R2,#+4
+   \   00000006   0x4350             MULS     R0,R2,R0
+   \   00000008   0x5808             LDR      R0,[R1, R0]
+   \   0000000A   0x6840             LDR      R0,[R0, #+4]
+   \   0000000C   0xB280             UXTH     R0,R0
+   \   0000000E   0x4770             BX       LR               ;; return
+    431          }
+    432          
+    433          /**
+    434            * 简介
+    435            *     测速 计数清0
+    436            */
+
+   \                                 In section .text, align 2, keep-with-next
+    437          void FTM_CountClean(ftmX ftmn)
+    438          {
+    439              FTMX[ftmn]->CNT = 0;
+   \                     FTM_CountClean: (+1)
+   \   00000000   0x2100             MOVS     R1,#+0
+   \   00000002   0x....             LDR      R2,??DataTable6_3
+   \   00000004   0xB2C0             UXTB     R0,R0
+   \   00000006   0x2304             MOVS     R3,#+4
+   \   00000008   0x4358             MULS     R0,R3,R0
+   \   0000000A   0x5810             LDR      R0,[R2, R0]
+   \   0000000C   0x6041             STR      R1,[R0, #+4]
+    440          }
+   \   0000000E   0x4770             BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x40048014         DC32     0x40048014
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0x4004800C         DC32     0x4004800c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \   00000000   0xFFFFFEFF         DC32     0xfffffeff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_3:
+   \   00000000   0xFFFFFDFF         DC32     0xfffffdff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_4:
+   \   00000000   0xFFFFF7FF         DC32     0xfffff7ff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6:
+   \   00000000   0x40048010         DC32     0x40048010
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_1:
+   \   00000000   0x........         DC32     ftm_clk_khz
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_2:
+   \   00000000   0x........         DC32     g_mod
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_3:
+   \   00000000   0x........         DC32     FTMX
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_4:
+   \   00000000   0x40048014         DC32     0x40048014
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_5:
+   \   00000000   0x4004800C         DC32     0x4004800c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_6:
+   \   00000000   0xFCFFFFFF         DC32     0xfcffffff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_7:
+   \   00000000   0xF3FFFFFF         DC32     0xf3ffffff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_8:
+   \   00000000   0xCFFFFFFF         DC32     0xcfffffff
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_9:
+   \   00000000   0x4003A04C         DC32     0x4003a04c
+    441          
+    442          
+    443          
+    444          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   FTM_CountClean
+      12   FTM_PwmDuty
+        12 __aeabi_uidiv
+      24   FTM_PwmInit
+        24   -> FTM_PwmMux
+        24 __aeabi_uidiv
+       4   FTM_PwmMux
+       0   FTM_SpeedGet
+       8   FTM_SpeedInit
+         8   -> FTM_SpeedMux
+       8   FTM_SpeedMux
+         8   -> prot_pull
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_2
+       4  ??DataTable2_3
+       4  ??DataTable2_4
+       4  ??DataTable6
+       4  ??DataTable6_1
+       4  ??DataTable6_2
+       4  ??DataTable6_3
+       4  ??DataTable6_4
+       4  ??DataTable6_5
+       4  ??DataTable6_6
+       4  ??DataTable6_7
+       4  ??DataTable6_8
+       4  ??DataTable6_9
+      12  FTMX
+      16  FTM_CountClean
+     104  FTM_PwmDuty
+     314  FTM_PwmInit
+     290  FTM_PwmMux
+      16  FTM_SpeedGet
+      80  FTM_SpeedInit
+     154  FTM_SpeedMux
+       2  g_mod
+
+ 
+     2 bytes in section .bss
+    12 bytes in section .rodata
+ 1 034 bytes in section .text
+ 
+ 1 034 bytes of CODE  memory
+    12 bytes of CONST memory
+     2 bytes of DATA  memory
+
+Errors: none
+Warnings: none

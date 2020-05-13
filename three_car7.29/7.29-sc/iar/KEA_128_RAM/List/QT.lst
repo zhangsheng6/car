@@ -1,0 +1,275 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.30.3.8024/W32 for ARM        17/Jul/2018  09:40:44
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\QT.c
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\QT.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -lB
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\ -o
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config H:\IAR7.3\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\device\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\user\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\lib\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\..\system\coreSupport\ -Ol
+#    List file    =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\List\QT.lst
+#    Object file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\7.17\iar\KEA_128_RAM\Obj\QT.o
+#
+###############################################################################
+
+H:\智能车程序2018\电磁三轮——ZS\7.17\device\C\QT.c
+      1          
+      2          #include "Variable.h"
+      3          #include "common.h"
+      4          #include "allHead.h"
+
+   \                                 In section .bss, align 1
+      5          uint8 chice = 0;    //按键使用
+   \                     chice:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+      6          uint8 c=0;
+   \                     c:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+      7          uint8 cars=0;
+   \                     cars:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+      8          uint8 sure=0;
+   \                     sure:
+   \   00000000                      DS8 1
+      9          
+     10          
+     11          /**
+     12            * 简介
+     13            *     无对应模块的IO口初始化函数
+     14            * 注意
+     15            */
+
+   \                                 In section .text, align 2, keep-with-next
+     16          void IoInit()
+     17          {
+   \                     IoInit: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     18              //指示灯
+     19              GpioInit(LED_0, GPO, 1);
+   \   00000002   0x2201             MOVS     R2,#+1
+   \   00000004   0x2101             MOVS     R1,#+1
+   \   00000006   0x2030             MOVS     R0,#+48
+   \   00000008   0x.... 0x....      BL       GpioInit
+     20              GpioInit(LED_1, GPO, 1);
+   \   0000000C   0x2201             MOVS     R2,#+1
+   \   0000000E   0x2101             MOVS     R1,#+1
+   \   00000010   0x2031             MOVS     R0,#+49
+   \   00000012   0x.... 0x....      BL       GpioInit
+     21              GpioInit(LED_2, GPO, 1);
+   \   00000016   0x2201             MOVS     R2,#+1
+   \   00000018   0x2101             MOVS     R1,#+1
+   \   0000001A   0x2032             MOVS     R0,#+50
+   \   0000001C   0x.... 0x....      BL       GpioInit
+     22              GpioInit(LED_3, GPO, 1);
+   \   00000020   0x2201             MOVS     R2,#+1
+   \   00000022   0x2101             MOVS     R1,#+1
+   \   00000024   0x2033             MOVS     R0,#+51
+   \   00000026   0x.... 0x....      BL       GpioInit
+     23          
+     24              //蜂鸣器
+     25              GpioInit(BUZZER, GPO, 0);
+   \   0000002A   0x2200             MOVS     R2,#+0
+   \   0000002C   0x2101             MOVS     R1,#+1
+   \   0000002E   0x2018             MOVS     R0,#+24
+   \   00000030   0x.... 0x....      BL       GpioInit
+     26          
+     27              //电机方向
+     28              GpioInit(ENL_L, GPO, 0);
+   \   00000034   0x2200             MOVS     R2,#+0
+   \   00000036   0x2101             MOVS     R1,#+1
+   \   00000038   0x201C             MOVS     R0,#+28
+   \   0000003A   0x.... 0x....      BL       GpioInit
+     29              GpioInit(ENL_R, GPO, 0);
+   \   0000003E   0x2200             MOVS     R2,#+0
+   \   00000040   0x2101             MOVS     R1,#+1
+   \   00000042   0x2024             MOVS     R0,#+36
+   \   00000044   0x.... 0x....      BL       GpioInit
+     30              GpioInit(ENR_L, GPO, 0);
+   \   00000048   0x2200             MOVS     R2,#+0
+   \   0000004A   0x2101             MOVS     R1,#+1
+   \   0000004C   0x202A             MOVS     R0,#+42
+   \   0000004E   0x.... 0x....      BL       GpioInit
+     31              GpioInit(ENR_R, GPO, 0);
+   \   00000052   0x2200             MOVS     R2,#+0
+   \   00000054   0x2101             MOVS     R1,#+1
+   \   00000056   0x201A             MOVS     R0,#+26
+   \   00000058   0x.... 0x....      BL       GpioInit
+     32          
+     33              //测方向
+     34              GpioInit(DIR_L, GPI, 0);
+   \   0000005C   0x2200             MOVS     R2,#+0
+   \   0000005E   0x2100             MOVS     R1,#+0
+   \   00000060   0x2023             MOVS     R0,#+35
+   \   00000062   0x.... 0x....      BL       GpioInit
+     35              GpioInit(DIR_R, GPI, 0);
+   \   00000066   0x2200             MOVS     R2,#+0
+   \   00000068   0x2100             MOVS     R1,#+0
+   \   0000006A   0x2021             MOVS     R0,#+33
+   \   0000006C   0x.... 0x....      BL       GpioInit
+     36          }
+   \   00000070   0xBD01             POP      {R0,PC}          ;; return
+     37          
+     38          
+     39          /**
+     40            * 简介
+     41            *     小车状态设置
+     42            * 注意
+     43            */
+     44          
+     45          //void PlanSet(void)
+     46          //{
+     47          //    if(c==1)
+     48          //    {
+     49          //      c=0;
+     50          //      cars++;
+     51          //      sure=1;
+     52          //    }
+     53          //    
+     54          //    if(sure==1)
+     55          //    {
+     56          //      sure=0;
+     57          //      
+     58          //      if(cars/2==0)//车开
+     59          //      {
+     60          //         ENABLE_INTERRUPTS;  //开总中断
+     61          //         OLED_MenuFlicker();//速度控制改参数显示菜单
+     62          //         LED_3_TURN;
+     63          //      }
+     64          //    
+     65          //      if(cars/2==1)//车开
+     66          //      {
+     67          //        locking_L;
+     68          //        locking_R;
+     69          //        PIT_DisableIrq();//关 PIT 中断
+     70          //        OLED_MenuFlicker();//速度控制改参数显示菜单
+     71          //        menuSelect = LOGO;
+     72          //        OLED_MenuFlicker();
+     73          //      }
+     74          //    }
+     75          //    
+     76          //    
+     77          //
+     78          ////    
+     79          // }
+     80          //    
+     81              
+
+   \                                 In section .text, align 2, keep-with-next
+     82          void PlanSet(void)
+     83          {
+   \                     PlanSet: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     84              switch (carStatus)
+   \   00000002   0x....             LDR      R0,??DataTable0
+   \   00000004   0x7800             LDRB     R0,[R0, #+0]
+   \   00000006   0x2800             CMP      R0,#+0
+   \   00000008   0xD002             BEQ      ??PlanSet_0
+   \   0000000A   0x2801             CMP      R0,#+1
+   \   0000000C   0xD001             BEQ      ??PlanSet_1
+   \   0000000E   0xE018             B        ??PlanSet_2
+     85              {
+     86              case NORMAL:
+     87                  break;
+   \                     ??PlanSet_0: (+1)
+   \   00000010   0xE017             B        ??PlanSet_3
+     88          
+     89              case STOP:
+     90                  locking_L;
+   \                     ??PlanSet_1: (+1)
+   \   00000012   0x2100             MOVS     R1,#+0
+   \   00000014   0x202A             MOVS     R0,#+42
+   \   00000016   0x.... 0x....      BL       GpioSet
+   \   0000001A   0x2100             MOVS     R1,#+0
+   \   0000001C   0x201A             MOVS     R0,#+26
+   \   0000001E   0x.... 0x....      BL       GpioSet
+     91                  locking_R;
+   \   00000022   0x2100             MOVS     R1,#+0
+   \   00000024   0x2024             MOVS     R0,#+36
+   \   00000026   0x.... 0x....      BL       GpioSet
+   \   0000002A   0x2100             MOVS     R1,#+0
+   \   0000002C   0x201C             MOVS     R0,#+28
+   \   0000002E   0x.... 0x....      BL       GpioSet
+     92          //        BUZZER_ON;
+     93                  PIT_DisableIrq();//关 PIT 中断
+   \   00000032   0x.... 0x....      BL       PIT_DisableIrq
+     94          
+     95                  menuSelect = LOGO;
+   \   00000036   0x2000             MOVS     R0,#+0
+   \   00000038   0x....             LDR      R1,??DataTable0_1
+   \   0000003A   0x7008             STRB     R0,[R1, #+0]
+     96                  OLED_MenuFlicker();
+   \   0000003C   0x.... 0x....      BL       OLED_MenuFlicker
+     97                  break;
+   \   00000040   0xE7FF             B        ??PlanSet_3
+     98          
+     99              default :
+    100                  break;
+    101              }
+    102          }
+   \                     ??PlanSet_2: (+1)
+   \                     ??PlanSet_3: (+1)
+   \   00000042   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \   00000000   0x........         DC32     carStatus
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0_1:
+   \   00000000   0x........         DC32     menuSelect
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   IoInit
+         8   -> GpioInit
+       8   PlanSet
+         8   -> GpioSet
+         8   -> OLED_MenuFlicker
+         8   -> PIT_DisableIrq
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable0
+       4  ??DataTable0_1
+     114  IoInit
+      68  PlanSet
+       1  c
+       1  cars
+       1  chice
+       1  sure
+
+ 
+   4 bytes in section .bss
+ 190 bytes in section .text
+ 
+ 190 bytes of CODE memory
+   4 bytes of DATA memory
+
+Errors: none
+Warnings: none

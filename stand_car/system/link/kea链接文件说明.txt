@@ -1,0 +1,117 @@
+/**
+  **************************************************************************
+  * 时间
+  *     2017年12月23日 21:00:04
+  * 说明
+  *     为防止对源文件进行误操作，在此处进行说明
+  *     只是将 KEA128.icf 文件内容copy了过来 --- han
+  **************************************************************************
+  */
+
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__ = 0x00000000;	 //向量表的起始地址
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = 0x00000000; //ROM起始地址
+define symbol __ICFEDIT_region_ROM_end__   = 0x0001ffff; //ROM结束地址
+define symbol __ICFEDIT_region_RAM_start__ = 0x1ffff000; //RAM起始地址
+define symbol __ICFEDIT_region_RAM_end__   = 0x20002FFF; //RAM结束地址
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 0x100;           //栈的大小
+define symbol __ICFEDIT_size_heap__   = 0x100;   		 //堆的大小
+/**** End of ICF editor section. ###ICF###*/
+
+/*SRAM_U 从 0x2000,0000 到 0x2000,2fff 共12KB;*/
+define symbol __region_RAM2_start__ 		= 0x20000000;
+define symbol __region_RAM2_end__ 			= 0x20002fff;
+
+define symbol __FlashConfig_start__			= 0x00000400;
+define symbol __FlashConfig_end__   		= 0x0000040f;
+
+/*分配4G的寻址空间*/
+define memory mem with size = 4G;						 //芯片大小
+define region ROM_region = mem:[from __ICFEDIT_region_ROM_start__ to (__FlashConfig_start__ - 1)] | mem:[from (__FlashConfig_end__+1)  to __ICFEDIT_region_ROM_end__];
+define region RAM_region = mem:[from __ICFEDIT_region_RAM_start__ to  __ICFEDIT_region_RAM_end__] | mem:[from __region_RAM2_start__ to __region_RAM2_end__];
+
+/*设置堆栈的大小 8字节对齐*/
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+define region FlashConfig_region = mem:[from __FlashConfig_start__ to __FlashConfig_end__];
+
+initialize by copy { readwrite };		 //启动时将RW数据搬到ROM
+do not initialize  { section .noinit };
+
+/*将中断向量表起始地址放在 只读段.intvec，也就是对应ROM区的起始地址0x00000000*/
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
+
+/*定义代码执行地址为 0x0000000*/
+place in FlashConfig_region {section FlashConfig};
+
+/*将编译后的只读readonly变量，和CodeRelocate块存到ROM区中，编译器动态分配*/
+place in ROM_region   { readonly };
+
+/*将编译后的可读可写readwrite变量，和CodeRelocateRam块一节堆和栈存到RAM区中，编译器动态分配*/
+place in RAM_region   { readwrite, block CSTACK, block HEAP };
+
+
+/**
+  **************************************************************************
+  * 时间
+  *     2018年1月4日 15:30:28
+  * 说明
+  *     为防止对源文件进行误操作，在此处进行说明
+  *     只是将 KEA128_RAM.icf 文件内容copy了过来 --- han
+  **************************************************************************
+  */
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__ = 0x1ffff000;//中断向量的起始地址为RAM的首地址
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = 0x0;
+define symbol __ICFEDIT_region_ROM_end__   = 0x0;   //将ROM空间置零
+define symbol __ICFEDIT_region_RAM_start__ = 0x1ffff000;
+define symbol __ICFEDIT_region_RAM_end__   = 0x20002FFF;
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 0x100;
+define symbol __ICFEDIT_size_heap__   = 0x100;
+/**** End of ICF editor section. ###ICF###*/
+
+define symbol __region_RAM2_start__ = 0x20000000;
+define symbol __region_RAM2_end__ = 0x20010000;
+
+define exported symbol __VECTOR_TABLE = 0x1fff0000;//中断向量表放在RAM区首地址
+define exported symbol __VECTOR_RAM = 0x1fff0000;
+
+define exported symbol __BOOT_STACK_ADDRESS = __region_RAM2_end__ - 8;	//0x2000FFF8;
+
+define symbol __code_start__ = 0x1fff0410;//代码起始地址
+
+define memory mem with size = 4G;
+define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
+define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__] | mem:[from __region_RAM2_start__ to __region_RAM2_end__];
+
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+initialize manually { readwrite };
+initialize manually { section .data};
+initialize manually { section .textrw };
+do not initialize  { section .noinit };
+
+define block CodeRelocate { section .textrw_init };
+define block CodeRelocateRam { section .textrw };
+
+
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
+place at address mem:__code_start__ { readonly section .noinit };
+
+place in RAM_region   { readonly, block CodeRelocate };//将只读代码放到RAM区
+
+place in RAM_region   { readwrite, block CodeRelocateRam,
+                        block CSTACK, block HEAP };
+

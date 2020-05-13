@@ -1,0 +1,220 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.40.2.8542/W32 for ARM        01/May/2018  16:13:21
+# Copyright 1999-2015 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  H:\智能车程序2018\电磁三轮——ZS\5.1\lib\C\KEA128_adc.c
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\lib\C\KEA128_adc.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_FLASH\List\ -lB
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_FLASH\List\ -o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_FLASH\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config F:\IAR安装包\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\device\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\user\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\system\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\lib\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\system\coreSupport\ -On
+#    List file    =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_FLASH\List\KEA128_adc.lst
+#    Object file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_FLASH\Obj\KEA128_adc.o
+#
+###############################################################################
+
+H:\智能车程序2018\电磁三轮——ZS\5.1\lib\C\KEA128_adc.c
+      1          /*********************************************************************************************************************
+      2           * COPYRIGHT NOTICE
+      3           * Copyright (c) 2017,逐飞科技
+      4           * All rights reserved.
+      5           * 技术讨论QQ群：179029047
+      6           *
+      7           * 以下所有内容版权均属逐飞科技所有，未经允许不得用于商业用途，
+      8           * 欢迎各位使用并传播本程序，修改内容时必须保留逐飞科技的版权声明。
+      9           *
+     10           * @file       		KEA128_adc
+     11           * @company	   		成都逐飞科技有限公司
+     12           * @author     		逐飞科技(QQ3184284598)
+     13           * @version    		v2.0
+     14           * @Software 		IAR 7.7 or MDK 5.23
+     15           * @Target core		S9KEA128AMLK
+     16           * @Taobao   		https://seekfree.taobao.com/
+     17           * @date       		2017-11-6
+     18           ********************************************************************************************************************/
+     19          
+     20          
+     21          #include "KEA128_adc.h"
+     22          
+     23          
+     24          
+     25          
+     26          //-------------------------------------------------------------------------------------------------------------------
+     27          //  @brief      ADC初始化
+     28          //  @param      adcn_ch         选择ADC通道
+     29          //  @return     void
+     30          //  @since      v2.0
+     31          //  Sample usage:               adc_init(ADC0_SE8);
+     32          //-------------------------------------------------------------------------------------------------------------------
+
+   \                                 In section .text, align 2, keep-with-next
+     33          void adc_init(ADCn_Ch adcn_ch)
+     34          {
+     35              SIM->SCGC |= SIM_SCGC_ADC_MASK;         //开启ADC时钟
+   \                     adc_init: (+1)
+   \   00000000   0x....             LDR      R1,??DataTable2  ;; 0x40048014
+   \   00000002   0x6809             LDR      R1,[R1, #+0]
+   \   00000004   0x2280             MOVS     R2,#+128
+   \   00000006   0x0592             LSLS     R2,R2,#+22       ;; #+536870912
+   \   00000008   0x430A             ORRS     R2,R2,R1
+   \   0000000A   0x....             LDR      R1,??DataTable2  ;; 0x40048014
+   \   0000000C   0x600A             STR      R2,[R1, #+0]
+     36              
+     37              ADC->APCTL1 |= 1<<adcn_ch;              //使能ADC引脚
+   \   0000000E   0x....             LDR      R1,??DataTable2_1  ;; 0x4003b018
+   \   00000010   0x6809             LDR      R1,[R1, #+0]
+   \   00000012   0x2201             MOVS     R2,#+1
+   \   00000014   0x4082             LSLS     R2,R2,R0
+   \   00000016   0x430A             ORRS     R2,R2,R1
+   \   00000018   0x....             LDR      R1,??DataTable2_1  ;; 0x4003b018
+   \   0000001A   0x600A             STR      R2,[R1, #+0]
+     38          }
+   \   0000001C   0x4770             BX       LR               ;; return
+     39          
+     40          
+     41          //-------------------------------------------------------------------------------------------------------------------
+     42          //  @brief      ADC采集
+     43          //  @param      adcn_ch         选择ADC通道
+     44          //  @param      bit             选择精度ADC_8bit、ADC_10bit、ADC_12bit
+     45          //  @return     void
+     46          //  @since      v2.0
+     47          //  Sample usage:               uint16 dat = adc_once(ADC0_SE8,ADC_12bit);//采集ADC0_SE8电压，精度12位
+     48          //-------------------------------------------------------------------------------------------------------------------
+
+   \                                 In section .text, align 2, keep-with-next
+     49          uint16 adc_once(ADCn_Ch adcn_ch, ADC_nbit bit)
+     50          {
+   \                     adc_once: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0002             MOVS     R2,R0
+     51              uint16 result;
+     52              ADC->SC3 = (0
+     53                          | ADC_SC3_ADIV(0)           //分频系数
+     54                          | ADC_SC3_MODE(bit)         //分辨率
+     55                          | ADC_SC3_ADICLK(0)         //使用总线时钟最为ADC得时钟源
+     56                          );
+   \   00000004   0xB2C9             UXTB     R1,R1
+   \   00000006   0x008B             LSLS     R3,R1,#+2
+   \   00000008   0x240C             MOVS     R4,#+12
+   \   0000000A   0x401C             ANDS     R4,R4,R3
+   \   0000000C   0x....             LDR      R3,??DataTable2_2  ;; 0x4003b008
+   \   0000000E   0x601C             STR      R4,[R3, #+0]
+     57                  
+     58              
+     59              ADC->SC2 = ADC_SC2_REFSEL(0);           //基准电压选择
+   \   00000010   0x2300             MOVS     R3,#+0
+   \   00000012   0x....             LDR      R4,??DataTable2_3  ;; 0x4003b004
+   \   00000014   0x6023             STR      R3,[R4, #+0]
+     60          
+     61              ADC->SC1 = ADC_SC1_ADCH(adcn_ch);       //启动转换
+   \   00000016   0xB2D2             UXTB     R2,R2
+   \   00000018   0x06D3             LSLS     R3,R2,#+27       ;; ZeroExtS R3,R2,#+27,#+27
+   \   0000001A   0x0EDB             LSRS     R3,R3,#+27
+   \   0000001C   0x....             LDR      R4,??DataTable2_4  ;; 0x4003b000
+   \   0000001E   0x6023             STR      R3,[R4, #+0]
+     62              
+     63              while(!(ADC->SC1 & ADC_SC1_COCO_MASK)); //等待转换完成
+   \                     ??adc_once_0: (+1)
+   \   00000020   0x....             LDR      R3,??DataTable2_4  ;; 0x4003b000
+   \   00000022   0x681B             LDR      R3,[R3, #+0]
+   \   00000024   0x061B             LSLS     R3,R3,#+24
+   \   00000026   0xD5FB             BPL      ??adc_once_0
+     64              result = ADC->R;
+   \   00000028   0x....             LDR      R3,??DataTable2_5  ;; 0x4003b010
+   \   0000002A   0x681B             LDR      R3,[R3, #+0]
+   \   0000002C   0x0018             MOVS     R0,R3
+     65              return (result & ADC_R_ADR_MASK);       //返回结果
+   \   0000002E   0x0500             LSLS     R0,R0,#+20       ;; ZeroExtS R0,R0,#+20,#+20
+   \   00000030   0x0D00             LSRS     R0,R0,#+20
+   \   00000032   0xBD10             POP      {R4,PC}          ;; return
+     66              
+     67          }
+     68          
+     69          //-------------------------------------------------------------------------------------------------------------------
+     70          //  @brief      ADC停止采集
+     71          //  @param      adcn_ch         选择ADC通道
+     72          //  @param      bit             选择精度ADC_8bit、ADC_10bit、ADC_12bit
+     73          //  @return     void
+     74          //  @since      v2.0
+     75          //  Sample usage:               adc_stop(adc0);
+     76          //-------------------------------------------------------------------------------------------------------------------
+
+   \                                 In section .text, align 2, keep-with-next
+     77          void adc_stop(void)
+     78          {
+     79              ADC->SC1 = ADC_SC1_ADCH(0xFF); 
+   \                     adc_stop: (+1)
+   \   00000000   0x201F             MOVS     R0,#+31
+   \   00000002   0x....             LDR      R1,??DataTable2_4  ;; 0x4003b000
+   \   00000004   0x6008             STR      R0,[R1, #+0]
+     80          }
+   \   00000006   0x4770             BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x40048014         DC32     0x40048014
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0x4003B018         DC32     0x4003b018
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \   00000000   0x4003B008         DC32     0x4003b008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_3:
+   \   00000000   0x4003B004         DC32     0x4003b004
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_4:
+   \   00000000   0x4003B000         DC32     0x4003b000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_5:
+   \   00000000   0x4003B010         DC32     0x4003b010
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   adc_init
+       8   adc_once
+       0   adc_stop
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_2
+       4  ??DataTable2_3
+       4  ??DataTable2_4
+       4  ??DataTable2_5
+      30  adc_init
+      52  adc_once
+       8  adc_stop
+
+ 
+ 114 bytes in section .text
+ 
+ 114 bytes of CODE memory
+
+Errors: none
+Warnings: none

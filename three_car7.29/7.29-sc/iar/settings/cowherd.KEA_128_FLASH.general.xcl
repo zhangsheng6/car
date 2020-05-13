@@ -1,0 +1,15 @@
+"F:\IAR安装包\arm\bin\armproc.dll" 
+
+"F:\IAR安装包\arm\bin\armjlink.dll" 
+
+"H:\智能车程序2018\三轮比赛\7.29-sc\iar\KEA_128_FLASH\Exe\cowherd.out" 
+
+--plugin "F:\IAR安装包\arm\bin\armbat.dll" 
+
+--device_macro "F:\IAR安装包\arm\config\debugger\Freescale\KExx.dmac" 
+
+--flash_loader "F:\IAR安装包\arm\config\flashloader\Freescale\FlashKE04Z128_4.board" 
+
+
+
+

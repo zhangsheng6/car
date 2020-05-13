@@ -1,0 +1,161 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.40.2.8542/W32 for ARM        29/Apr/2018  11:05:38
+# Copyright 1999-2015 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\lib\C\KEA128_port.c
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\lib\C\KEA128_port.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\KEA_128_RAM\List\ -lB
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\KEA_128_RAM\List\ -o
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\KEA_128_RAM\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config F:\IAR安装包\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\..\device\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\..\user\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\..\system\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\..\lib\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\..\system\coreSupport\
+#        -Ol
+#    List file    =  
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\KEA_128_RAM\List\KEA128_port.lst
+#    Object file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\iar\KEA_128_RAM\Obj\KEA128_port.o
+#
+###############################################################################
+
+H:\智能车程序2018\电磁三轮——ZS\4.27_ZS\lib\C\KEA128_port.c
+      1          /*********************************************************************************************************************
+      2           * COPYRIGHT NOTICE
+      3           * Copyright (c) 2017,逐飞科技
+      4           * All rights reserved.
+      5           * 技术讨论QQ群：179029047
+      6           *
+      7           * 以下所有内容版权均属逐飞科技所有，未经允许不得用于商业用途，
+      8           * 欢迎各位使用并传播本程序，修改内容时必须保留逐飞科技的版权声明。
+      9           *
+     10           * @file       		KEA128_port
+     11           * @company	   		成都逐飞科技有限公司
+     12           * @author     		逐飞科技(QQ3184284598)
+     13           * @version    		v2.0
+     14           * @Software 		IAR 7.7 or MDK 5.23
+     15           * @Target core		S9KEA128AMLK
+     16           * @Taobao   		https://seekfree.taobao.com/
+     17           * @date       		2017-11-6
+     18           ********************************************************************************************************************/
+     19          
+     20          
+     21          #include "KEA128_port.h"
+     22          
+     23          
+     24          
+     25          #define PTX(PTX_n)  (PTX_n>>5)  //获取模块号 PTX_n/32
+     26          #define PTn(PTX_n)  (PTX_n&0x1f)//获取引脚号 PTX_n%32
+     27          
+     28          //-------------------------------------------------------------------------------------------------------------------
+     29          //  @brief      IO上拉
+     30          //  @param      ptx_n           选择端口
+     31          //  @return     void
+     32          //  @since      v2.0
+     33          //  Sample usage:               prot_pull(E0);			//E0 上拉电阻开启
+     34          //-------------------------------------------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     35          void prot_pull(PTX_n ptx_n)
+     36          {
+   \                     prot_pull: (+1)
+   \   00000000   0xB500             PUSH     {LR}
+     37              uint8 ptx,ptn;
+     38              ptx = PTX(ptx_n);//记录模块号    //A,B......
+   \   00000002   0x0001             MOVS     R1,R0
+   \   00000004   0xB2C9             UXTB     R1,R1
+   \   00000006   0x0949             LSRS     R1,R1,#+5
+     39              ptn = PTn(ptx_n);//记录引脚号    //0,1,2,3......
+   \   00000008   0x06C0             LSLS     R0,R0,#+27       ;; ZeroExtS R0,R0,#+27,#+27
+   \   0000000A   0x0EC0             LSRS     R0,R0,#+27
+     40              
+     41              switch(ptx)
+   \   0000000C   0xB2C9             UXTB     R1,R1
+   \   0000000E   0x2900             CMP      R1,#+0
+   \   00000010   0xD003             BEQ      ??prot_pull_0
+   \   00000012   0x2902             CMP      R1,#+2
+   \   00000014   0xD011             BEQ      ??prot_pull_1
+   \   00000016   0xD308             BCC      ??prot_pull_2
+   \   00000018   0xE016             B        ??prot_pull_3
+     42              {
+     43                  case 0:
+     44                  {
+     45                      PORT->PUE0 |= (uint32)(1<<ptn);
+   \                     ??prot_pull_0: (+1)
+   \   0000001A   0x490C             LDR      R1,??prot_pull_4  ;; 0x40049008
+   \   0000001C   0x6809             LDR      R1,[R1, #+0]
+   \   0000001E   0x2201             MOVS     R2,#+1
+   \   00000020   0x4082             LSLS     R2,R2,R0
+   \   00000022   0x430A             ORRS     R2,R2,R1
+   \   00000024   0x4809             LDR      R0,??prot_pull_4  ;; 0x40049008
+   \   00000026   0x6002             STR      R2,[R0, #+0]
+     46                  }break;
+   \   00000028   0xE00E             B        ??prot_pull_3
+     47                  
+     48                  case 1:
+     49                  {
+     50                      PORT->PUE1 |= (uint32)(1<<ptn);
+   \                     ??prot_pull_2: (+1)
+   \   0000002A   0x4909             LDR      R1,??prot_pull_4+0x4  ;; 0x4004900c
+   \   0000002C   0x6809             LDR      R1,[R1, #+0]
+   \   0000002E   0x2201             MOVS     R2,#+1
+   \   00000030   0x4082             LSLS     R2,R2,R0
+   \   00000032   0x430A             ORRS     R2,R2,R1
+   \   00000034   0x4806             LDR      R0,??prot_pull_4+0x4  ;; 0x4004900c
+   \   00000036   0x6002             STR      R2,[R0, #+0]
+     51                  }break;
+   \   00000038   0xE006             B        ??prot_pull_3
+     52                  
+     53                  case 2:
+     54                  {
+     55                      PORT->PUE2 |= (uint32)(1<<ptn);
+   \                     ??prot_pull_1: (+1)
+   \   0000003A   0x4906             LDR      R1,??prot_pull_4+0x8  ;; 0x40049010
+   \   0000003C   0x6809             LDR      R1,[R1, #+0]
+   \   0000003E   0x2201             MOVS     R2,#+1
+   \   00000040   0x4082             LSLS     R2,R2,R0
+   \   00000042   0x430A             ORRS     R2,R2,R1
+   \   00000044   0x4803             LDR      R0,??prot_pull_4+0x8  ;; 0x40049010
+   \   00000046   0x6002             STR      R2,[R0, #+0]
+     56                  }break;
+     57              }
+     58          }
+   \                     ??prot_pull_3: (+1)
+   \   00000048   0xBD00             POP      {PC}             ;; return
+   \   0000004A   0xBF00             Nop      
+   \                     ??prot_pull_4:
+   \   0000004C   0x40049008         DC32     0x40049008
+   \   00000050   0x4004900C         DC32     0x4004900c
+   \   00000054   0x40049010         DC32     0x40049010
+     59          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       4   prot_pull
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      88  prot_pull
+
+ 
+ 88 bytes in section .text
+ 
+ 88 bytes of CODE memory
+
+Errors: none
+Warnings: none

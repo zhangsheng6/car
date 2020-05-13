@@ -1,0 +1,26 @@
+/**
+  ***************************************************************************
+  * 时间
+  * 	2017年10月26日 23:19:09
+  * 说明
+  * 	将eww工作区拖到其它地方，需要按下述方法修改路径
+  ***************************************************************************
+  */
+
+用记事本打开根目录下的 fire_demo.eww 文件，修改里面的工程路径。
+$WS_DIR$为工作区所在的文件夹
+
+<workspace>
+<project>
+<path>$WS_DIR$\fire_demo.ewp</path>
+</project>
+<batchBuild/>
+</workspace>
+
+修改为：
+<workspace>
+<project>
+<path>$WS_DIR$\Prj\IAR\fire_demo.ewp</path>
+</project>
+<batchBuild/>
+</workspace>

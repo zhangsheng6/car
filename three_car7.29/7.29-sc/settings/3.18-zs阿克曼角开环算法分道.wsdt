@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>cowherd/KEA_128_FLASH</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>210</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>980</ColumnWidth1><ColumnWidth2>261</ColumnWidth2><ColumnWidth3>65</ColumnWidth3></Build>
+      <TerminalIO/>
+      <Debug-Log>
+        
+        
+      <ColumnWidth0>18</ColumnWidth0><ColumnWidth1>151</ColumnWidth1></Debug-Log>
+    <Find-in-Files><ColumnWidth0>111</ColumnWidth0><ColumnWidth1>18</ColumnWidth1><ColumnWidth2>166</ColumnWidth2><ColumnWidth3>74</ColumnWidth3></Find-in-Files><Select-Ambiguous-Definitions><ColumnWidth0>95</ColumnWidth0><ColumnWidth1>13</ColumnWidth1><ColumnWidth2>163</ColumnWidth2></Select-Ambiguous-Definitions></Static>
+    <Windows>
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-16343-12825</Identity>
+            <TabName>&#x5De5;&#x4F5C;&#x533A;</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>cowherd</ExpandedNode><ExpandedNode>cowherd/User</ExpandedNode><ExpandedNode>cowherd/User/C</ExpandedNode></NodeDict></Session>
+          </Tab>
+          <Tab>
+            <Identity>TabID-4550-12842</Identity>
+            <TabName>&#x5eFA;&#x7ACB;</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-24248-13086</Identity>
+            <TabName>&#x8C03;&#x8BD5;&#x65e5;&#x5FD7;</TabName>
+            <Factory>Debug-Log</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-12664-21286</Identity><TabName>&#x5728;&#x6587;&#x4eF6;&#x4e2D;&#x67e5;&#x627e;</TabName><Factory>Find-in-Files</Factory><Session/></Tab><Tab><Identity>TabID-1460-14651</Identity><TabName>&#x6A21;&#x7CCA;&#x7684;&#x5B9A;&#x4e49;</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>2</SelectedTab></Wnd0></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>42</YPos2><SelStart2>6097</SelStart2><SelEnd2>6097</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\Direction_Control.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>72</YPos2><SelStart2>3661</SelStart2><SelEnd2>3674</SelEnd2></Tab><ActiveTab>1</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\Speed_Control.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>703</SelStart2><SelEnd2>703</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-04A38800><key>iaridepm.enu1</key></Toolbar-04A38800></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>640</Bottom><Right>284</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>146413</sizeHorzCX><sizeHorzCY>291971</sizeHorzCY><sizeVertCX>209370</sizeVertCX><sizeVertCY>937226</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

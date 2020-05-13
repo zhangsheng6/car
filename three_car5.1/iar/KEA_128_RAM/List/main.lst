@@ -1,0 +1,468 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.40.2.8542/W32 for ARM        01/May/2018  14:50:05
+# Copyright 1999-2015 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  H:\智能车程序2018\电磁三轮——ZS\5.1\user\C\main.c
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\user\C\main.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\List\ -lB
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\List\ -o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config F:\IAR安装包\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\device\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\user\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\system\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\lib\H\ -I
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\system\coreSupport\ -Ol
+#    List file    =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\List\main.lst
+#    Object file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\main.o
+#
+###############################################################################
+
+H:\智能车程序2018\电磁三轮——ZS\5.1\user\C\main.c
+      1          /*
+      2          很多事情都不值得你动容。不要觉得会有人相信你。
+      3          */
+      4          #include "allHead.h"
+      5          extern uint8  KEY_sta ;//按键状态，1-按下
+      6          extern char position; 
+      7          
+
+   \                                 In section .bss, align 2
+      8          uint16 PIT_times = 0;           //定时次数
+   \                     PIT_times:
+   \   00000000                      DS8 2
+
+   \                                 In section .bss, align 1
+      9          uint8 KEY_textSelect = TEXT_DEFAULT;  //测试菜单 使用
+   \                     KEY_textSelect:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     10          uint8 carStatus = 0;     //速度方案使用
+   \                     carStatus:
+   \   00000000                      DS8 1
+
+   \                                 In section .data, align 1
+     11          uint8 menuSelect = MENU;//菜单选择
+   \                     menuSelect:
+   \   00000000   0x01               DC8 1
+
+   \                                 In section .data, align 1
+     12          uint8 z=1;
+   \                     z:
+   \   00000000   0x01               DC8 1
+
+   \                                 In section .bss, align 4
+     13            int x=0;
+   \                     x:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     14          int   speed_control_counter = 0;
+   \                     speed_control_counter:
+   \   00000000                      DS8 4
+     15          
+     16          /*****************************************************************************************/
+     17          // ----------------------------------- MAIN -------------------------------------------- //
+     18          /*****************************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     19          void main()
+     20          {
+   \                     main: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     21              get_clk();  //因为作用域的原因，必须加载main里面，不能加在时钟里
+   \   00000002   0x.... 0x....      BL       get_clk
+     22              DISABLE_INTERRUPTS;  //关总中断
+   \   00000006   0xB672             CPSID    I
+     23          
+     24              ADC_Init();//一定要放在最前面，里面开了ADC时钟
+   \   00000008   0x.... 0x....      BL       ADC_Init
+     25              UART_Init(UART_PART, UART_BAUD);
+   \   0000000C   0x21E1             MOVS     R1,#+225
+   \   0000000E   0x0249             LSLS     R1,R1,#+9        ;; #+115200
+   \   00000010   0x2002             MOVS     R0,#+2
+   \   00000012   0x.... 0x....      BL       UART_Init
+     26              L3G4200_Init();//顺序随便
+   \   00000016   0x.... 0x....      BL       L3G4200_Init
+     27              FTM_PwmInit(PWM_CH0, ch0, 10, 0); //PWM 初始化
+   \   0000001A   0x2300             MOVS     R3,#+0
+   \   0000001C   0x220A             MOVS     R2,#+10
+   \   0000001E   0x2100             MOVS     R1,#+0
+   \   00000020   0x2002             MOVS     R0,#+2
+   \   00000022   0x.... 0x....      BL       FTM_PwmInit
+     28              FTM_PwmInit(PWM_CH1, ch1, 10, 0); //PWM 初始化
+   \   00000026   0x2300             MOVS     R3,#+0
+   \   00000028   0x220A             MOVS     R2,#+10
+   \   0000002A   0x2101             MOVS     R1,#+1
+   \   0000002C   0x2002             MOVS     R0,#+2
+   \   0000002E   0x.... 0x....      BL       FTM_PwmInit
+     29              FTM_SpeedInit(FTM_SPEED_L);       //测速 初始化
+   \   00000032   0x2000             MOVS     R0,#+0
+   \   00000034   0x.... 0x....      BL       FTM_SpeedInit
+     30              FTM_SpeedInit(FTM_SPEED_R);       //测速 初始化
+   \   00000038   0x2001             MOVS     R0,#+1
+   \   0000003A   0x.... 0x....      BL       FTM_SpeedInit
+     31              //放在后面
+     32              OLED_Init();
+   \   0000003E   0x.... 0x....      BL       OLED_Init
+     33              KEY_Init();
+   \   00000042   0x.... 0x....      BL       KEY_Init
+     34              IoInit();
+   \   00000046   0x.... 0x....      BL       IoInit
+     35              PIT_Init(PIT0, 2500);             //PIT0 定时 5ms
+   \   0000004A   0x....             LDR      R1,??DataTable1  ;; 0x9c4
+   \   0000004C   0x2000             MOVS     R0,#+0
+   \   0000004E   0x.... 0x....      BL       PIT_Init
+     36          
+     37              //开定时中断之前要完成的
+     38              
+     39            OLED_MenuFlicker();//速度控制改参数显示菜单
+   \   00000052   0x.... 0x....      BL       OLED_MenuFlicker
+     40            
+     41          //OLED_Inductor_Static();//电感名称显示
+     42          //  OLED_Speed_Static();//速度名称显示
+     43          
+     44              PIT_EnableIrq();                  //开PIT0 中断
+   \   00000056   0x.... 0x....      BL       PIT_EnableIrq
+     45              ENABLE_INTERRUPTS;   //开总中断
+   \   0000005A   0xB662             CPSIE    I
+     46              
+     47              while (1)
+     48              {
+     49          //       KEY();//zs按键阿克曼角  
+     50          //       ReadDataControl();
+     51                 KEY_ParaMenu();//按键改变数据1
+   \                     ??main_0: (+1)
+   \   0000005C   0x.... 0x....      BL       KEY_ParaMenu
+   \   00000060   0xE7FC             B        ??main_0
+     52                 //void OLED_Menu();//oled显示数据名称3
+     53                 //void OLED_MenuFlicker();//oled菜单闪烁4
+     54                 //KEY_ParaMenuDisplay();//oled显示实时数据2
+     55                  
+     56          //         PlanSet();
+     57                  //ReadDataControl();//串口控制   
+     58              }
+     59          }
+     60          /********PIT0 中断:自定义函数名在中断向量表中进行了替换*****************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     61          void PIT_CH0_IRQHandler(void)
+     62          {
+   \                     PIT_CH0_IRQHandler: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     63          //                LED_1_OFF;//1.212MS正常跑
+     64          //                                LED_0_OFF;
+     65          
+     66              PIT_CLEAR;    
+   \   00000002   0x....             LDR      R0,??DataTable1_1  ;; 0x4003710c
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x2101             MOVS     R1,#+1
+   \   00000008   0x4301             ORRS     R1,R1,R0
+   \   0000000A   0x....             LDR      R0,??DataTable1_1  ;; 0x4003710c
+   \   0000000C   0x6001             STR      R1,[R0, #+0]
+     67              g_5msFlag=1;
+   \   0000000E   0x2001             MOVS     R0,#+1
+   \   00000010   0x....             LDR      R1,??DataTable1_2
+   \   00000012   0x7008             STRB     R0,[R1, #+0]
+     68          
+     69          
+     70              //清除中断标志   
+     71              if ((++PIT_times) >= 100)//每 500ms LED0翻转一次
+   \   00000014   0x....             LDR      R0,??DataTable1_3
+   \   00000016   0x8800             LDRH     R0,[R0, #+0]
+   \   00000018   0x1C40             ADDS     R0,R0,#+1
+   \   0000001A   0x....             LDR      R1,??DataTable1_3
+   \   0000001C   0x8008             STRH     R0,[R1, #+0]
+   \   0000001E   0x....             LDR      R0,??DataTable1_3
+   \   00000020   0x8800             LDRH     R0,[R0, #+0]
+   \   00000022   0x2864             CMP      R0,#+100
+   \   00000024   0xDB05             BLT      ??PIT_CH0_IRQHandler_0
+     72              {
+     73                  PIT_times = 0;
+   \   00000026   0x2000             MOVS     R0,#+0
+   \   00000028   0x....             LDR      R1,??DataTable1_3
+   \   0000002A   0x8008             STRH     R0,[R1, #+0]
+     74                  LED_0_TURN;
+   \   0000002C   0x2030             MOVS     R0,#+48
+   \   0000002E   0x.... 0x....      BL       GpioTurn
+     75              }  
+     76          //    
+     77            Inductor_analyse();//方向判断
+   \                     ??PIT_CH0_IRQHandler_0: (+1)
+   \   00000032   0x.... 0x....      BL       Inductor_analyse
+     78          //Read_ADC();
+     79            Test_RoadInfo();
+   \   00000036   0x.... 0x....      BL       Test_RoadInfo
+     80          //  Test_RoadInfo_Shuzhi(); 
+     81            Test_Huandao(); 
+   \   0000003A   0x.... 0x....      BL       Test_Huandao
+     82            Gyro_ZS();
+   \   0000003E   0x.... 0x....      BL       Gyro_ZS
+     83            Direction_ChaSpeed_Control();
+   \   00000042   0x.... 0x....      BL       Direction_ChaSpeed_Control
+     84          
+     85          //Direction_Controler_I();
+     86          z++;
+   \   00000046   0x....             LDR      R0,??DataTable1_4
+   \   00000048   0x7800             LDRB     R0,[R0, #+0]
+   \   0000004A   0x1C40             ADDS     R0,R0,#+1
+   \   0000004C   0x....             LDR      R1,??DataTable1_4
+   \   0000004E   0x7008             STRB     R0,[R1, #+0]
+     87          if(z>1)
+   \   00000050   0x....             LDR      R0,??DataTable1_4
+   \   00000052   0x7800             LDRB     R0,[R0, #+0]
+   \   00000054   0x2802             CMP      R0,#+2
+   \   00000056   0xDB12             BLT      ??PIT_CH0_IRQHandler_1
+     88          {
+     89            z=0;
+   \   00000058   0x2000             MOVS     R0,#+0
+   \   0000005A   0x....             LDR      R1,??DataTable1_4
+   \   0000005C   0x7008             STRB     R0,[R1, #+0]
+     90            Get_CarSpeed();//获取车速  
+   \   0000005E   0x.... 0x....      BL       Get_CarSpeed
+     91          //  Direction_Controler();
+     92            speed_control_counter++;
+   \   00000062   0x....             LDR      R0,??DataTable1_5
+   \   00000064   0x6800             LDR      R0,[R0, #+0]
+   \   00000066   0x1C40             ADDS     R0,R0,#+1
+   \   00000068   0x....             LDR      R1,??DataTable1_5
+   \   0000006A   0x6008             STR      R0,[R1, #+0]
+     93            if (speed_control_counter >= SPEED_CONTROL_PERIOD)//周期100ms
+   \   0000006C   0x....             LDR      R0,??DataTable1_5
+   \   0000006E   0x6800             LDR      R0,[R0, #+0]
+   \   00000070   0x2814             CMP      R0,#+20
+   \   00000072   0xDB04             BLT      ??PIT_CH0_IRQHandler_1
+     94           {
+     95                Speed_Controler();//速度环PI控制
+   \   00000074   0x.... 0x....      BL       Speed_Controler
+     96                speed_control_counter = 0;
+   \   00000078   0x2000             MOVS     R0,#+0
+   \   0000007A   0x....             LDR      R1,??DataTable1_5
+   \   0000007C   0x6008             STR      R0,[R1, #+0]
+     97           }
+     98           
+     99            
+    100          
+    101          }
+    102          
+    103          Direction_Controler();
+   \                     ??PIT_CH0_IRQHandler_1: (+1)
+   \   0000007E   0x.... 0x....      BL       Direction_Controler
+    104            
+    105            Motor_control();//电机控制输出PWM   
+   \   00000082   0x.... 0x....      BL       Motor_control
+    106          
+    107          
+    108          
+    109          if(x++>1)
+   \   00000086   0x....             LDR      R0,??DataTable1_6
+   \   00000088   0x6800             LDR      R0,[R0, #+0]
+   \   0000008A   0x0001             MOVS     R1,R0
+   \   0000008C   0x1C49             ADDS     R1,R1,#+1
+   \   0000008E   0x....             LDR      R2,??DataTable1_6
+   \   00000090   0x6011             STR      R1,[R2, #+0]
+   \   00000092   0x2802             CMP      R0,#+2
+   \   00000094   0xDB02             BLT      ??PIT_CH0_IRQHandler_2
+    110          {
+    111            x=0;
+   \   00000096   0x2000             MOVS     R0,#+0
+   \   00000098   0x....             LDR      R1,??DataTable1_6
+   \   0000009A   0x6008             STR      R0,[R1, #+0]
+    112          //OLED_Inductor_Dynamic();//线跳动，数据变化大
+    113          // OLED_Speed_Dynamic();////一个OLED显示0.158ms
+    114          // UART_Send();//线跳动，数据变化小//1个串口发送1.068ms
+    115          }  
+    116           
+    117          //刷OLED，使用了硬件spi速率已经缩小到了us级别
+    118              if (KEY_sta)
+   \                     ??PIT_CH0_IRQHandler_2: (+1)
+   \   0000009C   0x....             LDR      R0,??DataTable1_7
+   \   0000009E   0x7800             LDRB     R0,[R0, #+0]
+   \   000000A0   0x2800             CMP      R0,#+0
+   \   000000A2   0xD01D             BEQ      ??PIT_CH0_IRQHandler_3
+    119              {
+    120                  if (KEY_menuChange)//菜单选择和数据显示 更新分两次进行 减小数据量
+   \   000000A4   0x....             LDR      R0,??DataTable1_8
+   \   000000A6   0x7800             LDRB     R0,[R0, #+0]
+   \   000000A8   0x2800             CMP      R0,#+0
+   \   000000AA   0xD00C             BEQ      ??PIT_CH0_IRQHandler_4
+    121                  {
+    122                      OLED_MenuFlicker();
+   \   000000AC   0x.... 0x....      BL       OLED_MenuFlicker
+    123                      KEY_menuChange = !KEY_menuChange;
+   \   000000B0   0x....             LDR      R0,??DataTable1_8
+   \   000000B2   0x7800             LDRB     R0,[R0, #+0]
+   \   000000B4   0x2800             CMP      R0,#+0
+   \   000000B6   0xD103             BNE      ??PIT_CH0_IRQHandler_5
+   \   000000B8   0x2001             MOVS     R0,#+1
+   \   000000BA   0x....             LDR      R1,??DataTable1_8
+   \   000000BC   0x7008             STRB     R0,[R1, #+0]
+   \   000000BE   0xE002             B        ??PIT_CH0_IRQHandler_4
+   \                     ??PIT_CH0_IRQHandler_5: (+1)
+   \   000000C0   0x2000             MOVS     R0,#+0
+   \   000000C2   0x....             LDR      R1,??DataTable1_8
+   \   000000C4   0x7008             STRB     R0,[R1, #+0]
+    124                  }
+    125                  KEY_ParaMenuDisplay();//大概需要1ms左右,但由于第二次按键不操作，所以时间差可以忽略
+   \                     ??PIT_CH0_IRQHandler_4: (+1)
+   \   000000C6   0x.... 0x....      BL       KEY_ParaMenuDisplay
+    126                  KEY_sta = !KEY_sta;
+   \   000000CA   0x....             LDR      R0,??DataTable1_7
+   \   000000CC   0x7800             LDRB     R0,[R0, #+0]
+   \   000000CE   0x2800             CMP      R0,#+0
+   \   000000D0   0xD103             BNE      ??PIT_CH0_IRQHandler_6
+   \   000000D2   0x2001             MOVS     R0,#+1
+   \   000000D4   0x....             LDR      R1,??DataTable1_7
+   \   000000D6   0x7008             STRB     R0,[R1, #+0]
+   \   000000D8   0xE002             B        ??PIT_CH0_IRQHandler_3
+   \                     ??PIT_CH0_IRQHandler_6: (+1)
+   \   000000DA   0x2000             MOVS     R0,#+0
+   \   000000DC   0x....             LDR      R1,??DataTable1_7
+   \   000000DE   0x7008             STRB     R0,[R1, #+0]
+    127              }
+    128          //              LED_1_ON;
+    129          //   change_L(5000);
+    130          //   change_R(5000);
+    131          //   forward_L;
+    132          //   forward_R;
+    133          }
+   \                     ??PIT_CH0_IRQHandler_3: (+1)
+   \   000000E0   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x000009C4         DC32     0x9c4
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x4003710C         DC32     0x4003710c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x........         DC32     g_5msFlag
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x........         DC32     PIT_times
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x........         DC32     z
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_5:
+   \   00000000   0x........         DC32     speed_control_counter
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_6:
+   \   00000000   0x........         DC32     x
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_7:
+   \   00000000   0x........         DC32     KEY_sta
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_8:
+   \   00000000   0x........         DC32     KEY_menuChange
+    134          
+    135          
+    136          //uint8 scope_send_num;
+    137          //uint8 scope_send_count=0;
+    138          //uint8 send_flag=0;
+    139          ////系统
+    140          
+    141          //uint16 Runing_times=0;
+    142          //uint16 Runing_Distance = 0;
+    143          //#define Runing_Furthest  3000		//试车最远距离(单位:cm)
+    144          //uint8 Car_Status = Ready;	//开机即直立
+    145          //uint8 Stop_Car_cnt = 0;
+    146          //uint8 Stop_Car_flag=0;
+    147          //uint8 forward_flag = 0;
+    148          //float power;
+    149          //uint8 key=0;
+    150          //
+    151          //uint8 alarm_status=0;
+    152          ////速度
+    153          //uint8 speed_control_period = 0;
+    154          //uint8 podao_spd_flag=0;
+    155          //uint8 podao_flag;/* 当赛道识别程序加入后，将此定义移到该文档 --- han 2017-11-1 */
+    156          ////方向
+    157          //uint32 Brick_Time = 0,Podao_Time = 0,Start_Line_Time = 0,Test_Time = 0;
+    158          //uint8 boma, boma_last = 0, key_value;
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   PIT_CH0_IRQHandler
+         8   -> Direction_ChaSpeed_Control
+         8   -> Direction_Controler
+         8   -> Get_CarSpeed
+         8   -> GpioTurn
+         8   -> Gyro_ZS
+         8   -> Inductor_analyse
+         8   -> KEY_ParaMenuDisplay
+         8   -> Motor_control
+         8   -> OLED_MenuFlicker
+         8   -> Speed_Controler
+         8   -> Test_Huandao
+         8   -> Test_RoadInfo
+       8   main
+         8   -> ADC_Init
+         8   -> FTM_PwmInit
+         8   -> FTM_SpeedInit
+         8   -> IoInit
+         8   -> KEY_Init
+         8   -> KEY_ParaMenu
+         8   -> L3G4200_Init
+         8   -> OLED_Init
+         8   -> OLED_MenuFlicker
+         8   -> PIT_EnableIrq
+         8   -> PIT_Init
+         8   -> UART_Init
+         8   -> get_clk
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+       4  ??DataTable1_5
+       4  ??DataTable1_6
+       4  ??DataTable1_7
+       4  ??DataTable1_8
+       1  KEY_textSelect
+     226  PIT_CH0_IRQHandler
+       2  PIT_times
+       1  carStatus
+      98  main
+       1  menuSelect
+       4  speed_control_counter
+       4  x
+       1  z
+
+ 
+  12 bytes in section .bss
+   2 bytes in section .data
+ 360 bytes in section .text
+ 
+ 360 bytes of CODE memory
+  14 bytes of DATA memory
+
+Errors: none
+Warnings: none

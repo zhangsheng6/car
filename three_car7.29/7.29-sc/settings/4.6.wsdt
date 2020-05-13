@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>cowherd/KEA_128_FLASH</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>163</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      <PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Build</Factory></Window><Window><Factory>Debug-Log</Factory></Window></Windows></PreferedWindows></Workspace>
+      <Build>
+        
+        
+        
+        
+      <PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Workspace</Factory></Window><Window><Factory>Debug-Log</Factory></Window></Windows></PreferedWindows><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>980</ColumnWidth1><ColumnWidth2>261</ColumnWidth2><ColumnWidth3>65</ColumnWidth3></Build>
+      <TerminalIO/>
+      <Debug-Log>
+        
+        
+      <PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Workspace</Factory></Window><Window><Factory>Build</Factory></Window></Windows></PreferedWindows><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1307</ColumnWidth1></Debug-Log>
+    <Select-Ambiguous-Definitions><ColumnWidth0>111</ColumnWidth0><ColumnWidth1>15</ColumnWidth1><ColumnWidth2>191</ColumnWidth2></Select-Ambiguous-Definitions></Static>
+    <Windows>
+      
+    <Wnd0><Tabs><Tab><Identity>TabID-29398-32375</Identity><TabName>&#x5eFA;&#x7ACB;</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-5810-32407</Identity><TabName>&#x8C03;&#x8BD5;&#x65e5;&#x5FD7;</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-10449-11707</Identity><TabName>&#x6A21;&#x7CCA;&#x7684;&#x5B9A;&#x4e49;</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab><Tab><Identity>TabID-17950-4625</Identity><TabName>&#x5De5;&#x4F5C;&#x533A;</TabName><Factory>Workspace</Factory><Session><NodeDict><ExpandedNode>cowherd</ExpandedNode><ExpandedNode>cowherd/Device</ExpandedNode><ExpandedNode>cowherd/User</ExpandedNode><ExpandedNode>cowherd/User/C</ExpandedNode><ExpandedNode>cowherd/User/C/ZS_XS.c</ExpandedNode><ExpandedNode>cowherd/User/H</ExpandedNode></NodeDict></Session></Tab></Tabs><SelectedTab>1</SelectedTab></Wnd0></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>27</YPos2><SelStart2>2298</SelStart2><SelEnd2>2347</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\XS_ZS.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>1393</SelStart2><SelEnd2>1393</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\Speed_Control.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>9</YPos2><SelStart2>213</SelStart2><SelEnd2>213</SelEnd2></Tab><ActiveTab>2</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\Motor_Control.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>3</SelStart2><SelEnd2>3</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\Direction_Control.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>4769</SelStart2><SelEnd2>4769</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\inductor_1.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>285</YPos2><SelStart2>11461</SelStart2><SelEnd2>11467</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\C\SDSB_ZS.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>123</YPos2><SelStart2>11609</SelStart2><SelEnd2>11609</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user\H\variable.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>228</YPos2><SelStart2>7595</SelStart2><SelEnd2>7595</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-07D643E0><key>iaridepm.enu1</key></Toolbar-07D643E0></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>640</Bottom><Right>237</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>146413</sizeHorzCX><sizeHorzCY>291971</sizeHorzCY><sizeVertCX>174963</sizeVertCX><sizeVertCY>937226</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

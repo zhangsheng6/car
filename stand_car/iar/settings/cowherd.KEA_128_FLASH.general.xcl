@@ -1,0 +1,13 @@
+"D:\IAR_ARM_8.32.1\arm\bin\armproc.dll" 
+
+"D:\IAR_ARM_8.32.1\arm\bin\armsim2.dll" 
+
+"E:\32\飞卡\stand_ZS_9.28\iar\KEA_128_FLASH\Exe\cowherd.out" 
+
+--plugin="D:\IAR_ARM_8.32.1\arm\bin\armbat.dll" 
+
+--device_macro="D:\IAR_ARM_8.32.1\arm\config\debugger\NXP\KExx.dmac" 
+
+
+
+

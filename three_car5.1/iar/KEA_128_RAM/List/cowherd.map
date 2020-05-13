@@ -1,0 +1,763 @@
+###############################################################################
+#
+# IAR ELF Linker V7.40.2.8542/W32 for ARM                 01/May/2018  14:50:06
+# Copyright 2007-2015 IAR Systems AB.
+#
+#    Output file  =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Exe\cowherd.out
+#    Map file     =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\List\cowherd.map
+#    Command line =  
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\adc.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\common.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\Control.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\Direction_Control.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\ftm.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\Fuzzy_ZS.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\iicAnalog.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\inductor_1.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_adc.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_flash.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_gpio.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_i2c.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_irq.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_kbi.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_port.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_systick.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\KEA128_uart.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\key.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\L3G4200.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\L3G4200D_ZS.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\main.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\Motor_Control.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\oled.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\outputdata.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\outputdata_zs.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\pit.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\QT.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\SDSB_ZS.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\Speed_Control.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\spi.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\startup_SKEAZ1284.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\system_SKEAZ1284.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\uart.o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj\XS_ZS.o
+#        --redirect _Printf=_PrintfFull --redirect _Scanf=_ScanfFull -o
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Exe\cowherd.out
+#        --map
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\List\cowherd.map
+#        --config
+#        H:\智能车程序2018\电磁三轮——ZS\5.1\iar\..\system\link\KEAZ128_RAM.icf
+#        --semihosting --entry __iar_program_start --vfe
+#
+###############################################################################
+
+*******************************************************************************
+*** MESSAGES
+***
+
+Error[Lp011]: section placement failed
+          unable to allocate space for sections/blocks with a total estimated
+                    minimum size of 0x5c80 bytes (max align 0x8) in
+                    <[0x1ffff000-0x20002fff]> (total uncommitted space 0x3f30).
+
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor                     = *
+__Heap_Handler                = Basic
+__SystemLibrary               = DLib
+__dlib_dynamic_initialization = normal
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at 0x1ffff000 { ro section .intvec };
+"P1":  place in [from 0x1ffff000 to 0x20002fff] { ro, block CodeRelocate };
+"P2":  place in [from 0x1ffff000 to 0x20002fff] {
+          rw, block CodeRelocateRam, block CSTACK, block HEAP };
+
+  Section            Kind        Address    Size  Object
+  -------            ----        -------    ----  ------
+"A1":                                       0xd0
+  .intvec            ro code  0x1ffff000    0xd0  startup_SKEAZ1284.o [1]
+                            - 0x1ffff0d0    0xd0
+
+"P1", part 1 of 2 (*** FAILED ***):       0x55e4
+  .text              ro code               0x980  oled.o [1]
+  .text              ro code               0x1cc  KEA128_gpio.o [1]
+  .text              ro code               0x148  spi.o [1]
+  .text              ro code                0x54  KEA128_systick.o [1]
+  .text              ro code                0xe0  I32DivModFast.o [5]
+  .text              ro code                0x26  FltCmpLe.o [4]
+  .text              ro code                0x2a  zero_init3.o [5]
+  .text              ro code                0x26  FltToU32.o [4]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                0x36  I32ToFlt.o [4]
+  .text              ro code               0x120  FltAddSub.o [4]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                0x28  FltCmpGe.o [4]
+  .text              ro code                0xb0  FltMul.o [4]
+  .text              ro code                0x3a  FltToS32.o [4]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                0x34  ABImemcpy.o [5]
+  .text              ro code                 0x8  abs.o [3]
+  .text              ro code                0xc4  common.o [1]
+  .text              ro code                 0x2  IntDivZer.o [5]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code               0x8c8  key.o [1]
+  .text              ro code               0x40c  ftm.o [1]
+  .text              ro code                0x32  FltToDbl.o [4]
+  .text              ro code               0x1b4  DblAddSub.o [4]
+  .text              ro code                0x62  DblToFlt.o [4]
+  .text              ro code                0x58  KEA128_port.o [1]
+  .text              ro code               0x8c8  SDSB_ZS.o [1]
+  .text              ro code               0x2fc  inductor_1.o [1]
+  .text              ro code                0xaa  FltDiv.o [4]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code               0x134  adc.o [1]
+  .text              ro code               0x7d4  Direction_Control.o [1]
+  .text              ro code                0x32  DblCmpLe.o [4]
+  .text              ro code               0x184  DblMul.o [4]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code               0x2b8  tan.o [4]
+  .text              ro code                0xc2  DblDiv.o [4]
+  .text              ro code                0x32  DblCmpGe.o [4]
+  .text              ro code                0x4e  DblToI32.o [4]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                0x30  I32ToDbl.o [4]
+  .text              ro code               0x174  xquad.o [4]
+  .text              ro code                0x10  errno.o [3]
+  .text              ro code                0x8c  xdint.o [4]
+  .text              ro code                0x24  DblCmpEq.o [4]
+  .text              ro code                0xc6  fmod.o [4]
+  .text              ro code                 0x2  xtls.o [3]
+  .text              ro code                 0xc  iarEdom.o [5]
+  .rodata            const                 0x400  oled.o [1]
+  .text              ro code               0x388  KEA128_i2c.o [1]
+  .text              ro code               0x2e0  Speed_Control.o [1]
+  .rodata            const                 0x228  oled.o [1]
+  .text              ro code               0x168  main.o [1]
+  .text              ro code               0x150  KEA128_uart.o [1]
+  .text              ro code               0x100  L3G4200.o [1]
+  .text              ro code                0x72  QT.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                0xd0  pit.o [1]
+  .text              ro code               0x14c  L3G4200D_ZS.o [1]
+  .text              ro code               0x138  Motor_Control.o [1]
+  .rodata            const                  0x80  KEA128_i2c.o [1]
+  .text              ro code                0x74  system_SKEAZ1284.o [1]
+  .text              ro code                0x28  data_init.o [5]
+  .rodata            const                  0x24  oled.o [1]
+  .rodata            const                  0x24  spi.o [1]
+  .iar.init_table    const                   0x0  - Linker created -
+  .text              ro code                0x1a  cmain.o [5]
+  .text              ro code                 0x4  low_level_init.o [3]
+  .text              ro code                 0x8  exit.o [3]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0xa  cexit.o [5]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                0x14  exit.o [6]
+  .rodata            const                  0x18  common.o [1]
+  .text              ro code                0x10  startup_SKEAZ1284.o [1]
+  .rodata            const                   0xc  ftm.o [1]
+  .rodata            const                   0xc  KEA128_gpio.o [1]
+  .text              ro code                 0xc  cstartup_M.o [5]
+  .rodata            const                   0x8  oled.o [1]
+  .rodata            const                   0x8  spi.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .text              ro code                 0x2  startup_SKEAZ1284.o [1]
+  .rodata            const                   0x0  zero_init3.o [5]
+                                          0x55e4
+
+"P1", part 2 of 2 (*** FAILED ***):         0xdc
+  Initializer bytes  const                  0xdc  <for P2 s0> (used: 0x0)
+                                            0xdc
+
+"P2", part 1 of 3 (*** FAILED ***):         0xd9
+  .data              inited                 0x14  SDSB_ZS.o [1]
+  .data              inited                 0x10  SDSB_ZS.o [1]
+  .data              inited                  0xc  KEA128_uart.o [1]
+  .data              inited                  0x8  Direction_Control.o [1]
+  .data              inited                  0x8  KEA128_i2c.o [1]
+  .data              inited                  0x8  oled.o [1]
+  .data              inited                  0x8  SDSB_ZS.o [1]
+  .data              inited                  0x8  spi.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  Direction_Control.o [1]
+  .data              inited                  0x4  L3G4200D_ZS.o [1]
+  .data              inited                  0x4  L3G4200D_ZS.o [1]
+  .data              inited                  0x4  L3G4200D_ZS.o [1]
+  .data              inited                  0x4  Motor_Control.o [1]
+  .data              inited                  0x4  Motor_Control.o [1]
+  .data              inited                  0x4  SDSB_ZS.o [1]
+  .data              inited                  0x4  SDSB_ZS.o [1]
+  .data              inited                  0x4  SDSB_ZS.o [1]
+  .data              inited                  0x4  SDSB_ZS.o [1]
+  .data              inited                  0x4  SDSB_ZS.o [1]
+  .data              inited                  0x4  SDSB_ZS.o [1]
+  .data              inited                  0x4  SDSB_ZS.o [1]
+  .data              inited                  0x4  Speed_Control.o [1]
+  .data              inited                  0x4  Speed_Control.o [1]
+  .data              inited                  0x4  Speed_Control.o [1]
+  .data              inited                  0x4  Speed_Control.o [1]
+  .data              inited                  0x4  Speed_Control.o [1]
+  .data              inited                  0x4  Speed_Control.o [1]
+  .data              inited                  0x4  Speed_Control.o [1]
+  __DLIB_PERTHREAD   inited                  0x4  errno.o [3]
+  .data              inited                  0x2  SDSB_ZS.o [1]
+  .data              inited                  0x2  SDSB_ZS.o [1]
+  .data              inited                  0x2  SDSB_ZS.o [1]
+  .data              inited                  0x1  main.o [1]
+  .data              inited                  0x1  main.o [1]
+  .data              inited                  0x1  SDSB_ZS.o [1]
+                                            0xd9
+
+"P2", part 2 of 3 (*** FAILED ***):        0x3e2
+  .bss               zero                  0x190  SDSB_ZS.o [1]
+  .bss               zero                   0x3c  SDSB_ZS.o [1]
+  .bss               zero                   0x34  SDSB_ZS.o [1]
+  .bss               zero                   0x28  Direction_Control.o [1]
+  .bss               zero                   0x28  Direction_Control.o [1]
+  .bss               zero                   0x14  SDSB_ZS.o [1]
+  .bss               zero                   0x14  SDSB_ZS.o [1]
+  .bss               zero                   0x14  SDSB_ZS.o [1]
+  .bss               zero                   0x14  SDSB_ZS.o [1]
+  .bss               zero                    0x4  common.o [1]
+  .bss               zero                    0x4  common.o [1]
+  .bss               zero                    0x4  common.o [1]
+  .bss               zero                    0x4  common.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  Direction_Control.o [1]
+  .bss               zero                    0x4  L3G4200D_ZS.o [1]
+  .bss               zero                    0x4  L3G4200D_ZS.o [1]
+  .bss               zero                    0x4  L3G4200D_ZS.o [1]
+  .bss               zero                    0x4  L3G4200D_ZS.o [1]
+  .bss               zero                    0x4  L3G4200D_ZS.o [1]
+  .bss               zero                    0x4  L3G4200D_ZS.o [1]
+  .bss               zero                    0x4  L3G4200D_ZS.o [1]
+  .bss               zero                    0x4  main.o [1]
+  .bss               zero                    0x4  main.o [1]
+  .bss               zero                    0x4  Motor_Control.o [1]
+  .bss               zero                    0x4  Motor_Control.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  SDSB_ZS.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x4  Speed_Control.o [1]
+  .bss               zero                    0x2  ftm.o [1]
+  .bss               zero                    0x2  L3G4200.o [1]
+  .bss               zero                    0x2  L3G4200.o [1]
+  .bss               zero                    0x2  L3G4200.o [1]
+  .bss               zero                    0x2  L3G4200.o [1]
+  .bss               zero                    0x2  main.o [1]
+  .bss               zero                    0x1  Control.o [1]
+  .bss               zero                    0x1  Direction_Control.o [1]
+  .bss               zero                    0x1  Direction_Control.o [1]
+  .bss               zero                    0x1  key.o [1]
+  .bss               zero                    0x1  key.o [1]
+  .bss               zero                    0x1  L3G4200.o [1]
+  .bss               zero                    0x1  L3G4200.o [1]
+  .bss               zero                    0x1  L3G4200.o [1]
+  .bss               zero                    0x1  main.o [1]
+  .bss               zero                    0x1  Speed_Control.o [1]
+                                           0x3e2
+
+"P2", part 3 of 3 (*** FAILED ***):        0x100
+  CSTACK                                   0x100  <Block>
+    CSTACK           uninit                0x100  <Block tail>
+                                           0x100
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module               ro code  ro data  rw data
+    ------               -------  -------  -------
+H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj: [1]
+    Control.o                                    1
+    Direction_Control.o    2 004               198
+    KEA128_gpio.o            460       12
+    KEA128_i2c.o             904      128        8
+    KEA128_port.o             88
+    KEA128_systick.o          84
+    KEA128_uart.o            336                12
+    L3G4200.o                256                11
+    L3G4200D_ZS.o            332                40
+    Motor_Control.o          312                16
+    QT.o                     114
+    SDSB_ZS.o              2 248               767
+    Speed_Control.o          736               105
+    adc.o                    308
+    common.o                 196       24       16
+    ftm.o                  1 036       12        2
+    inductor_1.o             764
+    key.o                  2 248                 2
+    main.o                   360                13
+    oled.o                 2 432    1 620        8
+    pit.o                    208
+    spi.o                    328       44        8
+    startup_SKEAZ1284.o      296
+    system_SKEAZ1284.o       116
+    ----------------------------------------------
+    Total:                16 166    1 840    1 207
+
+command line: [2]
+    ----------------------------------------------
+    Total:
+
+dl6M_tlf.a: [3]
+    abs.o                      8
+    errno.o                   16                 4
+    exit.o                     8
+    low_level_init.o           4
+    xtls.o                     2
+    ----------------------------------------------
+    Total:                    38                 4
+
+m6M_tl.a: [4]
+    DblAddSub.o              436
+    DblCmpEq.o                36
+    DblCmpGe.o                50
+    DblCmpLe.o                50
+    DblDiv.o                 194
+    DblMul.o                 388
+    DblToFlt.o                98
+    DblToI32.o                78
+    FltAddSub.o              288
+    FltCmpGe.o                40
+    FltCmpLe.o                38
+    FltDiv.o                 170
+    FltMul.o                 176
+    FltToDbl.o                50
+    FltToS32.o                58
+    FltToU32.o                38
+    I32ToDbl.o                48
+    I32ToFlt.o                54
+    fmod.o                   198
+    tan.o                    696
+    xdint.o                  140
+    xquad.o                  372
+    ----------------------------------------------
+    Total:                 3 696
+
+rt6M_tl.a: [5]
+    ABImemcpy.o               52
+    I32DivModFast.o          224
+    IntDivZer.o                2
+    cexit.o                   10
+    cmain.o                   26
+    cstartup_M.o              12
+    data_init.o               40
+    iarEdom.o                 12
+    zero_init3.o              42
+    ----------------------------------------------
+    Total:                   420
+
+shb_l.a: [6]
+    exit.o                    20
+    ----------------------------------------------
+    Total:                    20
+
+    Linker created                    220      256
+--------------------------------------------------
+    Grand Total:          20 340    2 060    1 467
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+.iar.init_table$$Base   0x000054fc          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x0000550c          --   Gb  - Linker created -
+?main                   0x0000550d         Code  Gb  cmain.o [5]
+ADC_Able                0x00002e4b   0x1c  Code  Gb  adc.o [1]
+ADC_Init                0x00002e25   0x26  Code  Gb  adc.o [1]
+ADC_Once                0x00002e67   0x48  Code  Gb  adc.o [1]
+AD_0_max                0x00000330    0x4  Data  Gb  SDSB_ZS.o [1]
+AD_2_max                0x00000334    0x4  Data  Gb  SDSB_ZS.o [1]
+AD_V                    0x00000190   0x3c  Data  Gb  SDSB_ZS.o [1]
+AD_inductor             0x00000264   0x14  Data  Gb  SDSB_ZS.o [1]
+AD_sum                  0x0000028c   0x14  Data  Gb  SDSB_ZS.o [1]
+AD_valu                 0x00000250   0x14  Data  Gb  SDSB_ZS.o [1]
+Accum_Error_L           0x00000200   0x28  Data  Gb  Direction_Control.o [1]
+Accum_Error_R           0x00000228   0x28  Data  Gb  Direction_Control.o [1]
+Angle_D                 0x000002c4    0x4  Data  Gb  Direction_Control.o [1]
+Angle_P                 0x000002c0    0x4  Data  Gb  Direction_Control.o [1]
+Angle_P_choose          0x000002c8    0x4  Data  Gb  Direction_Control.o [1]
+B                       0x00000074    0x4  Data  Gb  Direction_Control.o [1]
+CSTACK$$Base            0x00000000          --   Gb  - Linker created -
+CSTACK$$Limit           0x00000100          --   Gb  - Linker created -
+Change                  0x00002d95   0x90  Code  Gb  adc.o [1]
+Chasu_Bili              0x00000064    0x4  Data  Gb  Direction_Control.o [1]
+Chazhi                  0x00000320    0x4  Data  Gb  SDSB_ZS.o [1]
+Chazhi_Last             0x00000324    0x4  Data  Gb  SDSB_ZS.o [1]
+Chazhi_limit            0x00000060    0x4  Data  Gb  Direction_Control.o [1]
+Circle_Count            0x00000360    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Count2           0x00000364    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Count2_Max       0x00000098    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Count_Max        0x00000094    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Error_Count      0x00000370    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Error_Count_Max  0x0000009c    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Error_Flag       0x00000374    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Finish_Count_Max
+                        0x000000a0    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Flag             0x00000354    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Inductor_value1  0x000000a4    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Inductor_value2  0x000000a8    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_Inductor_value3  0x000000ac    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_L_Count          0x00000368    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_L_Finish_Count   0x00000378    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_L_Flag           0x00000358    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_R_Count          0x0000036c    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_R_Finish_Count   0x0000037c    0x4  Data  Gb  SDSB_ZS.o [1]
+Circle_R_Flag           0x0000035c    0x4  Data  Gb  SDSB_ZS.o [1]
+Direction_ChaSpeed_Control
+                        0x00002ec9  0x438  Code  Gb  Direction_Control.o [1]
+Direction_Control_Output_L
+                        0x000002ec    0x4  Data  Gb  Direction_Control.o [1]
+Direction_Control_Output_R
+                        0x000002f0    0x4  Data  Gb  Direction_Control.o [1]
+Direction_Controler     0x0000335d  0x2ca  Code  Gb  Direction_Control.o [1]
+F6x8                    0x000049f0  0x228  Data  Gb  oled.o [1]
+FTMX                    0x0000557c    0xc  Data  Lc  ftm.o [1]
+FTM_CountClean          0x00001e4b   0x10  Code  Gb  ftm.o [1]
+FTM_PwmDuty             0x00001cd5   0x68  Code  Gb  ftm.o [1]
+FTM_PwmInit             0x00001b9b  0x13a  Code  Gb  ftm.o [1]
+FTM_PwmMux              0x00001a79  0x122  Code  Gb  ftm.o [1]
+FTM_SpeedGet            0x00001e3b   0x10  Code  Gb  ftm.o [1]
+FTM_SpeedInit           0x00001deb   0x50  Code  Gb  ftm.o [1]
+FTM_SpeedMux            0x00001d51   0x9a  Code  Gb  ftm.o [1]
+GPIOX                   0x00005588    0xc  Data  Lc  KEA128_gpio.o [1]
+Get_CarSpeed            0x000048e5   0xc6  Code  Gb  Speed_Control.o [1]
+GpioGet                 0x00000a7f   0x34  Code  Gb  KEA128_gpio.o [1]
+GpioInit                0x00000981   0xfe  Code  Gb  KEA128_gpio.o [1]
+GpioSet                 0x00000ab3   0x52  Code  Gb  KEA128_gpio.o [1]
+GpioTurn                0x00000b05   0x42  Code  Gb  KEA128_gpio.o [1]
+Gyro_ZS                 0x00005115  0x14c  Code  Gb  L3G4200D_ZS.o [1]
+I2CN                    0x00000038    0x8  Data  Gb  KEA128_i2c.o [1]
+Inductor_Check          0x0000279d  0x238  Code  Gb  SDSB_ZS.o [1]
+Inductor_analyse        0x0000234d  0x2a4  Code  Gb  SDSB_ZS.o [1]
+IoInit                  0x00004fd1   0x72  Code  Gb  QT.o [1]
+KEY_Init                0x000011b1   0x66  Code  Gb  key.o [1]
+KEY_ParaMenu            0x00001339  0x5b8  Code  Gb  key.o [1]
+KEY_ParaMenuDisplay     0x00001931  0x100  Code  Gb  key.o [1]
+KEY_Scan                0x00001217  0x120  Code  Gb  key.o [1]
+KEY_menuChange          0x000003db    0x1  Data  Gb  key.o [1]
+KEY_sta                 0x000003dc    0x1  Data  Gb  key.o [1]
+L                       0x00000078    0x4  Data  Gb  Direction_Control.o [1]
+L3G4200_Init            0x00004ed1   0x56  Code  Gb  L3G4200.o [1]
+L3G4200_Read            0x00004f27   0x86  Code  Gb  L3G4200.o [1]
+Motor_Max               0x0000008c    0x4  Data  Gb  Motor_Control.o [1]
+Motor_Min               0x00000090    0x4  Data  Gb  Motor_Control.o [1]
+Motor_Out_L             0x00000318    0x4  Data  Gb  Motor_Control.o [1]
+Motor_Out_Max           0x000000c4    0x4  Data  Gb  Speed_Control.o [1]
+Motor_Out_Min           0x000000c8    0x4  Data  Gb  Speed_Control.o [1]
+Motor_Out_R             0x0000031c    0x4  Data  Gb  Motor_Control.o [1]
+Motor_control           0x00005261  0x138  Code  Gb  Motor_Control.o [1]
+NVIC_EnableIRQ          0x00005045    0xe  Code  Lc  pit.o [1]
+OLED_Clear              0x0000004d   0x38  Code  Gb  oled.o [1]
+OLED_DisplayFloat       0x00000871   0xf8  Code  Gb  oled.o [1]
+OLED_DisplaytinyStr     0x0000019b   0x52  Code  Gb  oled.o [1]
+OLED_HEXACSII           0x000007cd   0x38  Code  Gb  oled.o [1]
+OLED_Init               0x000000ad   0xee  Code  Gb  oled.o [1]
+OLED_Menu               0x000001f5  0x1e0  Code  Gb  oled.o [1]
+OLED_MenuFlicker        0x00000405  0x3c2  Code  Gb  oled.o [1]
+OLED_SPI                0x00000040    0x8  Data  Gb  oled.o [1]
+OLED_Set_Pos            0x00000085   0x28  Code  Gb  oled.o [1]
+OLED_Uint16             0x00000805   0x6c  Code  Gb  oled.o [1]
+OLED_WrCmd              0x00000001   0x26  Code  Gb  oled.o [1]
+OLED_WrDat              0x00000027   0x26  Code  Gb  oled.o [1]
+PIT_CH0_IRQHandler      0x00004c7b   0xe2  Code  Gb  main.o [1]
+PIT_EnableIrq           0x000050d5   0x22  Code  Gb  pit.o [1]
+PIT_Init                0x00005053   0x82  Code  Gb  pit.o [1]
+PIT_times               0x000003d6    0x2  Data  Gb  main.o [1]
+Piaoyi_L                0x000003d9    0x1  Data  Gb  Direction_Control.o [1]
+Piaoyi_R                0x000003da    0x1  Data  Gb  Direction_Control.o [1]
+Position_transit        0x00000014   0x10  Data  Gb  SDSB_ZS.o [1]
+Read_ADC                0x000029ed  0x2ca  Code  Gb  inductor_1.o [1]
+Region$$Table$$Base     0x000054fc          --   Gb  - Linker created -
+Region$$Table$$Limit    0x0000550c          --   Gb  - Linker created -
+Road_Remember           0x00000000  0x190  Data  Gb  SDSB_ZS.o [1]
+SPIN                    0x00000050    0x8  Data  Gb  spi.o [1]
+Slope_AD_1              0x00000328    0x4  Data  Gb  SDSB_ZS.o [1]
+Speed_Control_Output_L  0x000003a4    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Control_Output_L_Old
+                        0x000003ac    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Control_Output_R  0x000003a8    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Control_Output_R_Old
+                        0x000003b0    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Controler         0x00004711  0x1a0  Code  Gb  Speed_Control.o [1]
+Speed_D                 0x00000380    0x4  Data  Gb  Speed_Control.o [1]
+Speed_D_D               0x000002bc    0x4  Data  Gb  Direction_Control.o [1]
+Speed_Error_L           0x0000038c    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Error_Last_L      0x00000390    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Error_Last_Last_L
+                        0x00000394    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Error_Last_Last_R
+                        0x000003a0    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Error_Last_R      0x0000039c    0x4  Data  Gb  Speed_Control.o [1]
+Speed_Error_R           0x00000398    0x4  Data  Gb  Speed_Control.o [1]
+Speed_I                 0x000000bc    0x4  Data  Gb  Speed_Control.o [1]
+Speed_I_D               0x000002b8    0x4  Data  Gb  Direction_Control.o [1]
+Speed_I_D_Temp          0x000002d8    0x4  Data  Gb  Direction_Control.o [1]
+Speed_I_lntegral_L      0x000002e4    0x4  Data  Gb  Direction_Control.o [1]
+Speed_I_lntegral_Max    0x0000007c    0x4  Data  Gb  Direction_Control.o [1]
+Speed_I_lntegral_R      0x000002e8    0x4  Data  Gb  Direction_Control.o [1]
+Speed_P                 0x000000b8    0x4  Data  Gb  Speed_Control.o [1]
+Speed_P_D               0x0000006c    0x4  Data  Gb  Direction_Control.o [1]
+Start                   0x0000542d   0x3c  Code  Gb  system_SKEAZ1284.o [1]
+StraightRoad            0x00000338    0x4  Data  Gb  SDSB_ZS.o [1]
+StraightRoad_Flag       0x00000348    0x4  Data  Gb  SDSB_ZS.o [1]
+StraightRoad_Old        0x0000033c    0x4  Data  Gb  SDSB_ZS.o [1]
+Sum_Error_L             0x000002dc    0x4  Data  Gb  Direction_Control.o [1]
+Sum_Error_R             0x000002e0    0x4  Data  Gb  Direction_Control.o [1]
+SystickDelay            0x00000c95   0x26  Code  Gb  KEA128_systick.o [1]
+SystickDelayMs          0x00000cbb   0x1c  Code  Gb  KEA128_systick.o [1]
+Test_Huandao            0x00002125  0x1d0  Code  Gb  SDSB_ZS.o [1]
+Test_RoadInfo           0x00002631  0x11e  Code  Gb  SDSB_ZS.o [1]
+UART_Init               0x00004de9   0xd0  Code  Gb  KEA128_uart.o [1]
+WindingRoad_Left        0x00000340    0x4  Data  Gb  SDSB_ZS.o [1]
+WindingRoad_Left_Flag   0x0000034c    0x4  Data  Gb  SDSB_ZS.o [1]
+WindingRoad_Right       0x00000344    0x4  Data  Gb  SDSB_ZS.o [1]
+WindingRoad_Right_Flag  0x00000350    0x4  Data  Gb  SDSB_ZS.o [1]
+__BOOT_STACK_ADDRESS {Abs}
+                        0x20002ff7          --   Gb  command line/config [2]
+__VECTOR_RAM {Abs}      0x1ffff000          --   Gb  command line/config [2]
+__VECTOR_TABLE {Abs}    0x1ffff000          --   Gb  command line/config [2]
+__Vectors               0x1ffff000          --   Gb  startup_SKEAZ1284.o [1]
+__Vectors_End           0x1ffff0c0         Data  Gb  startup_SKEAZ1284.o [1]
+__Vectors_Size {Abs}    0x000000c0          --   Gb  startup_SKEAZ1284.o [1]
+__aeabi_cdcmpeq         0x00003e91         Code  Gb  DblCmpEq.o [4]
+__aeabi_cdcmple         0x0000369d         Code  Gb  DblCmpLe.o [4]
+__aeabi_cdrcmple        0x00003bcf         Code  Gb  DblCmpGe.o [4]
+__aeabi_cfcmple         0x00000dc9         Code  Gb  FltCmpLe.o [4]
+__aeabi_cfrcmple        0x00000f99         Code  Gb  FltCmpGe.o [4]
+__aeabi_d2f             0x0000206b         Code  Gb  DblToFlt.o [4]
+__aeabi_d2iz            0x00003c01         Code  Gb  DblToI32.o [4]
+__aeabi_dadd            0x00001eb7         Code  Gb  DblAddSub.o [4]
+__aeabi_ddiv            0x00003b0d         Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x000036cf         Code  Gb  DblMul.o [4]
+__aeabi_dsub            0x00001f7d         Code  Gb  DblAddSub.o [4]
+__aeabi_errno_addr      0x00003df5    0xa  Code  Gb  errno.o [3]
+__aeabi_f2d             0x00001e85         Code  Gb  FltToDbl.o [4]
+__aeabi_f2iz            0x00001071         Code  Gb  FltToS32.o [4]
+__aeabi_f2uiz           0x00000e19         Code  Gb  FltToU32.o [4]
+__aeabi_fadd            0x00000e77         Code  Gb  FltAddSub.o [4]
+__aeabi_fdiv            0x00002ce9         Code  Gb  FltDiv.o [4]
+__aeabi_fmul            0x00000fc1         Code  Gb  FltMul.o [4]
+__aeabi_fsub            0x00000ee7         Code  Gb  FltAddSub.o [4]
+__aeabi_i2d             0x00003c51         Code  Gb  I32ToDbl.o [4]
+__aeabi_i2f             0x00000e41         Code  Gb  I32ToFlt.o [4]
+__aeabi_idiv            0x00000d15         Code  Gb  I32DivModFast.o [5]
+__aeabi_idiv0           0x000011ad         Code  Gb  IntDivZer.o [5]
+__aeabi_idivmod         0x00000d15         Code  Gb  I32DivModFast.o [5]
+__aeabi_memcpy4         0x000010ad         Code  Wk  ABImemcpy.o [5]
+__aeabi_ui2f            0x00000e59         Code  Gb  I32ToFlt.o [4]
+__aeabi_uidiv           0x00000d1b         Code  Gb  I32DivModFast.o [5]
+__aeabi_uidivmod        0x00000d1b         Code  Gb  I32DivModFast.o [5]
+__cmain                 0x0000550d         Code  Gb  cmain.o [5]
+__exit                  0x00005541   0x14  Code  Gb  exit.o [6]
+__iar_Dint              0x00003e05   0x8c  Code  Gb  xdint.o [4]
+__iar_Errno             0x000000cc    0x4  Data  Gb  errno.o [3]
+__iar_Quad              0x00003c81  0x174  Code  Gb  xquad.o [4]
+__iar_d2uiz             0x00003c25         Code  Gb  DblToI32.o [4]
+__iar_data_init3        0x0000548d   0x28  Code  Gb  data_init.o [5]
+__iar_dlib_perthread_access
+                        0x00003f7b    0x2  Code  Gb  xtls.o [3]
+__iar_edom              0x00003f7d         Code  Gb  iarEdom.o [5]
+__iar_fmod              0x00003eb5         Code  Gb  fmod.o [4]
+__iar_fmodl             0x00003eb5         Code  Gb  fmod.o [4]
+__iar_program_start     0x00005595         Code  Gb  cstartup_M.o [5]
+__iar_ui2d              0x00003c65         Code  Gb  I32ToDbl.o [4]
+__iar_ui2f              0x00000e5d         Code  Gb  I32ToFlt.o [4]
+__iar_zero_init3        0x00000def   0x2a  Code  Gb  zero_init3.o [5]
+__low_level_init        0x00005527    0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x1ffff000         Data  Gb  startup_SKEAZ1284.o [1]
+_call_main              0x00005519         Code  Gb  cmain.o [5]
+_exit                   0x00005535         Code  Gb  cexit.o [5]
+_main                   0x00005523         Code  Gb  cmain.o [5]
+abs                     0x000010e1    0x8  Code  Gb  abs.o [3]
+abs_f                   0x00002cd7   0x12  Code  Gb  inductor_1.o [1]
+abs_inductor            0x00002cc9    0xe  Code  Gb  inductor_1.o [1]
+ad_valu                 0x000001cc   0x34  Data  Gb  SDSB_ZS.o [1]
+angle                   0x000002d4    0x4  Data  Gb  Direction_Control.o [1]
+angle_P                 0x00000070    0x4  Data  Gb  Direction_Control.o [1]
+angle_limit             0x00000030    0x8  Data  Gb  Direction_Control.o [1]
+bus_clk_khz             0x000002ac    0x4  Data  Gb  common.o [1]
+carStatus               0x000003e0    0x1  Data  Gb  main.o [1]
+change_factor           0x000002b0    0x4  Data  Gb  Direction_Control.o [1]
+change_value            0x00000068    0x4  Data  Gb  Direction_Control.o [1]
+change_variable         0x000002b4    0x4  Data  Gb  Direction_Control.o [1]
+core_clk_khz            0x000002a8    0x4  Data  Gb  common.o [1]
+disable_wdog            0x00005419   0x14  Code  Gb  system_SKEAZ1284.o [1]
+exit                    0x0000552b    0x8  Code  Gb  exit.o [3]
+fmod                    0x00003eb5         Code  Gb  fmod.o [4]
+fmodl                   0x00003eb5         Code  Gb  fmod.o [4]
+ftm_clk_khz             0x000002a4    0x4  Data  Gb  common.o [1]
+g_5msFlag               0x000003d8    0x1  Data  Gb  Control.o [1]
+g_mod                   0x000003cc    0x2  Data  Gb  ftm.o [1]
+get_clk                 0x000010e9   0x9e  Code  Gb  common.o [1]
+gg                      0x00000304    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gx                      0x000003dd    0x1  Data  Gb  L3G4200.o [1]
+gyr_angle               0x000002fc    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_angle_speed         0x000002f4    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_angle_speed_static  0x00000080    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_angle_speed_up      0x000002f8    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_angle_up            0x00000300    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_offset__x_average   0x0000030c    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_offset__x_sum       0x00000308    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_offset_x            0x00000084    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyr_offset_z            0x00000088    0x4  Data  Gb  L3G4200D_ZS.o [1]
+gyro_ID                 0x000003df    0x1  Data  Gb  L3G4200.o [1]
+gyro_x                  0x000003d2    0x2  Data  Gb  L3G4200.o [1]
+gyro_z                  0x000003d4    0x2  Data  Gb  L3G4200.o [1]
+gz                      0x000003de    0x1  Data  Gb  L3G4200.o [1]
+i2c_Wait                0x00004389   0xae  Code  Gb  KEA128_i2c.o [1]
+i2c_delay               0x00004543   0x1a  Code  Gb  KEA128_i2c.o [1]
+i2c_init                0x00004437  0x10c  Code  Gb  KEA128_i2c.o [1]
+i2c_read_reg            0x0000455d  0x102  Code  Gb  KEA128_i2c.o [1]
+i2c_write_reg           0x00004689   0x84  Code  Gb  KEA128_i2c.o [1]
+ics_clk_khz             0x000002a0    0x4  Data  Gb  common.o [1]
+k                       0x000002cc    0x4  Data  Gb  Direction_Control.o [1]
+k1                      0x00000058    0x4  Data  Gb  Direction_Control.o [1]
+k2                      0x0000005c    0x4  Data  Gb  Direction_Control.o [1]
+k3                      0x000002d0    0x4  Data  Gb  Direction_Control.o [1]
+logo                    0x00003f88  0x400  Data  Gb  oled.o [1]
+main                    0x00004c19   0x62  Code  Gb  main.o [1]
+max_v                   0x00000000   0x14  Data  Gb  SDSB_ZS.o [1]
+max_value               0x0000032c    0x4  Data  Gb  SDSB_ZS.o [1]
+menuNum                 0x000054b4   0x24  Data  Gb  oled.o [1]
+menuSelect              0x000000d6    0x1  Data  Gb  main.o [1]
+min_v                   0x00000048    0x8  Data  Gb  SDSB_ZS.o [1]
+position                0x000000d8    0x1  Data  Gb  SDSB_ZS.o [1]
+prot_pull               0x000020cd   0x58  Code  Gb  KEA128_port.o [1]
+sensor_to_one           0x00000278   0x14  Data  Gb  SDSB_ZS.o [1]
+speed_L                 0x000003bc    0x4  Data  Gb  Speed_Control.o [1]
+speed_R                 0x000003c0    0x4  Data  Gb  Speed_Control.o [1]
+speed_control_counter   0x00000314    0x4  Data  Gb  main.o [1]
+speed_measure_L         0x000003b4    0x4  Data  Gb  Speed_Control.o [1]
+speed_measure_R         0x000003b8    0x4  Data  Gb  Speed_Control.o [1]
+speed_old_L             0x000003c4    0x4  Data  Gb  Speed_Control.o [1]
+speed_old_R             0x000003c8    0x4  Data  Gb  Speed_Control.o [1]
+speed_set               0x000000c0    0x4  Data  Gb  Speed_Control.o [1]
+speed_set_L             0x00000384    0x4  Data  Gb  Speed_Control.o [1]
+speed_set_R             0x00000388    0x4  Data  Gb  Speed_Control.o [1]
+speed_set_W             0x000000b4    0x4  Data  Gb  Speed_Control.o [1]
+speed_set_Z             0x000000b0    0x4  Data  Gb  Speed_Control.o [1]
+spi_init                0x00000b4d  0x12a  Code  Gb  spi.o [1]
+tan                     0x00003855  0x2b8  Code  Gb  tan.o [4]
+uart                    0x00000024    0xc  Data  Gb  KEA128_uart.o [1]
+uart_mux                0x00004d81   0x68  Code  Gb  KEA128_uart.o [1]
+wgx                     0x000003ce    0x2  Data  Gb  L3G4200.o [1]
+wgz                     0x000003d0    0x2  Data  Gb  L3G4200.o [1]
+x                       0x00000310    0x4  Data  Gb  main.o [1]
+z                       0x000000d7    0x1  Data  Gb  main.o [1]
+
+
+[1] = H:\智能车程序2018\电磁三轮——ZS\5.1\iar\KEA_128_RAM\Obj
+[2] = command line
+[3] = dl6M_tlf.a
+[4] = m6M_tl.a
+[5] = rt6M_tl.a
+[6] = shb_l.a
+
+  20 340 bytes of readonly  code memory
+   2 060 bytes of readonly  data memory
+   1 467 bytes of readwrite data memory
+
+Errors: 1
+Warnings: none

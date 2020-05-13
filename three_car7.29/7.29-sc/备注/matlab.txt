@@ -1,0 +1,163 @@
+
+二次函数：退的快，增的快
+数值相比  平方
+0.2       0.04
+0.4       0.16
+0.5       0.25
+0.7       0.49
+0.9       0.81
+1         1
+1.2       1.44
+1.4       1.96
+1.5       2.25
+1.7       2.89
+
+ /*二次函数*/
+speed_set=70    
+speed_car=10;  Speed_Bili=1/49=0.02;
+speed_car=20;  Speed_Bili=3/49=;
+speed_car=30;  Speed_Bili=9/49=;
+speed_car=40;  Speed_Bili=16/49=;
+speed_car=50;  Speed_Bili=25/49=0.51;
+speed_car=60;  Speed_Bili=36/49=0.73;
+speed_car=70;  Speed_Bili=49/49=1;
+speed_car=80;  Speed_Bili=64/49=1.3;
+speed_car=90;  Speed_Bili=81/49=;
+speed_car=100; Speed_Bili=100/49=;
+ 
+speed_set=60        
+speed_car=10;  Speed_Bili=1/36=0.02;    
+speed_car=20;  Speed_Bili=4/36=0.11;    
+speed_car=30;  Speed_Bili=9/36=0.25;    
+speed_car=40;  Speed_Bili=16/36=0.45;    
+speed_car=50;  Speed_Bili=25/36=0.69;    
+speed_car=60;  Speed_Bili=36/36=1;    
+speed_car=70;  Speed_Bili=49/36=1.36;    
+
+----------------------------------------------------------
+指数   退的平缓，增的平缓
+e^-1=0.36
+ e^-2/3=0.51
+ e^-1/3=0.71
+ e^ 0=1
+ e^0.25=1.28
+ e^ 0.5=1.359 
+ e^ 0.75=2.1
+ e^ 1=2.7
+ e^ 2=7.38
+ 
+ 
+ 1.5^-0.5=0.8
+ 2.7^-0.5=0.6
+ 
+ 1.5^2=2.25
+ 2.7^2=7.29
+ 
+/*差值的指数函数**********************************/
+Chazhi_point=45;
+差值 数学              比例e^数学  P
+10   10-45/45=-0.778   0.46       115 
+20   20-45/45=-0.556   0.573      143 
+30   30-45/45=-0.333   0.717      180
+40   40-45/45=-0.111   0.895      224
+45   45-45/45= 0       1          250 
+50   50-45/45= 0.111   1.117      280
+60   60-45/45= 0.333   1.395      349
+70   70-45/45= 0.556   1.744      436
+80   80-45/45= 0.778   2.177      542   
+90   90-45/45= 1       2.7        675
+100  100-45/45=1.222   3.394      848.5
+
+Chazhi_point=50
+Chazhi=10   Chazhi_Bili=1/25=0.04
+Chazhi=20   Chazhi_Bili=4/25=0.16   48 
+Chazhi=30   Chazhi_Bili=9/25=0.36   108  
+Chazhi=40   Chazhi_Bili=16/25=0.64  192
+Chazhi=50   Chazhi_Bili=25/25=1     300
+Chazhi=60   Chazhi_Bili=36/25=
+Chazhi=70   Chazhi_Bili=49/25=      600
+Chazhi=80   Chazhi_Bili=64/25=
+Chazhi=90   Chazhi_Bili=81/25=
+Chazhi=100   Chazhi_Bili=100/25=
+--------------------------------------------------------------
+ 
+/*速度的指数函数**********************************/
+ Speed_Bili=(speed_car-Chazhi_point)/Chazhi_point;
+ 
+           speed_set=50  
+ 
+ 车速              比例                   指数值                
+speed_car=10;  Speed_Bili=10-50/50=-0.8   0.44
+speed_car=20;  Speed_Bili=-30/50=-0.6     0.55  
+speed_car=30;  Speed_Bili=   -0.4         0.67
+speed_car=40;  Speed_Bili=-10/50=-0.2     0.82   
+speed_car=50;  Speed_Bili=                  1    
+speed_car=60;  Speed_Bili=10/50=0.2       1.22
+speed_car=70;  Speed_Bili=20/50=0.4       1.49
+ 
+           speed_set=60   
+ 车速              比例                   指数值                
+speed_car=10;  Speed_Bili=-50/60=-0.8      0.45
+speed_car=20;  Speed_Bili=-40/60=-0.67     0.5  
+speed_car=30;  Speed_Bili=-30/60=-0.5      0.6
+speed_car=40;  Speed_Bili=-20/60=-0.33     0.72   
+speed_car=50;  Speed_Bili=-10/60=-0.17     0.84                 
+speed_car=60;  Speed_Bili=0                 1
+speed_car=70;  Speed_Bili=10/60=0.17        1.2  
+speed_car=80;  Speed_Bili=20/60=0.33       1.4 
+ 
+ /*陀螺仪D:speed_set=70*/  
+   Speed_Bili=(speed_point-speed_car)/speed_point;
+   
+ 车速              比例                   指数值                
+speed_car=10;  Speed_Bili=60/70=0.85      2.34    
+speed_car=20;  Speed_Bili=50/70=0.71
+speed_car=30;  Speed_Bili=40/70=0.57      1.77
+speed_car=40;  Speed_Bili=30/70=0.43
+speed_car=50;  Speed_Bili=20/70=0.29      1.34           
+speed_car=60;  Speed_Bili=10/70=0.14      1.15           
+speed_car=70;  Speed_Bili=0                1
+speed_car=80;  Speed_Bili=-10/70=-0.14    0.87 
+speed_car=90;  Speed_Bili=-20/70=-0.29    0.75
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+         
+
+ 
+ 

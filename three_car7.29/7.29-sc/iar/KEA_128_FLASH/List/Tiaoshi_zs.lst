@@ -1,0 +1,161 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.40.2.8542/W32 for ARM        29/Jul/2018  00:38:04
+# Copyright 1999-2015 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  H:\智能车程序2018\三轮比赛\7.29-sc\user\C\Tiaoshi_zs.c
+#    Command line =  
+#        H:\智能车程序2018\三轮比赛\7.29-sc\user\C\Tiaoshi_zs.c -D IAR -D
+#        TWR_K60N512 -D _DLIB_FILE_DESCRIPTOR -lCN
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\KEA_128_FLASH\List\ -lB
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\KEA_128_FLASH\List\ -o
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\KEA_128_FLASH\Obj\ --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M0+ -e --fpu=None
+#        --dlib_config F:\IAR安装包\arm\INC\c\DLib_Config_Normal.h -I
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\..\device\H\ -I
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\..\user\H\ -I
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\..\system\ -I
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\..\lib\H\ -I
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\..\system\coreSupport\ -On
+#    List file    =  
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\KEA_128_FLASH\List\Tiaoshi_zs.lst
+#    Object file  =  
+#        H:\智能车程序2018\三轮比赛\7.29-sc\iar\KEA_128_FLASH\Obj\Tiaoshi_zs.o
+#
+###############################################################################
+
+H:\智能车程序2018\三轮比赛\7.29-sc\user\C\Tiaoshi_zs.c
+      1          #include "Tiaoshi_zs.h"
+      2          #include "Variable.h"
+      3          #include "common.h"
+      4          #include "allHead.h"
+      5          
+
+   \                                 In section .text, align 2, keep-with-next
+      6          void man_zs(void)
+      7          {
+   \                     man_zs: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+      8            if(speed_L>20||speed_R>20)
+   \   00000002   0x....             LDR      R0,??DataTable1
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x....             LDR      R1,??DataTable1_1  ;; 0x41a00001
+   \   00000008   0x.... 0x....      BL       __aeabi_cfrcmple
+   \   0000000C   0xD905             BLS      ??man_zs_0
+   \   0000000E   0x....             LDR      R0,??DataTable1_2
+   \   00000010   0x6800             LDR      R0,[R0, #+0]
+   \   00000012   0x....             LDR      R1,??DataTable1_1  ;; 0x41a00001
+   \   00000014   0x.... 0x....      BL       __aeabi_cfrcmple
+   \   00000018   0xD802             BHI      ??man_zs_1
+      9              man=2;
+   \                     ??man_zs_0: (+1)
+   \   0000001A   0x2002             MOVS     R0,#+2
+   \   0000001C   0x....             LDR      R1,??DataTable1_3
+   \   0000001E   0x6008             STR      R0,[R1, #+0]
+     10          }
+   \                     ??man_zs_1: (+1)
+   \   00000020   0xBD01             POP      {R0,PC}          ;; return
+     11          
+
+   \                                 In section .text, align 2, keep-with-next
+     12          void Back_Car()
+     13          
+     14          {
+   \                     Back_Car: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     15             if(man>1)
+   \   00000002   0x....             LDR      R0,??DataTable1_3
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x2802             CMP      R0,#+2
+   \   00000008   0xDB1E             BLT      ??Back_Car_0
+     16             {
+     17               if(AD_inductor[0]<1&&AD_inductor[1]<1&&AD_inductor[2]<1)
+   \   0000000A   0x....             LDR      R0,??DataTable1_4
+   \   0000000C   0x6800             LDR      R0,[R0, #+0]
+   \   0000000E   0x21FE             MOVS     R1,#+254
+   \   00000010   0x0589             LSLS     R1,R1,#+22       ;; #+1065353216
+   \   00000012   0x.... 0x....      BL       __aeabi_cfcmple
+   \   00000016   0xD217             BCS      ??Back_Car_0
+   \   00000018   0x....             LDR      R0,??DataTable1_4
+   \   0000001A   0x6840             LDR      R0,[R0, #+4]
+   \   0000001C   0x21FE             MOVS     R1,#+254
+   \   0000001E   0x0589             LSLS     R1,R1,#+22       ;; #+1065353216
+   \   00000020   0x.... 0x....      BL       __aeabi_cfcmple
+   \   00000024   0xD210             BCS      ??Back_Car_0
+   \   00000026   0x....             LDR      R0,??DataTable1_4
+   \   00000028   0x6880             LDR      R0,[R0, #+8]
+   \   0000002A   0x21FE             MOVS     R1,#+254
+   \   0000002C   0x0589             LSLS     R1,R1,#+22       ;; #+1065353216
+   \   0000002E   0x.... 0x....      BL       __aeabi_cfcmple
+   \   00000032   0xD209             BCS      ??Back_Car_0
+     18               {
+     19          
+     20                  change_L(0);
+   \   00000034   0x2200             MOVS     R2,#+0
+   \   00000036   0x2101             MOVS     R1,#+1
+   \   00000038   0x2002             MOVS     R0,#+2
+   \   0000003A   0x.... 0x....      BL       FTM_PwmDuty
+     21            change_R(0);
+   \   0000003E   0x2200             MOVS     R2,#+0
+   \   00000040   0x2100             MOVS     R1,#+0
+   \   00000042   0x2002             MOVS     R0,#+2
+   \   00000044   0x.... 0x....      BL       FTM_PwmDuty
+     22               }
+     23             }
+     24          }
+   \                     ??Back_Car_0: (+1)
+   \   00000048   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     speed_L
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x41A00001         DC32     0x41a00001
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x........         DC32     speed_R
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x........         DC32     man
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x........         DC32     AD_inductor
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   Back_Car
+         8   -> FTM_PwmDuty
+         8 __aeabi_cfcmple
+       8   man_zs
+         8 __aeabi_cfrcmple
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+      74  Back_Car
+      34  man_zs
+
+ 
+ 128 bytes in section .text
+ 
+ 128 bytes of CODE memory
+
+Errors: none
+Warnings: none
